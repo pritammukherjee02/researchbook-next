@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 function SignUpPitch() {
@@ -8,7 +9,9 @@ function SignUpPitch() {
         </div>
         <div className='flex my-3 mb-6 h-10 justify-between w-11/12 mx-auto items-center'>
             <p className='text-white'>Join us today for free</p>
-            <button className='bg-gray-50 text-black rounded-full py-2 px-4'>Sign Up</button>
+            <Link href={'/login'}>
+              <button className='bg-gray-50 text-black rounded-full py-2 px-4'>Sign Up</button>
+            </Link>
         </div>
     </div>
   )

@@ -12,7 +12,7 @@ interface Props {
 
 function UserInformationCard({ name, fieldOfExpertise, jobDesignation, username, articles, followers, following }:Props) {
   return (
-    <div className='p-2 mx-auto w-full border border-b-2'>
+    <div className='p-2 mx-auto w-full border-0 border-b-2'>
         <p className='pl-2'>{name}</p>
         <div className='flex space-2 pt-3'>
             <div className='border border-blue-500 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0'></div>
