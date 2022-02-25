@@ -19,10 +19,21 @@ function Article() {
 
             <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
                 <div className='w-full h-full lg:w-8/12 pb-5'>
-                    <h1 className="text-3xl pt-4 font-bold w-11/12 lg:w-10/12 mx-auto">How and why is the demonlord so menacing?</h1>
+                    <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
+                        <div className='ml-2 border my-auto border-blue-500 rounded-full h-14 w-14'></div>
+                        <div className='flex flex-col pl-5 my-auto justify-between'>
+                            <div className='flex items-center'>
+                                <p className='text-lg'>D Maxwell</p>
+                                <button className='px-3 py-1 ml-3 text-sm lg:hidden bg-blue-500 hover:bg-blue-600 text-white rounded-full'>Follow</button>
+                            </div>
+                            <p className='text-sm opacity-60'>20 Feb, 22</p>
+                        </div>
+                    </div>
+
+                    <h1 className="text-3xl pt-8 font-bold w-11/12 lg:w-10/12 mx-auto">How and why is the demonlord so menacing?</h1>
                     <h2 className='text-2xl pt-1 font-light w-11/12 lg:w-10/12 mx-auto opacity-50'>Demonlord's pursuits</h2>
 
-                    <div className='mt-8'>
+                    <div className='mt-8 w-full mx-auto'>
                         <Image src={'https://images.unsplash.com/photo-1448772917253-74bbbe249b30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'} className="object-contain inline mx-auto mt-24" width={850} height={478} />
                     </div>
 
