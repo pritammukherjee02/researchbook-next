@@ -2,7 +2,7 @@ import React from 'react'
 
 function UserInfo() {
   return (
-    <div className='w-full py-5 flex flex-col bg-teal-100'>
+    <div className='w-full py-5 flex flex-col'>
         <div className='flex w-10/12 mx-auto h-24'>
             <div className='ml-2 border my-auto border-blue-500 rounded-full h-24 w-24'></div>
             <div className='flex flex-col justify-around pl-5'>
