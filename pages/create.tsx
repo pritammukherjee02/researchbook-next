@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
+import UserInfo from '../components/ArticleComponents/UserInfo'
 import EditorComponent from '../components/CreateComponents/Editor'
 import Header from '../components/Header'
 
@@ -24,6 +25,9 @@ function Create() {
                     <EditorComponent />
                   </div>
 
+                  <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
+                    <UserInfo />
+                  </div>
 
                 </div>
               </div>
