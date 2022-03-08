@@ -16,9 +16,11 @@ function EditorComponent() {
   return (
     <div className='flex flex-col w-full h-full lg:w-8/12'>
       <Editor
-        toolbarClassName='flex sticky top-10 z-50 mx-auto'
-        editorClassName='w-full border h-80 p-3 mx-autof'
+        toolbarClassName={'flex sticky top-10 z-50 mx-auto'}
+        editorClassName={'w-full border h-80 p-3 mx-auto'}
       />
+
+      <Editor  />
     </div>
   )
 }
