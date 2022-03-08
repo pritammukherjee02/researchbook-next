@@ -3,8 +3,8 @@ import React, { ReactFragment } from 'react'
 import dynamic from 'next/dynamic'
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-const Editor = dynamic(() => import("react-draft-wysiwyg").then(module => module.Editor), { ssr: false })
-//import { Editor } from 'react-draft-wysiwyg'
+//const Editor = dynamic(() => import("react-draft-wysiwyg").then(module => module.Editor), { ssr: false })
+import { Editor } from 'react-draft-wysiwyg'
 
 function EditorComponent() {
 
