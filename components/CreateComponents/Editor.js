@@ -8,9 +8,9 @@ import dynamic from 'next/dynamic'
 
 function EditorComponent() {
 
-  const wrapperRef = useRef<HTMLInputElement>(null)
+  const wrapperRef = useRef<HTMLInputElement | null>(null)
   useEffect(() => {
-    if(typeof window){
+    if(typeof window != undefined){
       const editor = document.createElement('div')
       wrapperRef.current.append(editor)
       new Quill(editor, { theme: 'snow' })

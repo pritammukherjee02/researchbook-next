@@ -17,6 +17,6 @@
     "noImplicitAny": false
   },
   "noImplicitAny": false,
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "icons/HomeIcon.jsx", "pages/create.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "icons/HomeIcon.jsx", "components/CreateComponents/Editor.js", "components/CreateComponents/Editor.js", "pages/create.js"],
   "exclude": ["node_modules"]
 }
