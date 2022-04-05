@@ -13,7 +13,7 @@ const Quill = dynamic(
 function EditorComponent() {
 
     const [value, setValue] = useState("");
-    const quillRef = useRef();
+    const quillRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         console.log(quillRef.current);
