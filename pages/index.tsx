@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
 
       <main className='h-screen'>
-        <Header home={true}/>
+        <Header home={true} searchProp=''/>
 
         <div className='lg:px-5 mt-5 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
           <div className='w-full lg:w-2/12'><UserInformation /></div>
