@@ -20,7 +20,7 @@ function EditorComponent() {
   return (
     <div className='flex flex-col w-full h-full lg:w-8/12 bg-blue-200'>
 
-      <div id="container" ref={wrapperRef}></div>
+      <div id="container" useRef={wrapperRef}></div>
 
     </div>
   )
