@@ -1,14 +1,18 @@
+import Link from 'next/link';
 import React from 'react';
 
 interface Props {
-    name: string
+    name: string,
+    uid: number
 }
 
-function FromFollowingUsernameCard({ name }:Props) {
+function FromFollowingUsernameCard({ name, uid }:Props) {
   return (
     <div className='flex items-center'>
         <div className='border border-blue-500 rounded-full h-8 w-8'></div>
-        <p className='mx-4'>{name} *</p>
+        <Link href={'/profile/' + uid}>
+          <p className='mx-4 cursor-pointer'>{name} *</p>
+        </Link>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import Recommended from '../components/ArticleComponents/Recommended'
 import UserInfo from '../components/ArticleComponents/UserInfo'
@@ -7,6 +8,8 @@ import Header from '../components/Header'
 import ArticleCard from '../components/MainContentComponents/ArticleCard'
 
 function Article() {
+    const [uid, name, date] = [2, "D Maxwell", "20 Feb, 22"]
+
   return (
     <div>
         <Head>
@@ -15,18 +18,22 @@ function Article() {
         </Head>
 
         <main className='h-screen'>
-            <Header home={false} />
+            <Header home={false} searchProp='' />
 
             <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
                 <div className='w-full h-full lg:w-8/12 pb-5'>
                     <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
-                        <div className='ml-2 border my-auto border-blue-500 rounded-full h-14 w-14'></div>
+                        <Link href={'/profile/' + uid}>
+                            <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-14 w-14'></div>
+                        </Link>
                         <div className='flex flex-col pl-5 my-auto justify-between'>
                             <div className='flex items-center'>
-                                <p className='text-lg'>D Maxwell</p>
+                                <Link href={'/profile/' + uid}>
+                                    <p className='text-lg cursor-pointer'>{name}</p>
+                                </Link>
                                 <button className='px-3 py-1 ml-3 text-sm lg:hidden bg-blue-500 hover:bg-blue-600 text-white rounded-full'>Follow</button>
                             </div>
-                            <p className='text-sm opacity-60'>20 Feb, 22</p>
+                            <p className='text-sm opacity-60'>{date}</p>
                         </div>
                     </div>
 
@@ -47,7 +54,7 @@ function Article() {
 
                 <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
                     <div className='pt-4 w-11/12 lg:w-10/12 mx-auto'>
-                        <UserInfo />
+                        <UserInfo name="D Maxwell" followers="1.1M" uid={2} />
                         <Recommended />
                         <div className='my-8 mb-4 w-11/12'>
                             <p className='text-sm opacity-50'>ResearchBook | Massive information network</p>

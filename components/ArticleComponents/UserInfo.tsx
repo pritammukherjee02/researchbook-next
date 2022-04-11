@@ -1,13 +1,24 @@
+import Link from 'next/link'
 import React from 'react'
 
-function UserInfo() {
+interface Props {
+    name: String,
+    followers: String,
+    uid: Number
+}
+
+function UserInfo({ name, followers, uid }:Props) {
   return (
     <div className='w-full py-5 flex flex-col'>
         <div className='flex w-10/12 mx-auto h-24'>
-            <div className='ml-2 border my-auto border-blue-500 rounded-full h-24 w-24'></div>
+            <Link href={'/profile/' + uid}>
+                <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-24 w-24'></div>
+            </Link>
             <div className='flex flex-col justify-around pl-5'>
-                <p className='text-lg'>D Maxwell</p>
-                <p className='text-sm opacity-70'>1.1M Followers</p>
+                <Link href={'/profile/' + uid}>
+                    <p className='text-lg cursor-pointer'>{name}</p>
+                </Link>
+                <p className='text-sm opacity-70'>{followers} Followers</p>
                 <div className='flex'>
                     <button className='px-4 py-2 mt-4 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-full'>Follow</button>
                 </div>
