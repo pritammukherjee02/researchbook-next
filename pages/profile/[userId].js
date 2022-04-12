@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -10,6 +10,8 @@ import RecommendedArticleCard from '../../components/ArticleComponents/Recommend
 function Profile() {
     const router = useRouter()
     const { userId } = router.query
+
+    const [following, setFollowing] = useState(false)
 
     const name = 'D Maxwell'
     const followers = '1.1M'
@@ -23,6 +25,11 @@ function Profile() {
     const articlesMarkup = articles.map((article, index) => {
         return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
     })
+
+    const toggleFollowing = () => {
+        if(following) setFollowing(false)
+        else setFollowing(true)
+    }
 
     return (
         <div>
@@ -44,7 +51,7 @@ function Profile() {
                             <span className='text-2xl font-semibold'>{name}</span>
                             <span> {followers} Followers</span>
                         </div>
-                        <button className='px-6 py-3 mt-4 text-md absolute right-6 bottom-24 lg:bottom-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full'>FOLLOW</button>
+                        <button onClick={toggleFollowing} className={'px-6 py-3 lg:px-5 lg:py-2 mt-4 text-md lg:text-sm absolute right-6 bottom-24 lg:bottom-3 text-white rounded-full transition-all ' + (following ? 'bg-gray-700 hover:bg-gray-900' : 'bg-blue-500 hover:bg-blue-600')}>{following ? 'FOLLOWING' : 'FOLLOW'}</button>
                     </div>
 
                     <div className='lg:hidden p-3 mt-16 bg-gray-100 rounded-2xl w-11/12 mx-auto'>

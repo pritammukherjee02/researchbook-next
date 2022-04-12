@@ -38,7 +38,10 @@ function Header({ home, searchProp='' }:Props) {
         <header className='flex justify-between p-3 lg:p-5 max-w-7xl mx-auto border-b-2 sticky top-0 z-50 bg-white'>
             <div className="flex items-center space-x-5">
                 <Link href='/'>
-                    <h1 className="object-contain cursor-pointer text-center font-semibold text-md md:text-xl lg:text-2xl" >ResearchBook</h1>
+                    <div>
+                        <h1 className="object-contain cursor-pointer text-center font-semibold text-md md:text-xl hidden lg:block lg:text-2xl" >ResearchBook</h1>
+                        <h1 className='object-contain cursor-pointer text-center font-semibold text-3xl lg:hidden'>Rb</h1>
+                    </div>
                 </Link>
                 <form onSubmit={search}>
                     <input name='searchField' type="text" placeholder='Search...' onChange={onchangeHandler} value={searchFieldContent} className='hidden md:block px-4 py-2 w-72 border-0 border-b-2 border-blue-500' />

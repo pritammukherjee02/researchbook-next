@@ -1,13 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import Recommended from '../components/ArticleComponents/Recommended'
 import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
 import ArticleCard from '../components/MainContentComponents/ArticleCard'
 
 function Article() {
+    const [following, setFollowing] = useState(false)
     const [uid, name, date] = [2, "D Maxwell", "20 Feb, 22"]
 
     const recommendedArticles = [
@@ -18,6 +19,11 @@ function Article() {
     const recommendedArticlesMarkup = recommendedArticles.map((article, index) => {
         return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
     })
+
+    const toggleFollowing = () => {
+        if(following) setFollowing(false)
+        else setFollowing(true)
+    }
 
   return (
     <div>
@@ -40,7 +46,7 @@ function Article() {
                                 <Link href={'/profile/' + uid}>
                                     <p className='text-lg cursor-pointer'>{name}</p>
                                 </Link>
-                                <button className='px-3 py-1 ml-3 text-sm lg:hidden bg-blue-500 hover:bg-blue-600 text-white rounded-full'>Follow</button>
+                                <button onClick={toggleFollowing} className={'px-3 py-1 ml-3 text-sm lg:hidden text-white rounded-full ' + (following ? 'bg-gray-700 hover:bg-gray-900' : 'bg-blue-500 hover:bg-blue-600')}>{following ? 'Following' : 'Follow'}</button>
                             </div>
                             <p className='text-sm opacity-60'>{date}</p>
                         </div>
