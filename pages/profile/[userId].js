@@ -5,6 +5,7 @@ import Head from 'next/head'
 //Components
 import Header from '../../components/Header'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard'
+import RecommendedArticleCard from '../../components/ArticleComponents/RecommendedArticleCard'
 
 function Profile() {
     const router = useRouter()
@@ -19,8 +20,8 @@ function Profile() {
         {title: 'You will never be happy', description: 'if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life', author: 'D Maxwell', date: '24 Apr, 22'},
     ]
 
-    const articlesMarkup = articles.map((article) => {
-        return <ArticleCard title={article.title} description={article.description} author={article.author} date={article.date} />
+    const articlesMarkup = articles.map((article, index) => {
+        return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
     })
 
     return (
@@ -51,19 +52,30 @@ function Profile() {
                         <p className='text-sm font-light'>{bio}</p>
                     </div>
 
-                    <div className='p-3 lg:mt-16'>
+                    <div className='lg:p-3 lg:mt-16'>
                         {/* ARTICLE CARDS BELONGING TO THE USER */}
 
                         {articlesMarkup}
                     </div>
                 </div>
 
-                <div className='hidden lg:w-4/12 lg:inline-flex'>
+                <div className='hidden lg:w-4/12 lg:inline-flex flex-col'>
                     {/* SIDE PANE FOR BIO AND MORE */}
 
                     <div className='p-3 bg-gray-100 rounded-2xl max-h-44 w-11/12 mx-auto flex flex-col align-middle'>
                         <p className='text-md font-bold opacity-40'>About</p>
                         <p className='text-sm font-light'>{bio}</p>
+                    </div>
+
+                    <div className='mt-5 p-3 w-11/12 mx-auto align-middle'>
+                        <div className=''>
+                            <p className='text-md font-bold opacity-40'>Top Articles</p>
+
+                            <div className='flex flex-col gap-5 mt-3'>
+                                <RecommendedArticleCard />
+                                <RecommendedArticleCard />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

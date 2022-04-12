@@ -10,6 +10,15 @@ import ArticleCard from '../components/MainContentComponents/ArticleCard'
 function Article() {
     const [uid, name, date] = [2, "D Maxwell", "20 Feb, 22"]
 
+    const recommendedArticles = [
+        {title: 'How to nuke a country effectively?', description: 'You have to be vigilant about prying eyes when it comes to nuking...', author: 'Demonlord', date: '14 Feb, 22'},
+        {title: 'Nuking heaven will be the best thing that will happen to us', description: 'It has been a while since the heaven has been nuked. Those gods need to be fucked...', author: 'Minion of demonlord', date: '15 Feb, 22'},
+    ]
+
+    const recommendedArticlesMarkup = recommendedArticles.map((article, index) => {
+        return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+    })
+
   return (
     <div>
         <Head>
@@ -47,8 +56,7 @@ function Article() {
                     <p className='text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem asperiores facere id est adipisci nesciunt totam odit, cum dolores non ipsam aut eius similique repudiandae assumenda. Non asperiores ipsum consequuntur officiis. Voluptas placeat vel similique sapiente quasi dolorum, cum nostrum, perferendis veniam quibusdam doloribus, dolorem aperiam suscipit temporibus iste? Consectetur hic saepe cupiditate qui accusantium corporis? Sunt in dolorum esse obcaecati, consequuntur aliquid natus eum quis doloremque quibusdam vel praesentium corporis quasi non facilis quia possimus. Iste exercitationem amet cumque ab, illum, et quaerat enim asperiores excepturi rerum quos aspernatur veritatis ducimus ipsam soluta corrupti deleniti quisquam autem deserunt earum.</p>
 
                     <div className='w-full lg:w-10/12 mx-auto bg-slate-50 mt-16 pt-4'>
-                        <ArticleCard title='How to nuke a country effectively?' description='You have to be vigilant about prying eyes when it comes to nuking...' author='Demonlord' date='14 Feb, 22' />    
-                        <ArticleCard title='Nuking heaven is the best thing that will happen to us' description='It has been a while since the heaven has been nuked. Those gods need to be fucked...' author='Minion of demonlord' date='15 Feb, 22' />    
+                        {recommendedArticlesMarkup}   
                     </div>                   
                 </div>
 
