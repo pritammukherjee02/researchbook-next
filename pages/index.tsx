@@ -24,7 +24,7 @@ export default function Home() {
           <div className='hidden lg:w-3/12 lg:inline-flex'><SideBar /></div>
         </div>
 
-        <AppBar />
+        <AppBar currentPage='home' />
       </main>
 
 

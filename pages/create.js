@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
+import AppBar from '../components/AppBar'
 
 function Create() {
   return (
@@ -14,7 +15,7 @@ function Create() {
         <main className='h-screen'>
             <Header home={false} />
 
-              <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto'>
+              <div className='lg:px-5 mt-5 mb-3 pb-14 lg:pb-0 max-w-7xl mx-auto'>
                 <div className='flex'>
 
                   <div className='flex flex-col w-full h-full lg:w-8/12 pb-5'>
@@ -29,6 +30,8 @@ function Create() {
 
                 </div>
               </div>
+
+              <AppBar currentPage='create' />
         
         </main>
 

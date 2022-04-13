@@ -30,7 +30,7 @@ function Search() {
         </div>
       </div>
 
-      <AppBar />
+      <AppBar currentPage='search' />
     </div>
   )
 }
