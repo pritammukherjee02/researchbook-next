@@ -10,7 +10,7 @@ interface Props {
 
 function ArticleCard({ title, description, author, date }:Props) {
   return (
-    <div className='flex p-5 my-2 flex-col justify-around border-0 border-x-2'>
+    <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 '>
         <Link href={'/article'}>
             <h2 className='text-3xl cursor-pointer'>{title}</h2>
         </Link>

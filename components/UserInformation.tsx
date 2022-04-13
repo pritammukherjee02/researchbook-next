@@ -8,7 +8,7 @@ function UserInformation() {
       <UserInformationCard name='James Anderson' fieldOfExpertise='Comp sci' jobDesignation='Research Fellow' uid={1} username='@janderson11' articles={0} followers={2} following={98} />
 
       <div className='my-4 hidden lg:block'>
-          <p className='text-sm'>From following:</p>
+          <p className='text-sm font-semibold opacity-40 cursor-default'>From following:</p>
           <div className='my-3 flex flex-col gap-2'>
             <FromFollowingUsernameCard name='Jamerson' uid={3} />
             <FromFollowingUsernameCard name='ssk414' uid={4} />
