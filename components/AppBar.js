@@ -18,7 +18,7 @@ function AppBar(props) {
                         </div>
 
                     </Link>
-                    <Link href='/search/Rb'>
+                    <Link href='/search'>
 
                         <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'search' ? 'text-blue-500' : '')}>
                             <svg className={ "h-6 w-6 inline-block mb-1" } xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" fill="currentColor">
