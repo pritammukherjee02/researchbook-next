@@ -6,6 +6,7 @@ import Recommended from '../components/ArticleComponents/Recommended'
 import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
 import ArticleCard from '../components/MainContentComponents/ArticleCard'
+import AppBar from '../components/AppBar'
 
 function Article() {
     const [following, setFollowing] = useState(false)
@@ -26,13 +27,13 @@ function Article() {
     }
 
   return (
-    <div>
+    <div className='flex flex-col gap-14'>
         <Head>
             <title>How and why is the demonlord so menacing? | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <main className='h-screen'>
+        <main className='h-screen pb-14'>
             <Header home={false} searchProp='' />
 
             <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
@@ -61,7 +62,7 @@ function Article() {
 
                     <p className='text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem asperiores facere id est adipisci nesciunt totam odit, cum dolores non ipsam aut eius similique repudiandae assumenda. Non asperiores ipsum consequuntur officiis. Voluptas placeat vel similique sapiente quasi dolorum, cum nostrum, perferendis veniam quibusdam doloribus, dolorem aperiam suscipit temporibus iste? Consectetur hic saepe cupiditate qui accusantium corporis? Sunt in dolorum esse obcaecati, consequuntur aliquid natus eum quis doloremque quibusdam vel praesentium corporis quasi non facilis quia possimus. Iste exercitationem amet cumque ab, illum, et quaerat enim asperiores excepturi rerum quos aspernatur veritatis ducimus ipsam soluta corrupti deleniti quisquam autem deserunt earum.</p>
 
-                    <div className='w-full lg:w-10/12 mx-auto bg-slate-50 mt-16 pt-4'>
+                    <div className='w-full lg:w-10/12 mx-auto bg-slate-50 mt-16 pt-4 pb-14 lg:pb-0 -z-10'>
                         <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
 
                         {recommendedArticlesMarkup}   
@@ -79,6 +80,8 @@ function Article() {
                 </div>
             </div>
         </main>
+
+        <AppBar />
     </div>
   )
 }

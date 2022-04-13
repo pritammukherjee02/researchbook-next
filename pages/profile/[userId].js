@@ -6,6 +6,7 @@ import Head from 'next/head'
 import Header from '../../components/Header'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard'
 import RecommendedArticleCard from '../../components/ArticleComponents/RecommendedArticleCard'
+import AppBar from '../../components/AppBar'
 
 function Profile() {
     const router = useRouter()
@@ -40,7 +41,7 @@ function Profile() {
 
             <Header home={false} searchProp='' />
 
-            <div className='lg:px-5 lg:mt-5 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
+            <div className='lg:px-5 lg:mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
                 
                 <div className='w-full h-full lg:w-8/12 pb-5'>
                     {/* USER BANNER AND POSTS */}
@@ -87,6 +88,8 @@ function Profile() {
                 </div>
 
             </div>
+
+            <AppBar />
 
         </div>
     )
