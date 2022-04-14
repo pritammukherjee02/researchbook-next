@@ -34,7 +34,7 @@ function Article() {
         </Head>
 
         <main className='h-screen pb-14'>
-            <Header home={false} searchProp='' />
+            <Header page='' searchProp='' />
 
             <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
                 <div className='w-full h-full lg:w-8/12 pb-5'>
