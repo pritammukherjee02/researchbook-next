@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 
 //components
 import MenuButton from './HeaderComponents/MenuButton';
+import MenuDropDown from './HeaderComponents/MenuDropDown'
+import NotificationDropDown from './HeaderComponents/NotificationDropDown'
 
 interface Props {
     page: string,
@@ -62,7 +64,7 @@ function Header({ page='', searchProp='' }:Props) {
                     <Link href='/readlist'>
                         <h3 className='flex flex-col items-center cursor-pointer'>
                             <svg className={ "h-7 w-7 " + (page == 'readlist' ? 'text-blue-500' : 'text-gray-700') } fill="currentColor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                viewBox="0 0 64 64" enable-background="new 0 0 64 64" xmlSpace="preserve">
+                                viewBox="0 0 64 64" enableBackground="new 0 0 64 64" xmlSpace="preserve">
                                 <path id="Bookmark_1_" d="M55.5311928,13.5146999c-1.2568016-1.2578001-2.9980011-1.9794998-4.7783012-1.9794998H16.0770931
                                     c-1.0039005,0-1.8213005-0.8174-1.8213005-1.8389006c0-0.5145998,0.2011995-1,0.5634995-1.3632994
                                     c0.3653002-0.3642001,0.8506002-0.5654001,1.3653011-0.5654001h33.1181145c0.552784,0,1-0.4473,1-1s-0.447216-1-1-1H16.1845932
@@ -87,13 +89,8 @@ function Header({ page='', searchProp='' }:Props) {
                         </h3>
                     </Link>
                 </div>
-                <h3 className='flex flex-col items-center cursor-pointer'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className={ "h-7 w-7 " + (page == 'notifications' ? 'text-blue-500' : 'text-gray-700') } viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                    </svg>
-                    {/*<p className="text-sm text-gray-700 hidden lg:block">Notifications</p>*/}
-                </h3>
-                <MenuButton />
+                <NotificationDropDown page={page} />
+                <MenuDropDown />
             </div>
         </header>
     )

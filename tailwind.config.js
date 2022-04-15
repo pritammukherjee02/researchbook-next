@@ -5,6 +5,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  mode: 'jit',
   theme: {
     extend: {},
   },
@@ -22,6 +23,16 @@ module.exports = {
           '&::-webkit-scrollbar': {
             display: 'none'
           }
+        },
+        '.tooltip .tooltip-text': {
+          'visibility': 'hidden',
+          'text-align': 'center',
+          'padding': '2px 6px',
+          'position': 'absolute',
+          'z-index': 100,
+        },
+        '.tooltip:hover .tooltip-text': {
+          'visibility': 'visible',
         }
       }
       )
