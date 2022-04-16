@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 
 //components
-import MenuButton from './HeaderComponents/MenuButton';
 import MenuDropDown from './HeaderComponents/MenuDropDown'
-import NotificationDropDown from './HeaderComponents/NotificationDropDown'
+import NotificationDropDownBetter from './HeaderComponents/NotificationDropDownBetter'
 
 interface Props {
     page: string,
@@ -89,7 +88,7 @@ function Header({ page='', searchProp='' }:Props) {
                         </h3>
                     </Link>
                 </div>
-                <NotificationDropDown page={page} />
+                <NotificationDropDownBetter page={page} />
                 <MenuDropDown />
             </div>
         </header>

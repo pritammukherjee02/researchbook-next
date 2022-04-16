@@ -33,7 +33,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className='h-screen'>
+      <main className='h-screen overflow-x-hidden'>
         <Header page='home' searchProp=''/>
 
         <div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
