@@ -25,6 +25,8 @@ function Create() {
         content: contentRef.current.value,
         title: titleRef.current.value,
         subtitle: subtitleRef.current.value,
+        description: 'Random description for now',
+        date: '27 Jul, 22',
         author: 'D Maxwell',
         uid: 2
       })

@@ -3,18 +3,31 @@ import React from 'react';
 import ArticleCard from './MainContentComponents/ArticleCard';
 import SignUpPitch from './MainContentComponents/SignUpPitch';
 
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection } from "firebase/firestore";
+import { db } from '../firebase'
+
 function MainContent(props) {
+    const [realtimeArticles, loading, error] = useCollection(
+        collection(db, 'articles')
+    )
 
     const uid = props.uid
-
-    const articles = [
+    
+    const randomData = [
         {title: 'A systematic approach to running a business', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae iusto error itaque quis quasi nesciunt architecto voluptas tenetur expedita.', author: 'D Maxwell', date: '24 Feb, 22'},
         {title: 'Why INTJs are the biggest assholes of all time', description: 'They just are', author: 'Clara Maxfield', date: '10 Feb, 22'},
         {title: 'Why INTJs are the biggest assholes of all time', description: 'They just are', author: 'Clara Maxfield', date: '10 Feb, 22'},
     ]
+    error && console.log(error)
+    const articles = !loading && realtimeArticles ? realtimeArticles.docs : randomData
 
     const articlesMarkup = articles.map((article, index) => {
-        return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+        if (loading){
+            return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+        } else {
+            return <ArticleCard key={article.id} title={article.data().title} description={article.data().description} author={article.data().author} date={article.data().date} />
+        }
     })
 
     return (
