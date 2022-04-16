@@ -1,5 +1,6 @@
-import firebase from "firebase";
-import 'firebase/storage'
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 //import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -13,10 +14,11 @@ const firebaseConfig = {
 };
 
 
-const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+//const application = apps.length ? initializeApp(firebaseConfig) : app()
+const app = initializeApp(firebaseConfig)
 
-const db = app.firestore() // DATABASE <- QUICK-FIND LABEL
-const storage = firebase.storage()
+const db = getFirestore(app) // DATABASE <- QUICK-FIND LABEL
+const storage = getStorage(app) // STORAGE <- QUICK-FIND LABEL
 
 //const analytics = getAnalytics(app);
 
