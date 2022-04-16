@@ -1,10 +1,21 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useRef } from 'react'
 import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 
+//import { db } from '../firebase'
+
 function Create() {
+  const contentRef = useRef(null)
+
+  const publishArticle = (e) => {
+    e.preventDefault()
+
+    if(!contentRef.current.value) return
+
+  }
+
   return (
     <div>
         <Head>
@@ -19,13 +30,17 @@ function Create() {
                 <div className='flex'>
 
                   <div className='flex flex-col w-full h-full lg:w-8/12 pb-5'>
-                    <input type="text" name='title' className='p-2 text-3xl font-bold w-full lg:w-8/12 mb-1' placeholder='Title...' />
+                    <div className='flex justify-between lg:w-11/12'>
+                      <input type="text" name='title' className='p-2 text-3xl font-bold w-full lg:w-8/12 mb-1' placeholder='Title...' />
+                      <input type='submit' value='Publish' className='px-6 h-10 mr-3 lg:mr-0 lg:h-11 text-md bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md' />
+                    </div>
                     <input type="text" name='subtitle' className='p-2 text-2xl font-light opacity-50 w-full lg:w-8/12 mb-5' placeholder='Sub-title...' />
 
+                    <textarea type="text" name='content' placeholder='Write your masterpiece...' className='text-xl p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
                   </div>
 
                   <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
-                    <UserInfo />
+                    <UserInfo name="D Maxwell" followers={19} uid={2} />
                   </div>
 
                 </div>
