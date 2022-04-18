@@ -1,13 +1,22 @@
 import Head from 'next/head'
 import AppBar from '../components/AppBar'
+import { getSession } from 'next-auth/react'
+import Router from 'next/router'
 
 //Components
 import Header from '../components/Header'
 import MainContent from '../components/MainContent'
 import SideBar from '../components/SideBar'
 import UserInformation from '../components/UserInformation'
+import { useEffect } from 'react';
 
-export default function Home() {
+export default function Home({ session }) {
+  useEffect(() => {
+    if (!session) {
+    } else {
+      console.log('Logged in state')
+    }
+  }, [])
 
   const userInfo = {
     uid: 1,
@@ -48,4 +57,15 @@ export default function Home() {
 
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  //GET THE USER
+  const session = await getSession(context)
+
+  return {
+    props: {
+      session
+    }
+  }
 }

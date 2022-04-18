@@ -1,11 +1,18 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import { signIn } from 'next-auth/react';
+import { getSession } from 'next-auth/react'
+import Router from 'next/router';
 
 import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import { auth, provider } from '../firebase'
 
-function Login() {
+function Login({ session }) {
+    useEffect(() => {
+        if(session) Router.push('/')
+    }, session)
+
     const GoogleOAuthSignIn = () => {
         signInWithRedirect(auth, provider);
 
@@ -31,6 +38,11 @@ function Login() {
             });
     }
 
+    const signIntoSystem = () => {
+        signIn()
+        console.log('Attempted sign in successfully')
+    }
+
     return (
         <div className='flex items-center h-screen'>
             <Head>
@@ -48,7 +60,7 @@ function Login() {
                     <h1 className='text-4xl font-bold text-center my-3 mb-10 w-12/12 md:w-6/12 mx-auto'>Never ending stream of <span className='text-indigo-600'>knowledge</span></h1>
                     <p className='w-9/12 md:6/12 font-light mx-auto text-center my-3 mb-10'>Connecting curious minds and article lovers together. Constanly get new things <span className='text-indigo-600'>you love to read about</span> in your feed.</p>
                     <div className='flex flex-col gap-4'>
-                        <button onClick={GoogleOAuthSignIn} className='p-4 border-2 mx-auto bg-blue-500 text-white drop-shadow-md hover:border-blue-500 hover:bg-white hover:text-blue-500 rounded-xl w-80'>Sign in with Google</button>
+                        <button onClick={signIntoSystem} className='p-4 border-2 mx-auto bg-blue-500 text-white drop-shadow-md hover:border-blue-500 hover:bg-white hover:text-blue-500 rounded-xl w-80'>Sign in with Google</button>
                     </div>
                 </div>
             </div>
@@ -57,3 +69,15 @@ function Login() {
 }
 
 export default Login
+
+export async function getServerSideProps(context) {
+    //GET THE USER
+    const session = await getSession(context)
+  
+    return {
+      props: {
+        session
+      }
+    }
+  }
+  

@@ -1,13 +1,22 @@
 import Head from 'next/head'
-import React, { useRef } from 'react'
+import Router from 'next/router'
+import React, { useRef, useEffect } from 'react'
 import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 
+import { getSession } from 'next-auth/react'
+
 import { db } from '../firebase'
 import { collection, addDoc } from "firebase/firestore";
 
-function Create() {
+function Create({ session }) {
+  useEffect(() => {
+    if (!session) {
+      Router.push('/login')
+    }
+    }, [])
+
   const contentRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
@@ -80,3 +89,14 @@ function Create() {
 }
 
 export default Create
+
+export async function getServerSideProps(context) {
+  //GET THE USER
+  const session = await getSession(context)
+
+  return {
+    props: {
+      session
+    }
+  }
+}
