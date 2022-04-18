@@ -17,6 +17,6 @@
     "noImplicitAny": false
   },
   "noImplicitAny": false,
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "icons/HomeIcon.jsx", "components/CreateComponents/Editor.js", "components/CreateComponents/Editor.js", "pages/create.js", "components/CreateComponents/EditorQuill.js", "components/ArticleComponents/RecommendedArticleCard.js", "components/UserInformation.js", "components/MainContent.js", "pages/login/index.js", "pages/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "icons/HomeIcon.jsx", "components/CreateComponents/Editor.js", "components/CreateComponents/Editor.js", "pages/create.js", "components/CreateComponents/EditorQuill.js", "components/ArticleComponents/RecommendedArticleCard.js", "components/UserInformation.js", "components/MainContent.js", "pages/login/index.js", "pages/index.js", "pages/article/[id].js"],
   "exclude": ["node_modules"]
 }

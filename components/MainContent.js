@@ -15,18 +15,18 @@ function MainContent({ session }) {
     )
     
     const randomData = [
-        {title: 'A systematic approach to running a business', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae iusto error itaque quis quasi nesciunt architecto voluptas tenetur expedita.', author: 'D Maxwell', date: '24 Feb, 22'},
-        {title: 'Why INTJs are the biggest assholes of all time', description: 'They just are', author: 'Clara Maxfield', date: '10 Feb, 22'},
-        {title: 'Why INTJs are the biggest assholes of all time', description: 'They just are', author: 'Clara Maxfield', date: '10 Feb, 22'},
+        {title: 'A systematic approach to running a business', id:1, description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae iusto error itaque quis quasi nesciunt architecto voluptas tenetur expedita.', author: 'D Maxwell', date: '24 Feb, 22'},
+        {title: 'Why INTJs are the biggest assholes of all time', id:2, description: 'They just are', author: 'Clara Maxfield', date: '10 Feb, 22'},
+        {title: 'Why INTJs are the biggest assholes of all time', id:3, description: 'They just are', author: 'Clara Maxfield', date: '10 Feb, 22'},
     ]
     error && console.log(error)
     const articles = !loading && realtimeArticles ? realtimeArticles.docs : randomData
 
     const articlesMarkup = articles.map((article, index) => {
         if (loading){
-            return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+            return <ArticleCard key={index} articleId={article.id} title={article.title} description={article.description} author={article.author} date={article.date} />
         } else {
-            return <ArticleCard key={article.id} title={article.data().title} description={article.data().description} author={article.data().author} date={article.data().date} />
+            return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} description={article.data().description} author={article.data().author} date={article.data().date} />
         }
     })
 

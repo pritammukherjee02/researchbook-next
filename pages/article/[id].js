@@ -1,14 +1,19 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 import React, { useState } from 'react'
-import Recommended from '../components/ArticleComponents/Recommended'
-import UserInfo from '../components/ArticleComponents/UserInfo'
-import Header from '../components/Header'
-import ArticleCard from '../components/MainContentComponents/ArticleCard'
-import AppBar from '../components/AppBar'
+import Recommended from '../../components/ArticleComponents/Recommended'
+import UserInfo from '../../components/ArticleComponents/UserInfo'
+import Header from '../../components/Header'
+import ArticleCard from '../../components/MainContentComponents/ArticleCard'
+import AppBar from '../../components/AppBar'
 
 function Article() {
+    const router = useRouter()
+    const { id } = router.query
+
     const [following, setFollowing] = useState(false)
     const [uid, name, date] = [2, "D Maxwell", "20 Feb, 22"]
 
