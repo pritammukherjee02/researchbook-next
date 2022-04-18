@@ -3,28 +3,44 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Recommended from '../../components/ArticleComponents/Recommended'
 import UserInfo from '../../components/ArticleComponents/UserInfo'
 import Header from '../../components/Header'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard'
 import AppBar from '../../components/AppBar'
 
+import { useDocument, useDocumentOnce, useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import { doc } from "firebase/firestore";
+import { db } from '../../firebase'
+
+
 function Article() {
     const router = useRouter()
     const { id } = router.query
 
-    const [following, setFollowing] = useState(false)
-    const [uid, name, date] = [2, "D Maxwell", "20 Feb, 22"]
+    const [snapshot, loading, error, reload] = useDocumentOnce(doc(db, 'articles', id));
 
-    const articleDetails = {
+    const [following, setFollowing] = useState(false)
+
+    const [articleDetails, setArticleDetails] = useState({
         uid: 2,
         authorName: 'D Maxwell',
         date: '20 Feb, 22',
         title: "How and why is the demonlord so menacing?",
         subtitle: "Demonlord's pursuits",
         content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem asperiores facere id est adipisci nesciunt totam odit, cum dolores non ipsam aut eius similique repudiandae assumenda. Non asperiores ipsum consequuntur officiis. Voluptas placeat vel similique sapiente quasi dolorum, cum nostrum, perferendis veniam quibusdam doloribus, dolorem aperiam suscipit temporibus iste? Consectetur hic saepe cupiditate qui accusantium corporis? Sunt in dolorum esse obcaecati, consequuntur aliquid natus eum quis doloremque quibusdam vel praesentium corporis quasi non facilis quia possimus. Iste exercitationem amet cumque ab, illum, et quaerat enim asperiores excepturi rerum quos aspernatur veritatis ducimus ipsam soluta corrupti deleniti quisquam autem deserunt earum."
-    }
+    })
+    const [article, setArticle] = useState(articleDetails)
+
+    useEffect(() => {
+        if(!loading && !error){
+            console.log(loading, error)
+            console.log('Snapshot data: ', snapshot.data())
+            console.log('articleDetails before setArticle: ', article)
+            setArticleDetails(snapshot.data())
+        } else if (error) console.log(error)
+    }, [loading])
 
     const recommendedArticles = [
         {title: 'How to nuke a country effectively?', description: 'You have to be vigilant about prying eyes when it comes to nuking...', author: 'Demonlord', date: '14 Feb, 22'},
