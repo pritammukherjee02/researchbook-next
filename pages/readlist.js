@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
+import Router from 'next/router'
+import { getSession } from 'next-auth/react'
 
 //components
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 
-function Readlist() {
+function Readlist({ session }) {
+  useEffect(() => {
+    if (!session) {
+      Router.push('/login/readlist')
+    }
+    }, [])
+
+    console.log(session)
+
+
   return (
     <div className='flex flex-col gap-14'>
         <Head>
@@ -28,3 +39,14 @@ function Readlist() {
 }
 
 export default Readlist
+
+export async function getServerSideProps(context) {
+  //GET THE USER
+  const session = await getSession(context)
+
+  return {
+    props: {
+      session
+    }
+  }
+}

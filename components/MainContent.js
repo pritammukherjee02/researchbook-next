@@ -1,18 +1,18 @@
 import Link from 'next/link';
-import React from 'react';
+import React, {  } from 'react';
 import ArticleCard from './MainContentComponents/ArticleCard';
 import SignUpPitch from './MainContentComponents/SignUpPitch';
+
 
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection } from "firebase/firestore";
 import { db } from '../firebase'
 
-function MainContent(props) {
+function MainContent({ session }) {
+
     const [realtimeArticles, loading, error] = useCollection(
         collection(db, 'articles')
     )
-
-    const uid = props.uid
     
     const randomData = [
         {title: 'A systematic approach to running a business', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae iusto error itaque quis quasi nesciunt architecto voluptas tenetur expedita.', author: 'D Maxwell', date: '24 Feb, 22'},
@@ -30,9 +30,11 @@ function MainContent(props) {
         }
     })
 
+    const signUpPitchLayout = (!session) ? <SignUpPitch /> : (<div />)
+
     return (
         <div className='flex flex-col justify-around gap-1'>
-                <SignUpPitch />
+                {signUpPitchLayout}
 
                 <Link href={'/create'}>
                     <div className='m-3 h-14 lg:mx-5 rounded-full cursor-pointer px-3 flex items-center border-2 border-gray-300'>

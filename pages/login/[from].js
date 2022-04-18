@@ -1,16 +1,25 @@
 import Head from 'next/head'
 import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import { signIn } from 'next-auth/react';
 import { getSession } from 'next-auth/react'
 import Router from 'next/router';
 
 import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
-import { auth, provider } from '../firebase'
+import { auth, provider } from '../../firebase'
 
 function Login({ session }) {
+    const router = useRouter()
+    const { from } = router.query
+
     useEffect(() => {
-        if(session) Router.push('/')
+        if(session){
+            if(from == 'create') Router.push('/create')
+            else if (from == 'account') Router.push('/account')
+            else if (from == 'settings') Router.push('/settings')
+            else if (from == 'readlist') Router.push('/readlist')
+        }
     }, session)
 
     const GoogleOAuthSignIn = () => {

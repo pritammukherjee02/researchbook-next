@@ -13,7 +13,6 @@ export default function Home({ session }) {
   useEffect(() => {
     if (!session) {
     } else {
-      console.log('Logged in state')
     }
   }, [])
 
@@ -45,8 +44,8 @@ export default function Home({ session }) {
         <Header page='home' searchProp=''/>
 
         <div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
-          <div className='w-full lg:w-2/12'><UserInformation fromFollowingUsers={fromFollowingUsers} userInfo={userInfo} /></div>
-          <div className='my-0 w-full lg:w-7/12'><MainContent uid={userInfo.uid} /></div>
+          <div className='w-full lg:w-2/12'><UserInformation session={session} fromFollowingUsers={fromFollowingUsers} userInfo={userInfo} /></div>
+          <div className='my-0 w-full lg:w-7/12'><MainContent session={session} /></div>
           <div className='hidden lg:w-3/12 lg:inline-flex'><SideBar /></div>
         </div>
 

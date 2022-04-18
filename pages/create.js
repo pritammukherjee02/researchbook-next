@@ -5,15 +5,16 @@ import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 
-import { getSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 
 import { db } from '../firebase'
 import { collection, addDoc } from "firebase/firestore";
 
 function Create({ session }) {
+  //const session = useSession()
   useEffect(() => {
     if (!session) {
-      Router.push('/login')
+      Router.push('/login/create')
     }
     }, [])
 
