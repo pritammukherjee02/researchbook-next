@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import AppBar from '../components/AppBar'
 import { getSession } from 'next-auth/react'
-import Router from 'next/router'
 
 //Components
 import Header from '../components/Header'
