@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import React, { useEffect, useState } from 'react'
 import Recommended from '../../components/ArticleComponents/Recommended'
@@ -10,37 +9,26 @@ import Header from '../../components/Header'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard'
 import AppBar from '../../components/AppBar'
 
-import { useDocument, useDocumentOnce, useDocumentDataOnce } from 'react-firebase-hooks/firestore';
-import { doc } from "firebase/firestore";
+import { doc, collection, getDocs, getDoc } from "firebase/firestore";
 import { db } from '../../firebase'
 
 
-function Article() {
-    const router = useRouter()
-    const { id } = router.query
-
-    const [snapshot, loading, error, reload] = useDocumentOnce(doc(db, 'articles', id));
+function Article({ article }) {
 
     const [following, setFollowing] = useState(false)
 
     const [articleDetails, setArticleDetails] = useState({
         uid: 2,
-        authorName: 'D Maxwell',
+        author: 'D Maxwell',
         date: '20 Feb, 22',
         title: "How and why is the demonlord so menacing?",
         subtitle: "Demonlord's pursuits",
         content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem asperiores facere id est adipisci nesciunt totam odit, cum dolores non ipsam aut eius similique repudiandae assumenda. Non asperiores ipsum consequuntur officiis. Voluptas placeat vel similique sapiente quasi dolorum, cum nostrum, perferendis veniam quibusdam doloribus, dolorem aperiam suscipit temporibus iste? Consectetur hic saepe cupiditate qui accusantium corporis? Sunt in dolorum esse obcaecati, consequuntur aliquid natus eum quis doloremque quibusdam vel praesentium corporis quasi non facilis quia possimus. Iste exercitationem amet cumque ab, illum, et quaerat enim asperiores excepturi rerum quos aspernatur veritatis ducimus ipsam soluta corrupti deleniti quisquam autem deserunt earum."
     })
-    const [article, setArticle] = useState(articleDetails)
 
     useEffect(() => {
-        if(!loading && !error){
-            console.log(loading, error)
-            console.log('Snapshot data: ', snapshot.data())
-            console.log('articleDetails before setArticle: ', article)
-            setArticleDetails(snapshot.data())
-        } else if (error) console.log(error)
-    }, [loading])
+        if(article) setArticleDetails(article)
+    }, [article])
 
     const recommendedArticles = [
         {title: 'How to nuke a country effectively?', description: 'You have to be vigilant about prying eyes when it comes to nuking...', author: 'Demonlord', date: '14 Feb, 22'},
@@ -75,7 +63,7 @@ function Article() {
                         <div className='flex flex-col pl-5 my-auto justify-between'>
                             <div className='flex items-center'>
                                 <Link href={'/profile/' + articleDetails.uid}>
-                                    <p className='text-lg cursor-pointer'>{articleDetails.authorName}</p>
+                                    <p className='text-lg cursor-pointer'>{articleDetails.author}</p>
                                 </Link>
                                 <button onClick={toggleFollowing} className={'px-3 py-1 ml-3 text-sm lg:hidden text-white rounded-full ' + (following ? 'bg-gray-700 hover:bg-gray-900' : 'bg-blue-500 hover:bg-blue-600')}>{following ? 'Following' : 'Follow'}</button>
                             </div>
@@ -117,3 +105,42 @@ function Article() {
 }
 
 export default Article
+
+export async function getStaticPaths() {
+
+    const articlesSnapshot = await getDocs(collection(db, "articles"))
+
+    let paths = []
+
+    articlesSnapshot.forEach(article => {
+        paths.push({
+            params: {
+                id: article.id
+            }
+        })
+    })
+
+    console.log(paths)
+
+    return {
+        paths,
+        fallback: 'blocking'
+    }
+}
+
+export const getStaticProps = async ({ params }) => {
+
+    const docSnap = await getDoc(doc(db, 'articles', params?.id));
+
+    if(!docSnap.exists) return {
+        notFound: true
+    }
+
+    const article = docSnap.data()
+
+    return {
+        props: {
+            article
+        }
+    }
+}
