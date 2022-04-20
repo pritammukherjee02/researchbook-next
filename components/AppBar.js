@@ -71,7 +71,7 @@ function AppBar(props) {
                         </div>
 
                     </Link>
-                    <Link href='/login'>
+                    <Link href='/myprofile'>
 
                         <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'account' ? 'text-blue-500' : '')}>
                             <svg className={ "h-6 w-6 inline-block mb-1" } fill="currentColor" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>person-profile-image</title>

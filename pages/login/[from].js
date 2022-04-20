@@ -19,6 +19,7 @@ function Login({ session }) {
             else if (from == 'account') Router.push('/account')
             else if (from == 'settings') Router.push('/settings')
             else if (from == 'readlist') Router.push('/readlist')
+            else if (from == 'myprofile') Router.push('/myprofile')
         }
     }, session)
 
