@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, {  } from 'react';
 import ArticleCard from './MainContentComponents/ArticleCard';
+import ArticleCardLoading from './MainContentComponents/ArticleCardLoading';
 import SignUpPitch from './MainContentComponents/SignUpPitch';
 
 
@@ -24,7 +25,8 @@ function MainContent({ session }) {
 
     const articlesMarkup = articles.map((article, index) => {
         if (loading){
-            return <ArticleCard key={index} articleId={article.id} title={article.title} description={article.description} author={article.author} date={article.date} />
+            //return <ArticleCard key={index} articleId={article.id} title={article.title} description={article.description} author={article.author} date={article.date} />
+            return <ArticleCardLoading />
         } else {
             return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} description={article.data().description} author={article.data().author} date={article.data().date} />
         }
