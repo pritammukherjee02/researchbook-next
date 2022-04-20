@@ -10,11 +10,6 @@ import UserInformation from '../components/UserInformation'
 import { useEffect } from 'react';
 
 export default function Home({ session }) {
-  useEffect(() => {
-    if (!session) {
-    } else {
-    }
-  }, [])
 
   const userInfo = {
     uid: 1,

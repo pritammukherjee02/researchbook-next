@@ -21,6 +21,7 @@ function Create({ session }) {
   const contentRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
+  const descriptionRef = useRef(null)
 
   async function publishArticle(e){
     e.preventDefault()
@@ -35,10 +36,10 @@ function Create({ session }) {
         content: contentRef.current.value,
         title: titleRef.current.value,
         subtitle: subtitleRef.current.value,
-        description: 'Random description for now',
+        description: descriptionRef.current.value,
         date: '27 Jul, 22',
-        author: 'D Maxwell',
-        uid: 2
+        author: session.user.name,
+        uid: session.user.email
       })
     } catch (e) {
       alert('Something went wrong')
@@ -49,6 +50,7 @@ function Create({ session }) {
     contentRef.current.value = ''
     titleRef.current.value = ''
     subtitleRef.current.value = ''
+    descriptionRef.current.value = ''
   }
 
   return (
@@ -71,6 +73,7 @@ function Create({ session }) {
                     </div>
                     <input type="text" ref={subtitleRef} name='subtitle' className='p-2 text-2xl font-light opacity-50 w-full lg:w-8/12 mb-5' placeholder='Sub-title...' />
 
+                    <textarea type="text" ref={descriptionRef} name='description' placeholder='Description' className='text-md p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
                     <textarea type="text" ref={contentRef} name='content' placeholder='Write your masterpiece...' className='text-xl p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
                   </form>
 
