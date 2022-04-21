@@ -3,6 +3,8 @@ import Head from 'next/head'
 import Router from 'next/router'
 
 import { getSession } from 'next-auth/react'
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from '../firebase'
 
 //Components
 import Header from '../components/Header'
@@ -10,7 +12,7 @@ import ArticleCard from '../components/MainContentComponents/ArticleCard'
 import RecommendedArticleCard from '../components/ArticleComponents/RecommendedArticleCard'
 import AppBar from '../components/AppBar'
 
-function MyProfile({ session }) {
+function MyProfile({ session, articles }) {
     useEffect(() => {
         if (!session) {
           Router.push('/login/myprofile')
@@ -22,11 +24,13 @@ function MyProfile({ session }) {
     const name = session ? session.user.name : 'D Maxwell'
     const followers = '1.1M'
     const bio = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
-    const articles = [
+    /*
+    let articles = [
         {title: 'God is dead', description: 'And we killed him. You and I', author: 'D Maxwell', date: '12 Apr, 22'},
         {title: 'Don\'t walk in front of me', description: 'I may not follow. Don\'t walk behind me… I may not lead. Walk beside me… just be my friend', author: 'D Maxwell', date: '15 Apr, 22'},
         {title: 'You will never be happy', description: 'if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life', author: 'D Maxwell', date: '24 Apr, 22'},
     ]
+    */
 
     const articlesMarkup = articles.map((article, index) => {
         return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
@@ -105,10 +109,19 @@ export default MyProfile
 export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
+
+    const q = query(collection(db, "articles"), where("uid", "==", session.user.email));
+    const querySnapshot = await getDocs(q);
+
+    let articles = []
+    querySnapshot?.forEach((doc) => {
+        articles.push(doc.data())
+    });
   
     return {
       props: {
-        session
+        session,
+        articles
       }
     }
   }
