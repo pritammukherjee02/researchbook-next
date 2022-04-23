@@ -27,7 +27,7 @@ function Create({ session }) {
     e.preventDefault()
 
     if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
-      alert('Please type the title, the subtitle and content')
+      alert('Please give the title, the subtitle and content')
       return
     }
 
@@ -40,6 +40,15 @@ function Create({ session }) {
         date: '27 Jul, 22',
         author: session.user.name,
         uid: session.user.email
+      })
+
+      const docCardRef = await addDoc(collection(db, "articleCards"), {
+        title: titleRef.current.value,
+        description: descriptionRef.current.value,
+        date: '27 Jul, 22',
+        author: session.user.name,
+        uid: session.user.email,
+        articleId: docRef.id
       })
     } catch (e) {
       alert('Something went wrong')

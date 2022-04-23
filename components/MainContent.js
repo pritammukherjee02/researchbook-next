@@ -12,7 +12,7 @@ import { db } from '../firebase'
 function MainContent({ session }) {
 
     const [realtimeArticles, loading, error] = useCollection(
-        collection(db, 'articles')
+        collection(db, 'articleCards')
     )
     
     const randomData = [
@@ -21,11 +21,11 @@ function MainContent({ session }) {
     error && console.log(error)
     const articles = !loading && realtimeArticles ? realtimeArticles.docs : randomData
 
-    const articlesMarkup = articles.map((article, index) => {
+    const articlesMarkup = articles.map((article) => {
         if (loading){
             return <ArticleCardLoading />
         } else {
-            return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
+            return <ArticleCard key={article.id} articleId={article.data().articleId} title={article.data().title} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
         }
     })
 
