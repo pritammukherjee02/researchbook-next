@@ -6,10 +6,11 @@ interface Props {
     description: string,
     author: string,
     date: string,
-    articleId: any
+    articleId: any,
+    uid: any
 }
 
-function ArticleCard({ title, description, author, date, articleId }:Props) {
+function ArticleCard({ title, description, author, date, articleId, uid }:Props) {
   return (
     <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 '>
         <Link href={`/article/${articleId}`}>
@@ -26,7 +27,9 @@ function ArticleCard({ title, description, author, date, articleId }:Props) {
                 <div className='flex gap-1 items-center mt-2'>
                     <p>~</p>
                     <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
-                    <p className='cursor-pointer'>{author}</p>
+                    <Link href={'/profile/' + uid}>
+                        <p className='cursor-pointer'>{author}</p>
+                    </Link>
                 </div>
                 <div className='flex gap-1 items-center'>
                     <p>~</p>

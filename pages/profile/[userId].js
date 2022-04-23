@@ -1,6 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+
+import ArticleCardLoading from '../../components/MainContentComponents/ArticleCardLoading';
+
+import { db } from '../../firebase'
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 //Components
 import Header from '../../components/Header'
@@ -14,17 +20,62 @@ function Profile() {
 
     const [following, setFollowing] = useState(false)
 
-    const name = 'D Maxwell'
-    const followers = '1.1M'
-    const bio = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
-    const articles = [
+    const [realtimeArticles, loading, error] = useCollection(
+        query(collection(db, "articles"), where("uid", "==", !userId ? 'official.researchbook@gmail.com' : userId))
+    )
+
+    /*
+    const randomData = [
         {title: 'God is dead', description: 'And we killed him. You and I', author: 'D Maxwell', date: '12 Apr, 22'},
         {title: 'Don\'t walk in front of me', description: 'I may not follow. Don\'t walk behind me… I may not lead. Walk beside me… just be my friend', author: 'D Maxwell', date: '15 Apr, 22'},
         {title: 'You will never be happy', description: 'if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life', author: 'D Maxwell', date: '24 Apr, 22'},
     ]
+    */
+
+    const randomData = [
+        {}, {}, {}
+    ]
+
+    error && console.log('React Firebase Hook err: ', error)
+    const articles = !loading && realtimeArticles ? realtimeArticles.docs : randomData
+
+   /*
+    const getArticles = async () => {
+        console.log('User ID: ', userId)
+        const q = query(collection(db, "articles"), where("uid", "==", 'itfreekpm@gmail.com'));
+        const querySnapshot = await getDocs(q);
+        querySnapshot?.forEach((doc) => {
+            articles.push(doc.data())
+        });
+        console.log("Articles: ", articles)
+    }
+    */
+
+    /*
+    useEffect(() => {
+        console.log('Ran bitch')
+        articlesMarkup = articles.map((article, index) => {
+            return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+        })
+    }, [articles])
+
+    if(articles != []){
+        articlesMarkup = articles.map((article, index) => {
+            return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+        })
+    }
+    */
+
+    const name = loading ? (<p className='w-56 bg-blue-200 h-5'></p>) : articles[0].data() ? articles[0].data().author : 'BRUH'
+    const followers = '1.1M'
+    const bio = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
 
     const articlesMarkup = articles.map((article, index) => {
-        return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+        if (loading){
+            return <ArticleCardLoading />
+        } else {
+            return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
+        }
     })
 
     const toggleFollowing = () => {
@@ -96,3 +147,52 @@ function Profile() {
 }
 
 export default Profile
+
+/*
+export async function getStaticPaths() {
+    const articlesSnapshot = await getDocs(collection(db, "articles"))
+
+    let uniqueUsers = []
+    
+    const q = query(collection(db, "articles"), where("uid", "not-in", uniqueUsers));
+    const querySnapshot = await getDocs(q);
+
+    let paths = []
+
+    articlesSnapshot?.forEach((doc) => {
+        paths.push({
+            params: {
+                userId: doc.data().uid.toString()
+            }
+        })
+    });
+
+    return {
+        paths,
+        fallback: 'blocking'
+    }
+}
+
+export const getStaticProps = async ({ params }) => {
+
+    //const docSnap = await getDoc(doc(db, 'articles', params?.usetId));
+    const q = query(collection(db, "articles"), where("uid", "==", params?.userId));
+    const querySnapshot = await getDocs(q);
+
+    if(!querySnapshot.exists) return {
+        notFound: true
+    }
+
+    let articles = []
+    querySnapshot?.forEach((doc) => {
+        articles.push(doc.data())
+    });
+    console.log('Articles: ', articles)
+
+    return {
+        props: {
+            articles
+        }
+    }
+}
+*/

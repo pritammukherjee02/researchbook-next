@@ -112,15 +112,13 @@ export async function getStaticPaths() {
 
     let paths = []
 
-    articlesSnapshot.forEach(article => {
+    articlesSnapshot?.forEach(article => {
         paths.push({
             params: {
                 id: article.id
             }
         })
     })
-
-    console.log(paths)
 
     return {
         paths,
