@@ -55,7 +55,7 @@ function Search({ session }) {
 			<Header home={false} searchProp='' />
 
 			<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
-				<div className='w-full lg:w-2/12'>
+				<div className='w-full hidden lg:block lg:w-2/12'>
 					{userInformationMarkup}
 				</div>
 				<div className='my-0 w-full lg:w-10/12'>

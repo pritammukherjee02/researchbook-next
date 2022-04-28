@@ -20,7 +20,7 @@ function Readlist({ session }) {
   return (
     <div className='flex flex-col gap-14'>
         <Head>
-            <title>Your Readlist | Researchbook</title>
+            <title>My Readlist | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
