@@ -28,24 +28,26 @@ export default function Example() {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active }) => (
-                  <button
-                    className={`${
-                      active ? 'bg-blue-500 text-white' : 'text-gray-900'
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <EditActiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <EditInactiveIcon
-                        className="w-5 h-5 mr-2"
-                        aria-hidden="true"
-                      />
-                    )}
-                    My Profile
-                  </button>
+                  <Link href={'/myprofile'}>
+                    <button
+                      className={`${
+                        active ? 'bg-blue-500 text-white' : 'text-gray-900'
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      {active ? (
+                        <EditActiveIcon
+                          className="w-5 h-5 mr-2"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <EditInactiveIcon
+                          className="w-5 h-5 mr-2"
+                          aria-hidden="true"
+                        />
+                      )}
+                      My Profile
+                    </button>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
