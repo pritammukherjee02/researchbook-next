@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 
-function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, articles, followers, following, uid }) {
+function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid }) {
   return (
     <div>
         <div className='p-2 mx-auto w-full hidden lg:block bg-blue-100 rounded-xl'>
