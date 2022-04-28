@@ -9,7 +9,7 @@ function SideBarNav({ page = 'home' }) {
                 <svg xmlns="http://www.w3.org/2000/svg" className={ "h-6 w-6 inline-block mr-5" } viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                 </svg>
-                <p className='text-xl font-bold cursor-pointer'>Home</p>
+                <p className={'text-xl cursor-pointer ' + (page == 'home' ? 'font-bold' : '')}>Home</p>
             </div>
         </Link>
 
@@ -37,7 +37,7 @@ function SideBarNav({ page = 'home' }) {
                         l-3.8787155,3.8786983V13.6037998h12V34.7753983z"/>
                     <g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>
                 </svg>
-                <p className='text-xl cursor-pointer'>Readlist</p>
+                <p className={'text-xl cursor-pointer ' + (page == 'readlist' ? 'font-bold' : '')}>Readlist</p>
             </div>
         </Link>
 
@@ -46,7 +46,7 @@ function SideBarNav({ page = 'home' }) {
                 <svg className={ "h-6 w-6 inline-block mr-5" } xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" fill="currentColor">
                     <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"/>
                 </svg>
-                <p className='text-xl cursor-pointer'>Search</p>
+                <p className={'text-xl cursor-pointer ' + (page == 'search' ? 'font-bold' : '')}>Search</p>
             </div>
         </Link>
 
@@ -55,7 +55,7 @@ function SideBarNav({ page = 'home' }) {
                 <svg className={ "h-6 w-6 inline-block mr-5" } fill="currentColor" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>person-profile-image</title>
                     <path d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0ZM49.28,71.35c.26-2.18-6.23-10.54-7.41-14.54-2.54-4-3.44-10.46-.68-14.73,1.11-1.69.63-3.16.63-5.51,0-23.24,40.7-23.24,40.7,0,0,2.94-.67,3.63.92,6,2.66,3.86,1.29,10.72-1,14.3C81,61,74.24,69,74.71,71.37c.42,11.92-25.5,11.53-25.43,0v0Zm-31,20.07c3.25-3.6,9.09-3.76,16.17-7.36a74.7,74.7,0,0,0,7.75-4.53c8.22,10.08,15,21.16,12.78,34.05a52.65,52.65,0,0,0,6.44.4c.55,0,1.09,0,1.64,0-.5-15.14,8.38-26.21,17.79-35.63A68.55,68.55,0,0,0,96.33,86c4.62,1.54,7.39,2.53,9,4.3a52.54,52.54,0,1,0-87,1.08Z"/>
                 </svg>
-                <p className='text-xl cursor-pointer'>Profile</p>
+                <p className={'text-xl cursor-pointer ' + (page == 'myprofile' ? 'font-bold' : '')}>Profile</p>
             </div>
         </Link>
     </div>
