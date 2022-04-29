@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 
+import Image from 'next/image'
+
 interface Props {
     title: string,
     description: string,
@@ -18,7 +20,8 @@ function ArticleCard({ title, description, author, date, articleId, uid }:Props)
         </Link>
         <div className='flex flex-col md:flex-row gap-3 mt-4 md:items-center'>
             <Link href={`/article/${articleId}`}>
-                <div className='w-full h-44 md:h-32 md:w-4/12 lg:h-32 lg:w-4/12 border border-blue-500 border-1 cursor-pointer rounded-lg mx-auto'></div>
+                {/*<div className='w-full h-44 md:h-32 md:w-4/12 lg:h-32 lg:w-4/12 border border-blue-500 border-1 cursor-pointer rounded-lg mx-auto'></div>*/}
+                <Image src={'https://images.unsplash.com/photo-1448772917253-74bbbe249b30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'} className="object-contain w-full hidden md:block h-44 md:h-32 md:w-4/12 lg:h-32 lg:w-4/12 cursor-pointer rounded-lg mx-auto" width={313} height={176} objectFit='cover' />
             </Link>
             <div className='flex flex-col h-full md:w-8/12 w-12/12 lg:w-8/12 p-3 px-5'>
                 <Link href={`/article/${articleId}`}>
