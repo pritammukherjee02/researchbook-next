@@ -57,8 +57,10 @@ function MyProfile({ session, articles }) {
                     {/* USER BANNER AND POSTS */}
 
                     <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
-                        <div className='absolute rounded-full border-2 border-blue-600 bg-blue-100 h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2'></div>
-                        {/*<Image src={session.user.image} className="object-contain absolute border-2 rounded-full h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2" width={112} height={112} layout='fixed' objectFit='cover' />*/}
+                        {/*<div className='absolute rounded-full border-2 border-blue-600 bg-blue-100 h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2'></div>*/}
+                        <div className='absolute translate-x-6 lg:translate-x-12 translate-y-1/2'>
+                            <Image src={session.user.image} className="object-contain border-2 border-blue-600 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
+                        </div>
                         <div className='relative flex flex-col lg:flex-row lg:items-center lg:gap-2 text-lg pl-36 lg:pl-48 -translate-y-1/4 lg:-translate-y-1/2 text-white'>
                             <span className='text-2xl font-semibold'>{name}</span>
                             <span> {followers} Followers</span>
