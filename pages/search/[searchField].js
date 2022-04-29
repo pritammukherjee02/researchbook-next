@@ -61,7 +61,7 @@ function Search({ session }) {
 				<div className='my-0 w-full lg:w-10/12'>
 					<div className='lg:px-3 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col justify-around gap-1'>
 						<form onSubmit={search} className='w-11/12 lg:w-7/12 mx-auto lg:mx-0'>
-							<input name='inPageSearchField' type='text' onChange={onchangeHandler} value={searchFieldContent} className='mb-2 lg:mx-9 text-md font-semibold opacity-90 p-3 w-full rounded-full bg-gray-200' placeholder='Search...' />
+							<input name='inPageSearchField' type='text' onChange={onchangeHandler} value={searchFieldContent} className='mb-2 lg:mx-9 text-md outline-none shadow-none font-semibold opacity-90 p-3 w-full rounded-full bg-gray-200' placeholder='Search...' />
 						</form>
 
 						<p className='mx-7 lg:mx-16 text-sm font-light'>Searching for "{searchField}"</p>

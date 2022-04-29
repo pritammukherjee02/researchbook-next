@@ -45,7 +45,7 @@ function Header({ page='', searchProp='' }:Props) {
                     </div>
                 </Link>
                 <form onSubmit={search}>
-                    <input name='searchField' type="text" placeholder='Search...' onChange={onchangeHandler} value={searchFieldContent} className='hidden md:block px-4 py-2 w-72 border-0 border-b-2 border-blue-500' />
+                    <input name='searchField' type="text" placeholder='Search...' onChange={onchangeHandler} value={searchFieldContent} className='hidden md:block outline-none shadow-none px-4 py-2 w-72 border-0 border-b-2 border-blue-500' />
                 </form>
             </div>
             <div className="flex items-center space-x-7">
