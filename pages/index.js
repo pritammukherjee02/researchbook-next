@@ -29,7 +29,7 @@ export default function Home({ session }) {
     {name: 'D Maxwell', uid:2},
   ] //Will be received from the server
 
-  const userInformationMarkup = session ? (<UserInformation session={session} fromFollowingUsers={fromFollowingUsers} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
+  const userInformationMarkup = session ? (<UserInformation page='home' session={session} fromFollowingUsers={fromFollowingUsers} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='home' />)
 
   return (
     <div className=''>

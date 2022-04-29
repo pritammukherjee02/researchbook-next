@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-function SideBarNav({ page = 'home' }) {
+function SideBarNav({ page = 'none' }) {
   return (
     <div className='flex flex-col gap-2'>
         <Link href='/'>

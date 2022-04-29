@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Router from 'next/router'
 import React, { useRef, useEffect } from 'react'
-import UserInfo from '../components/ArticleComponents/UserInfo'
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
+import UserInformation from '../components/UserInformation'
+import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 
 import { getSession, useSession } from 'next-auth/react'
 
@@ -22,6 +23,17 @@ function Create({ session }) {
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
   const descriptionRef = useRef(null)
+
+	const userInfo = {
+		uid: 1,
+		name: 'James Anderson',
+		fieldOfExpertise: 'Comp sci',
+		jobDesignation: 'Research Fellow',
+		username: '@janderson11',
+		articles: 0,
+		followers: 2,
+		following: 98
+	}
 
   async function publishArticle(e){
     e.preventDefault()
@@ -62,6 +74,8 @@ function Create({ session }) {
     descriptionRef.current.value = ''
   }
 
+  const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
+
   return (
     <div>
         <Head>
@@ -73,7 +87,11 @@ function Create({ session }) {
             <Header home={false} />
 
               <div className='lg:px-5 mt-5 mb-3 pb-14 lg:pb-0 max-w-7xl mx-auto'>
-                <div className='flex'>
+                <div className='flex gap-4'>
+
+                  <div className='hidden lg:flex w-full lg:w-2/12'>
+                	{userInformationMarkup}
+                  </div>
                   
                   <form onSubmit={publishArticle} className='flex flex-col w-full h-full lg:w-8/12 pb-5'>
                     <div className='flex justify-between lg:w-11/12'>
@@ -82,13 +100,9 @@ function Create({ session }) {
                     </div>
                     <input type="text" ref={subtitleRef} name='subtitle' className='p-2 text-2xl font-light opacity-50 w-full lg:w-8/12 mb-5' placeholder='Sub-title...' />
 
-                    <textarea type="text" ref={descriptionRef} name='description' placeholder='Description' className='text-md p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
+                    <textarea type="text" ref={descriptionRef} name='description' placeholder='Description' className='text-md p-2 mb-1 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
                     <textarea type="text" ref={contentRef} name='content' placeholder='Write your masterpiece...' className='text-xl p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
                   </form>
-
-                  <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
-                    <UserInfo name="D Maxwell" followers={19} uid={2} />
-                  </div>
 
                 </div>
               </div>
