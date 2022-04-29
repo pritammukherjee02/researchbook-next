@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
+import Image from 'next/image'
 
 import { getSession } from 'next-auth/react'
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -57,6 +58,7 @@ function MyProfile({ session, articles }) {
 
                     <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
                         <div className='absolute rounded-full border-2 border-blue-600 bg-blue-100 h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2'></div>
+                        {/*<Image src={session.user.image} className="object-contain absolute border-2 rounded-full h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2" width={112} height={112} layout='fixed' objectFit='cover' />*/}
                         <div className='relative flex flex-col lg:flex-row lg:items-center lg:gap-2 text-lg pl-36 lg:pl-48 -translate-y-1/4 lg:-translate-y-1/2 text-white'>
                             <span className='text-2xl font-semibold'>{name}</span>
                             <span> {followers} Followers</span>

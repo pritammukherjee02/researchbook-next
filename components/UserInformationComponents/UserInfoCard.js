@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link';
+import Image from 'next/image'
 
-function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid }) {
+function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid, pfp='/bruh' }) {
   return (
     <div>
         <div className='p-2 mx-auto w-full hidden lg:block bg-blue-100 rounded-xl'>
@@ -9,7 +10,8 @@ function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid })
                 <div className='cursor-pointer p-1 rounded-lg hover:bg-blue-200'>
                     <p className='pl-2 text-xl font-semibold'>{name}</p>
                     <div className='flex space-2 pt-3'>
-                        <div className='border-2 border-blue-500 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0'></div>
+                        {/*<div className='border-2 border-blue-500 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0'></div>*/}
+                        <Image src={pfp} className="object-contain border-2 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0" width={40} height={40} layout='fixed' objectFit='cover' />
                         <div className='mx-4'>
                             <p className='text-sm font-semibold'>{fieldOfExpertise}</p>
                             <p className='text-sm font-semibold'>{jobDesignation}</p>
@@ -58,7 +60,9 @@ function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid })
         <div className='p-1 py-5 mx-3 lg:hidden bg-blue-100 rounded-xl'>
             <Link href={'/profile/' + uid}>
                 <div className='cursor-pointer p-1 flex items-center space-2 rounded-lg hover:bg-blue-200'>
-                    <div className='border-2 border-blue-500 rounded-full h-14 w-14 mt-2 ml-3 lg:ml-0'></div>
+                    {/*<div className='border-2 border-blue-500 rounded-full h-14 w-14 mt-2 ml-3 lg:ml-0'></div>*/}
+                    <div className='w-3'></div>
+                    <Image src={pfp} className="object-contain border-2 rounded-full h-14 w-14 mt-2 ml-3 lg:ml-0" width={56} height={56} layout='fixed' objectFit='cover' />
                     <div className='mx-4'>
                         <p className='text-xl font-semibold'>{name}</p>
                         <p className='text-md font-semibold'>{username}</p>
