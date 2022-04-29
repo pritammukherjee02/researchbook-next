@@ -32,7 +32,7 @@ function MainContent({ session }) {
     const signUpPitchLayout = (!session) ? <SignUpPitch /> : (<div />)
 
     return (
-        <div className='flex flex-col justify-around gap-1'>
+        <div className='flex flex-col justify-around gap-1 pb-14'>
                 {signUpPitchLayout}
 
                 <Link href={'/create'}>
