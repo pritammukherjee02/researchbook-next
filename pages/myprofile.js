@@ -34,7 +34,7 @@ function MyProfile({ session, articles }) {
     */
 
     const articlesMarkup = articles.map((article, index) => {
-        return <ArticleCard key={index} title={article.title} description={article.description} author={article.author} date={article.date} />
+        return <ArticleCard key={index} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} date={article.date} />
     })
 
     const toggleFollowing = () => {

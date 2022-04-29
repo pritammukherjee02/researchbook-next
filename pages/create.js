@@ -23,6 +23,7 @@ function Create({ session }) {
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
   const descriptionRef = useRef(null)
+  const thumbnailRef = useRef(null)
 
 	const userInfo = {
 		uid: 1,
@@ -39,7 +40,7 @@ function Create({ session }) {
     e.preventDefault()
 
     if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
-      alert('Please give the title, the subtitle and content')
+      alert('Please give the title, the subtitle, the content, and the thumbnail image link')
       return
     }
 
@@ -51,7 +52,8 @@ function Create({ session }) {
         description: descriptionRef.current.value,
         date: '27 Jul, 22',
         author: session.user.name,
-        uid: session.user.email
+        uid: session.user.email,
+        thumbnailLink: thumbnailRef.current.value
       })
 
       const docCardRef = await addDoc(collection(db, "articleCards"), {
@@ -60,7 +62,8 @@ function Create({ session }) {
         date: '27 Jul, 22',
         author: session.user.name,
         uid: session.user.email,
-        articleId: docRef.id
+        articleId: docRef.id,
+        thumbnailLink: thumbnailRef.current.value
       })
     } catch (e) {
       alert('Something went wrong')
@@ -72,6 +75,7 @@ function Create({ session }) {
     titleRef.current.value = ''
     subtitleRef.current.value = ''
     descriptionRef.current.value = ''
+    thumbnailRef.current.value = ''
   }
 
   const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
@@ -102,6 +106,7 @@ function Create({ session }) {
 
                     <textarea type="text" ref={descriptionRef} name='description' placeholder='Description...' className='text-md outline-none shadow-none resize-none rounded-xl border-2 border-gray-100 p-2 mb-1 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
                     <textarea type="text" ref={contentRef} name='content' placeholder='Write your masterpiece...' className='text-xl outline-none shadow-none resize-none p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
+                    <input type="text" ref={thumbnailRef} name='thumbnail' className='p-1 outline-none shadow-none text-md font-light opacity-50 w-full lg:w-8/12 mb-5 border-t-2' placeholder='Link to thumbnail image...' />
                   </form>
 
                 </div>

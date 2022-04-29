@@ -74,7 +74,7 @@ function Profile() {
         if (loading){
             return <ArticleCardLoading />
         } else {
-            return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
+            return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} thumbnailLink={article.data().thumbnailLink} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
         }
     })
 

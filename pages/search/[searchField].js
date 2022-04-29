@@ -66,8 +66,8 @@ function Search({ session }) {
 
 						<p className='mx-7 lg:mx-16 text-sm font-light'>Searching for "{searchField}"</p>
 						<div className='w-full lg:w-8/12 lg:m-3 lg:mx-5 flex flex-col'>
-							<ArticleCard title="A systematic approach to running a business" description='Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae iusto error itaque quis quasi nesciunt architecto voluptas tenetur expedita.' author='D Maxwell' date='24 Feb, 22'/>
-							<ArticleCard title='Why INTJs are the biggest assholes of all time' description='They just are' author='Clara Maxfield' date='10 Feb, 22' />
+							<ArticleCard title="A systematic approach to running a business" thumbnailLink="https://images.unsplash.com/photo-1619760563678-02e23d15f69f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" description='Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae iusto error itaque quis quasi nesciunt architecto voluptas tenetur expedita.' author='D Maxwell' date='24 Feb, 22'/>
+							<ArticleCard title='Why INTJs are the biggest assholes of all time' thumbnailLink="https://images.unsplash.com/photo-1619760563678-02e23d15f69f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" description='They just are' author='Clara Maxfield' date='10 Feb, 22' />
 						</div>
 					</div>
 				</div>
