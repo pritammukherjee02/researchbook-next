@@ -39,7 +39,8 @@ function MainContent({ session }) {
                 <Link href={'/create'}>
                     <div className='m-3 h-14 lg:mx-5 rounded-full cursor-pointer px-3 flex items-center border-2 border-gray-300'>
                         {/*<div className='ml-2 border border-blue-500 rounded-full h-8 w-8'></div>*/}
-                        <Image src={session.user.image} className="object-contain border-2 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0" width={32} height={32} layout='fixed' objectFit='cover' />
+                        {/*<Image src={session ? session.user.image : ''} className="object-contain border-2 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0" width={32} height={32} layout='fixed' objectFit='cover' />*/}
+                        {session ? (<Image src={session.user.image} className="object-contain border-2 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0" width={32} height={32} layout='fixed' objectFit='cover' />) : (<div className='ml-2 border border-blue-500 rounded-full h-8 w-8'></div>)}
                         <p className='mx-4 text-lg text-gray-500'>Create something new</p>
                     </div>
                 </Link>
