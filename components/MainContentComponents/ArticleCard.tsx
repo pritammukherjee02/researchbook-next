@@ -3,6 +3,8 @@ import React from 'react';
 
 import Image from 'next/image'
 
+import ArticleCardMenuDropdown from './ArticleCardMenuDropdown'
+
 interface Props {
     title: string,
     description: string,
@@ -28,16 +30,22 @@ function ArticleCard({ title, description, author, date, articleId, uid, thumbna
                 <Link href={`/article/${articleId}`}>
                     <p className='cursor-pointer'>{description}</p>
                 </Link>
-                <div className='flex gap-1 items-center mt-2'>
-                    <p>~</p>
-                    <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
-                    <Link href={'/profile/' + uid}>
-                        <p className='cursor-pointer'>{author}</p>
-                    </Link>
-                </div>
-                <div className='flex gap-1 items-center'>
-                    <p>~</p>
-                    <p className='text-sm'>{date}</p>
+                <div className='flex justify-between items-end'>
+                    <div>
+                        <div className='flex gap-1 items-center mt-2'>
+                            <p>~</p>
+                            <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
+                            <Link href={'/profile/' + uid}>
+                                <p className='cursor-pointer'>{author}</p>
+                            </Link>
+                        </div>
+                        <div className='flex gap-1 items-center'>
+                            <p>~</p>
+                            <p className='text-sm'>{date}</p>
+                        </div>
+                    </div>
+
+                    <ArticleCardMenuDropdown />
                 </div>
             </div>
         </div>
