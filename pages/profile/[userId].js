@@ -66,7 +66,7 @@ function Profile() {
     }
     */
 
-    const name = loading ? (<p className='w-56 bg-blue-200 h-5'></p>) : articles[0].data() ? articles[0].data().author : 'BRUH'
+    const name = loading ? (<p className='w-44 bg-blue-200 h-5'></p>) : articles[0].data() ? articles[0].data().author : 'BRUH'
     const followers = '1.1M'
     const bio = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
 

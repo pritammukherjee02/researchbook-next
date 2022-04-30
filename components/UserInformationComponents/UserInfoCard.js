@@ -58,7 +58,7 @@ function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid, p
 
         {/* Mobile View */}
         <div className='p-1 py-5 mx-3 lg:hidden bg-blue-100 rounded-xl'>
-            <Link href={'/profile/' + uid}>
+            <Link href={'/myprofile'}>
                 <div className='cursor-pointer p-1 flex items-center space-2 rounded-lg hover:bg-blue-200'>
                     {/*<div className='border-2 border-blue-500 rounded-full h-14 w-14 mt-2 ml-3 lg:ml-0'></div>*/}
                     <div className='w-3'></div>
