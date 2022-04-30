@@ -6,7 +6,7 @@ import Trending from './SideBarComponents/Trending';
 
 function SideBar() {
   return (
-      <div className='flex w-full flex-col gap-2 h-screen sticky top-10 bottom-full hover:overflow-y-scroll'>
+      <div className='flex w-3/12 flex-col gap-2 fixed hover:overflow-y-scroll'>
             <Trending />
 
             <News />

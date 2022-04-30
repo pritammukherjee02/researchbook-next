@@ -46,7 +46,7 @@ export default function Home({ session }) {
             {userInformationMarkup}
           </div>
           <div className='my-0 w-full lg:w-7/12'><MainContent session={session} /></div>
-          <div className='hidden lg:w-3/12 lg:inline-flex'><SideBar /></div>
+          <div className='hidden lg:w-3/12 lg:block'><SideBar /></div>
         </div>
 
         <AppBar currentPage='home' />
