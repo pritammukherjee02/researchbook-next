@@ -4,15 +4,43 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import DeleteBtn from './DeleteBtn'
 import DeleteButton from './DeleteButton'
 
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, collection, setDoc } from "firebase/firestore";
 import { db } from '../../firebase'
 
-export default function Example({ selfOwned, articleId, articleCardId }) {
+export default function Example({ selfOwned, articleId, articleCardId, selfUid, title, desc, author, thumbnailLink, session }) {
 
     const deleteArticle = async () => {
         await deleteDoc(doc(db, "articleCards", articleCardId));
         await deleteDoc(doc(db, "articles", articleId));
         alert('Permanently deleted article')
+    }
+
+    const addToReadlist = async (e) => {
+      /*try {
+
+        const readlistRef = doc(db, 'readlists', selfUid)
+        
+        await setDoc(readlistRef, {
+          info: [{articleId: articleId,
+          title: title,
+          description: desc,
+          author: author}]
+        }, { merge: true });
+
+      } catch (error) {
+        alert('Something went wrong')
+        console.log('ERR: READLISTADD: ', e)
+        return
+      }*/
+        
+        await setDoc(doc(db, 'readlists', selfUid), {
+          info: [{articleId: articleId,
+          title: title,
+          description: desc,
+          author: author,
+          thumbnailLink: thumbnailLink
+        }]
+        }, { merge: true });
     }
 
     return (
@@ -60,28 +88,31 @@ export default function Example({ selfOwned, articleId, articleCardId }) {
                 </Menu.Item>
                 </div>
                 <div className="px-1 py-1">
-                <Menu.Item>
-                    {({ active }) => (
-                    <button
-                        className={`${
-                        active ? 'bg-blue-500 text-white' : 'text-gray-900'
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                    >
-                        {active ? (
-                        <ArchiveActiveIcon
-                            className="mr-2 h-5 w-5"
-                            aria-hidden="true"
-                        />
-                        ) : (
-                        <ArchiveInactiveIcon
-                            className="mr-2 h-5 w-5"
-                            aria-hidden="true"
-                        />
-                        )}
-                        Add to Readlist
-                    </button>
-                    )}
-                </Menu.Item>
+                  {session && (
+                    <Menu.Item>
+                      {({ active }) => (
+                      <button
+                          className={`${
+                          active ? 'bg-blue-500 text-white' : 'text-gray-900'
+                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          onClick={addToReadlist}
+                      >
+                          {active ? (
+                          <ArchiveActiveIcon
+                              className="mr-2 h-5 w-5"
+                              aria-hidden="true"
+                          />
+                          ) : (
+                          <ArchiveInactiveIcon
+                              className="mr-2 h-5 w-5"
+                              aria-hidden="true"
+                          />
+                          )}
+                          Add to Readlist
+                      </button>
+                      )}
+                    </Menu.Item>
+                  )}
                 <Menu.Item>
                     {({ active }) => (
                     <button

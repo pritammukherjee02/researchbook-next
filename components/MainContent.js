@@ -26,7 +26,7 @@ function MainContent({ session }) {
         if (loading){
             return <ArticleCardLoading />
         } else {
-            return <ArticleCard key={article.id} articleCardId={article.id} articleId={article.data().articleId} title={article.data().title} thumbnailLink={article.data().thumbnailLink} description={article.data().description} uid={article.data().uid} selfOwned={article.data().uid == session.user.email ? true : false} author={article.data().author} date={article.data().date} />
+            return <ArticleCard key={article.id} session={session} selfUid={session ? session.user.email : ''} articleCardId={article.id} articleId={article.data().articleId} title={article.data().title} thumbnailLink={article.data().thumbnailLink} description={article.data().description} uid={article.data().uid} selfOwned={article.data().uid == session && session.user.email ? true : false} author={article.data().author} date={article.data().date} />
         }
     })
 
