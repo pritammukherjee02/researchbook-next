@@ -11,11 +11,13 @@ interface Props {
     author: string,
     date: string,
     articleId: any,
+    articleCardId: any,
     uid: any,
-    thumbnailLink: string
+    thumbnailLink: string,
+    selfOwned: boolean
 }
 
-function ArticleCard({ title, description, author, date, articleId, uid, thumbnailLink }:Props) {
+function ArticleCard({ title, description, author, date, articleId, articleCardId, uid, thumbnailLink, selfOwned }:Props) {
   return (
     <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 '>
         <Link href={`/article/${articleId}`}>
@@ -45,7 +47,7 @@ function ArticleCard({ title, description, author, date, articleId, uid, thumbna
                         </div>
                     </div>
 
-                    <ArticleCardMenuDropdown />
+                    <ArticleCardMenuDropdown selfOwned={selfOwned} articleCardId={articleCardId} articleId={articleId} />
                 </div>
             </div>
         </div>
