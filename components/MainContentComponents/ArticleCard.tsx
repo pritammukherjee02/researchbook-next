@@ -36,7 +36,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
                     <p className='cursor-pointer'>{description}</p>
                 </Link>
                 <div className='flex justify-between items-end'>
-                    <div>
+                    <div className='w-full'>
                         <div className='flex gap-1 items-center mt-2'>
                             <p>~</p>
                             <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
