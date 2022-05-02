@@ -3,11 +3,17 @@ import Head from 'next/head'
 import Router from 'next/router'
 import { getSession } from 'next-auth/react'
 
+import { useDocument } from 'react-firebase-hooks/firestore';
+import { doc } from "firebase/firestore";
+import { db } from '../firebase'
+
 //components
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
+import ReadlistArticleCard from '../components/ReadlistComponents/ReadlistArticleCard'
+import ReadlistArticleCardLoading from '../components/ReadlistComponents/ReadlistArticleCardLoading'
 
 function Readlist({ session }) {
   useEffect(() => {
@@ -15,8 +21,6 @@ function Readlist({ session }) {
       Router.push('/login/readlist')
     }
     }, [])
-
-    console.log(session)
 
 	const userInfo = {
         uid: 1,
@@ -28,6 +32,27 @@ function Readlist({ session }) {
         followers: 2,
         following: 98
     }
+
+	const [value, loading, error] = useDocument(
+		doc(db, 'readlists', session.user.email),
+		{
+		  snapshotListenOptions: { includeMetadataChanges: true },
+		}
+	  );
+    
+    const randomData = [
+        {}, {}, {}
+    ]
+    error && console.log(error)
+    const articles = !loading && value ? value.data().info : randomData
+
+    const articlesMarkup = articles.map((article) => {
+        if (loading){
+            return <ReadlistArticleCardLoading />
+        } else {
+            return <ReadlistArticleCard key={article.id} session={session} articleId={article.articleId} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} />
+        }
+    })
 
 	const userInformationMarkup = session ? (<UserInformation page='readlist' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='readlist' />)
 
@@ -47,7 +72,11 @@ function Readlist({ session }) {
 					</div>
 					<div className='my-0 w-full lg:w-10/12'>
 						<div className='lg:px-3 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col justify-around gap-1'>
-							<p className='text-sm font-light p-5 opacity-70'>You have nothing in your Readlist yet</p>
+							{articlesMarkup == [] && <p className='text-sm font-light p-5 opacity-70'>You have nothing in your Readlist yet</p>}
+
+							<div className='lg:m-3 lg:mx-5 flex flex-col gap-1'>
+								{articlesMarkup}
+							</div>
 						</div>
 					</div>
 				</div>
