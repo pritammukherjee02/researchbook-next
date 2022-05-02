@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import DeleteBtn from './DeleteBtn'
 import DeleteButton from './DeleteButton'
 
-import { doc, deleteDoc, collection, setDoc } from "firebase/firestore";
+import { doc, deleteDoc, arrayUnion, updateDoc, setDoc } from "firebase/firestore";
 import { db } from '../../firebase'
 
 export default function Example({ selfOwned, articleId, articleCardId, selfUid, title, desc, author, thumbnailLink, session }) {
@@ -16,23 +16,25 @@ export default function Example({ selfOwned, articleId, articleCardId, selfUid, 
     }
 
     const addToReadlist = async (e) => {
-      /*try {
-
-        const readlistRef = doc(db, 'readlists', selfUid)
+      try {
         
-        await setDoc(readlistRef, {
-          info: [{articleId: articleId,
-          title: title,
-          description: desc,
-          author: author}]
-        }, { merge: true });
+        await updateDoc(doc(db, 'readlists', selfUid), {
+            info: arrayUnion({
+				articleId: articleId,
+				title: title,
+				description: desc,
+				author: author,
+				thumbnailLink: thumbnailLink
+			})
+        });
 
       } catch (error) {
         alert('Something went wrong')
         console.log('ERR: READLISTADD: ', e)
         return
-      }*/
+      }
         
+	  /*
         await setDoc(doc(db, 'readlists', selfUid), {
           info: [{articleId: articleId,
           title: title,
@@ -41,6 +43,18 @@ export default function Example({ selfOwned, articleId, articleCardId, selfUid, 
           thumbnailLink: thumbnailLink
         }]
         }, { merge: true });
+		
+
+        await updateDoc(doc(db, 'readlists', selfUid), {
+            info: arrayUnion({
+				articleId: articleId,
+				title: title,
+				description: desc,
+				author: author,
+				thumbnailLink: thumbnailLink
+			})
+        });
+		*/
     }
 
     return (

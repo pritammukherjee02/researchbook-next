@@ -6,7 +6,7 @@ import SideBarNav from './UserInformationComponents/SideBarNav';
 
 function UserInformation({ page }) {
   return (
-  <div className='flex flex-col space-2 lg:h-screen lg:sticky lg:pb-20 lg:top-10 scrollbar-hide overflow-y-auto'>
+  <div className='flex flex-col space-2 lg:h-full lg:w-48 lg:fixed lg:pb-20 overflow-y-auto'>
       <UserInfoNotLoggedIn />
 
       <div className='my-4 mt-6 hidden lg:block'>
