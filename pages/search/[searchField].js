@@ -130,7 +130,7 @@ function Search({ session }) {
 
 function Hit({hit}) {
   return (
-    <ArticleCard title={hit.title} thumbnailLink={hit.thumbnailLink} description={hit.description} author={hit.author} date={hit.date} />
+    <ArticleCard title={hit.title} articleId={hit.articleId} uid={hit.uid} thumbnailLink={hit.thumbnailLink} description={hit.description} author={hit.author} date={hit.date} />
   );
 }
 

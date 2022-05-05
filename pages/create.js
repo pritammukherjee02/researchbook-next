@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Router from 'next/router'
-import React, { useRef, useEffect } from 'react'
+import Image from 'next/image'
+import React, { useRef, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 import UserInformation from '../components/UserInformation'
@@ -19,11 +20,14 @@ function Create({ session }) {
     }
     }, [])
 
-  const contentRef = useRef(null)
-  const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const descriptionRef = useRef(null)
-  const thumbnailRef = useRef(null)
+	const [thumbnailToArticle, setThumbnailToArticle] = useState(null)
+
+	const contentRef = useRef(null)
+	const titleRef = useRef(null)
+	const subtitleRef = useRef(null)
+	const descriptionRef = useRef(null)
+	const thumbnailRef = useRef(null)
+	const filePickerRef = useRef(null)
 
 	const userInfo = {
 		uid: 1,
@@ -78,7 +82,24 @@ function Create({ session }) {
     thumbnailRef.current.value = ''
   }
 
-  const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
+  	const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
+
+	const addThumbnailImageToArticle = (e) => {
+		const reader = new FileReader()
+
+		if(e.target.files[0])
+		{
+			reader.readAsDataURL(e.target.files[0])
+		}
+
+		reader.onload = (readerEvent) => {
+			setThumbnailToArticle(readerEvent.target.result)
+		}
+	}
+
+	const removeThumbnail = () => {
+		setThumbnailToArticle(null)
+	}
 
   return (
     <div>
@@ -106,7 +127,17 @@ function Create({ session }) {
 
                     <textarea type="text" ref={descriptionRef} name='description' placeholder='Description...' className='text-md outline-none shadow-none resize-none rounded-xl border-2 border-gray-100 p-2 mb-1 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
                     <textarea type="text" ref={contentRef} name='content' placeholder='Write your masterpiece...' className='text-xl outline-none shadow-none resize-none p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
-                    <input type="text" ref={thumbnailRef} name='thumbnail' className='p-1 outline-none shadow-none text-md font-light opacity-50 w-full lg:w-8/12 mb-5 border-t-2' placeholder='Link to thumbnail image...' />
+					<div className='flex gap-2 justify-between h-12 lg:w-8/12 mb-5'>
+                    	<input type="text" ref={thumbnailRef} name='thumbnail' className='p-1 w-9/12 outline-none shadow-none text-md font-light opacity-50 border-t-2' placeholder='Link to thumbnail image...' />
+						<div onClick={() => filePickerRef.current.click()} className='w-3/12 h-full flex items-center justify-center text-sm opacity-50 rounded-xl cursor-pointer bg-gray-200 hover:bg-gray-400'>Upload Image</div>
+					</div>
+                    <input ref={filePickerRef} onChange={addThumbnailImageToArticle} type='file' hidden />
+					{thumbnailToArticle && (
+						<div onClick={removeThumbnail} className=' flex flex-col w-4/12 filter hover:brightness-110 transition duration-150 transform hover:scale-105 cursor-pointer'>
+							<Image src={thumbnailToArticle} className="object-contain hidden cursor-pointer rounded-lg mx-auto" width={313} height={176} objectFit='cover' />
+							<p className='text-xs text-red-500 text-center'>Remove</p>
+						</div>
+					)}
                   </form>
 
                 </div>
