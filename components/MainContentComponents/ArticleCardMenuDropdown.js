@@ -5,13 +5,15 @@ import DeleteBtn from './DeleteBtn'
 import DeleteButton from './DeleteButton'
 
 import { doc, deleteDoc, arrayUnion, updateDoc, setDoc } from "firebase/firestore";
-import { db } from '../../firebase'
+import { ref, deleteObject } from "firebase/storage";
+import { db, storage } from '../../firebase'
 
 export default function Example({ selfOwned, articleId, articleCardId, selfUid, title, desc, author, thumbnailLink, session }) {
 
     const deleteArticle = async () => {
         await deleteDoc(doc(db, "articleCards", articleCardId));
         await deleteDoc(doc(db, "articles", articleId));
+        await deleteObject(ref(storage, `thumbnails/${articleId}`));
         alert('Permanently deleted article')
     }
 
@@ -20,12 +22,12 @@ export default function Example({ selfOwned, articleId, articleCardId, selfUid, 
         
         await updateDoc(doc(db, 'readlists', selfUid), {
             info: arrayUnion({
-				articleId: articleId,
-				title: title,
-				description: desc,
-				author: author,
-				thumbnailLink: thumbnailLink
-			})
+              articleId: articleId,
+              title: title,
+              description: desc,
+              author: author,
+              thumbnailLink: thumbnailLink
+            })
         });
 
       } catch (error) {

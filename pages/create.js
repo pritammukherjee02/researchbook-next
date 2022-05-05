@@ -83,7 +83,6 @@ function Create({ session }) {
 		{
 			const uplodaTask = ref(storage, `thumbnails/${docRef.id}`)
 			uploadString(uplodaTask, thumbnailToArticle, 'data_url').then((snapshot) => {
-				console.log('Uploaded thumbnail');
 				getDownloadURL(ref(storage, snapshot.ref.fullPath))
 				.then(url => {
 
