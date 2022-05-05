@@ -9,8 +9,9 @@ import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 
 import { getSession, useSession } from 'next-auth/react'
 
-import { db } from '../firebase'
-import { collection, addDoc } from "firebase/firestore";
+import { db, storage } from '../firebase'
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
 function Create({ session }) {
   //const session = useSession()
@@ -40,46 +41,90 @@ function Create({ session }) {
 		following: 98
 	}
 
+	async function addArticleCard(articleId, url = ''){
+		const docCardRef = await addDoc(collection(db, "articleCards"), {
+			title: titleRef.current.value,
+			description: descriptionRef.current.value,
+			date: '27 Jul, 22',
+			author: session.user.name,
+			uid: session.user.email,
+			articleId: articleId,
+			thumbnailLink: thumbnailRef.current.value ? thumbnailRef.current.value : url
+		})
+	}
+
+	async function addThumbnailToArticle(articleId, url = ''){
+		const docRef = await setDoc(doc(db, 'articles', articleId), {
+			thumbnailLink: thumbnailRef.current.value ? thumbnailRef.current.value : url
+		  }, { merge: true })
+	}
+
   async function publishArticle(e){
     e.preventDefault()
 
     if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
-      alert('Please give the title, the subtitle, the content, and the thumbnail image link')
+      alert('Please give the title, the subtitle, the content, and the thumbnail image')
       return
     }
 
     try {
-      const docRef = await addDoc(collection(db, "articles"), {
-        content: contentRef.current.value,
-        title: titleRef.current.value,
-        subtitle: subtitleRef.current.value,
-        description: descriptionRef.current.value,
-        date: '27 Jul, 22',
-        author: session.user.name,
-        uid: session.user.email,
-        thumbnailLink: thumbnailRef.current.value
-      })
+		const docRef = await addDoc(collection(db, "articles"), {
+			content: contentRef.current.value,
+			title: titleRef.current.value,
+			subtitle: subtitleRef.current.value,
+			description: descriptionRef.current.value,
+			date: '27 Jul, 22',
+			author: session.user.name,
+			uid: session.user.email,
+			thumbnailLink: thumbnailRef.current.value
+		})
 
-      const docCardRef = await addDoc(collection(db, "articleCards"), {
-        title: titleRef.current.value,
-        description: descriptionRef.current.value,
-        date: '27 Jul, 22',
-        author: session.user.name,
-        uid: session.user.email,
-        articleId: docRef.id,
-        thumbnailLink: thumbnailRef.current.value
-      })
+		if(thumbnailToArticle)
+		{
+			const uplodaTask = ref(storage, `thumbnails/${docRef.id}`)
+			uploadString(uplodaTask, thumbnailToArticle, 'data_url').then((snapshot) => {
+				console.log('Uploaded thumbnail');
+				getDownloadURL(ref(storage, snapshot.ref.fullPath))
+				.then(url => {
+
+					addArticleCard(docRef.id, url)
+					addThumbnailToArticle(docRef.id, url)
+
+					removeThumbnail()
+					contentRef.current.value = ''
+					titleRef.current.value = ''
+					subtitleRef.current.value = ''
+					descriptionRef.current.value = ''
+					thumbnailRef.current.value = ''
+
+				})
+			})
+
+		/*
+		  uplodaTask.on('state_change', null, err => console.error(err), () => {
+			  getDownloadURL(ref(storage, `thumbnails/${docRef.id}`))
+			  	.then(url => {
+						setThumbnailDownloadURL(url)
+					})
+		  })
+		*/
+	  	} else {
+
+			addArticleCard(docRef.id)
+
+			removeThumbnail()
+			contentRef.current.value = ''
+			titleRef.current.value = ''
+			subtitleRef.current.value = ''
+			descriptionRef.current.value = ''
+			thumbnailRef.current.value = ''
+		}
     } catch (e) {
       alert('Something went wrong')
       console.log('ERR: DOCADD: ', e)
       return
     }
 
-    contentRef.current.value = ''
-    titleRef.current.value = ''
-    subtitleRef.current.value = ''
-    descriptionRef.current.value = ''
-    thumbnailRef.current.value = ''
   }
 
   	const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
