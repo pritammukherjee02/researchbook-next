@@ -172,8 +172,8 @@ function Create({ session }) {
                     <textarea type="text" ref={descriptionRef} name='description' placeholder='Description...' className='text-md outline-none shadow-none resize-none rounded-xl border-2 border-gray-100 p-2 mb-1 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
                     <textarea type="text" ref={contentRef} name='content' placeholder='Write your masterpiece...' className='text-xl outline-none shadow-none resize-none p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
 					<div className='flex gap-2 justify-between h-12 lg:w-8/12 mb-5'>
-                    	<input type="text" ref={thumbnailRef} name='thumbnail' className='p-1 w-9/12 outline-none shadow-none text-md font-light opacity-50 border-t-2' placeholder='Link to thumbnail image...' />
-						<div onClick={() => filePickerRef.current.click()} className='w-3/12 h-full flex items-center justify-center text-sm opacity-50 rounded-xl cursor-pointer bg-gray-200 hover:bg-gray-400'>Upload Image</div>
+                    	<input type="text" ref={thumbnailRef} name='thumbnail' className='p-1 w-7/12 lg:w-9/12 outline-none shadow-none text-md font-light opacity-50 border-t-2' placeholder='Link to thumbnail image...' />
+						<div onClick={() => filePickerRef.current.click()} className='w-4/12 lg:w-3/12 h-full flex items-center justify-center text-sm opacity-50 rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-400'>Upload Image</div>
 					</div>
                     <input ref={filePickerRef} onChange={addThumbnailImageToArticle} type='file' hidden />
 					{thumbnailToArticle && (

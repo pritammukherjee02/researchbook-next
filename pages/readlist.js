@@ -14,6 +14,8 @@ import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import ReadlistArticleCard from '../components/ReadlistComponents/ReadlistArticleCard'
 import ReadlistArticleCardLoading from '../components/ReadlistComponents/ReadlistArticleCardLoading'
+import ArticleCard from '../components/MainContentComponents/ArticleCard'
+import ArticleCardLoading from '../components/MainContentComponents/ArticleCardLoading'
 
 function Readlist({ session }) {
   useEffect(() => {
