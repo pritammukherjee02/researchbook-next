@@ -24,7 +24,7 @@ function ReadlistCard({ title, author, description, thumbnailLink='/bruh', artic
                         <div className='flex gap-1 items-center mt-2'>
                             <p>~</p>
                             <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
-                            <p className='cursor-pointer'>{author}</p>
+                            <p className='cursor-pointer absolute ml-14 hover:font-semibold'>{author}</p>
                         </div>
                     </div>
 
