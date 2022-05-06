@@ -24,7 +24,7 @@ function UserInformation(props) {
       </div>
 
       <Link href='/create'>
-        <div className='mt-5 hidden lg:flex items-center px-6 py-3 rounded-full cursor-pointer justify-center bg-blue-500 hover:bg-blue-600'>
+        <div className='mt-5 hidden lg:flex items-center px-6 py-3 rounded-full cursor-pointer justify-center transition duration-150 ease-in-out bg-blue-500 hover:bg-blue-600'>
           <p className='text-xl font-semibold text-white'>Create</p>
         </div>
       </Link>

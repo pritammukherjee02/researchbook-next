@@ -22,7 +22,7 @@ interface Props {
 function ArticleCard({ title, description, author, date, articleId, articleCardId, uid, thumbnailLink, selfOwned, selfUid, session }:Props) {
 
   return (
-    <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 '>
+    <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 transition duration-150 ease-in-out rounded-sm hover:shadow-md'>
         <Link href={`/article/${articleId}`}>
             <h2 className='text-3xl cursor-pointer'>{title}</h2>
         </Link>

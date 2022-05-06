@@ -7,7 +7,7 @@ function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid, p
     <div>
         <div className='p-2 mx-auto w-full hidden lg:block bg-blue-100 rounded-xl'>
             <Link href={'/myprofile'}>
-                <div className='cursor-pointer p-1 rounded-lg hover:bg-blue-200'>
+                <div className='cursor-pointer p-1 rounded-lg transition duration-150 ease-in-out hover:bg-blue-200'>
                     <p className='pl-2 text-xl font-semibold'>{name}</p>
                     <div className='flex space-2 pt-3'>
                         {/*<div className='border-2 border-blue-500 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0'></div>*/}
