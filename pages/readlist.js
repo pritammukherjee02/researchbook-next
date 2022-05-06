@@ -12,10 +12,8 @@ import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
-import ReadlistArticleCard from '../components/ReadlistComponents/ReadlistArticleCard'
-import ReadlistArticleCardLoading from '../components/ReadlistComponents/ReadlistArticleCardLoading'
-import ArticleCard from '../components/MainContentComponents/ArticleCard'
 import ArticleCardLoading from '../components/MainContentComponents/ArticleCardLoading'
+import ReadlistCard from '../components/ReadlistComponents/ReadlistCard';
 
 function Readlist({ session }) {
   useEffect(() => {
@@ -50,9 +48,9 @@ function Readlist({ session }) {
 
     const articlesMarkup = articles.map((article) => {
         if (loading){
-            return <ReadlistArticleCardLoading />
+            return <ArticleCardLoading />
         } else {
-            return <ReadlistArticleCard key={article.id} session={session} articleId={article.articleId} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} />
+            return <ReadlistCard key={article.id} selfUid={session.user.email} session={session} articleId={article.articleId} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} />
         }
     })
 
@@ -68,11 +66,11 @@ function Readlist({ session }) {
 			<main className='h-screen overflow-x-hidden'>
 				<Header home={false} page='readlist' searchProp='' />
 
-				<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
+				<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row relative'>
 					<div className='hidden lg:flex w-full lg:w-2/12'>
 						{userInformationMarkup}
 					</div>
-					<div className='my-0 w-full lg:w-10/12'>
+					<div className='my-0 w-full lg:w-7/12'>
 						<div className='lg:px-3 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col justify-around gap-1'>
 							{articlesMarkup == [] && <p className='text-sm font-light p-5 opacity-70'>You have nothing in your Readlist yet</p>}
 
