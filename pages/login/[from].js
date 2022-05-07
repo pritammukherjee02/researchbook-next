@@ -20,6 +20,7 @@ function Login({ session, providers }) {
             else if (from == 'settings') Router.push('/settings')
             else if (from == 'readlist') Router.push('/readlist')
             else if (from == 'myprofile') Router.push('/myprofile')
+            else if (from == 'preferences') Router.push('/preferences')
         }
     }, session)
 
