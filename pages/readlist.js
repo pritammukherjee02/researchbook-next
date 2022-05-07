@@ -34,7 +34,7 @@ function Readlist({ session }) {
     }
 
 	const [value, loading, error] = useDocument(
-		doc(db, 'readlists', session.user.email),
+		doc(db, 'readlists', session ? session.user.email : 'someemailaddress@email.com'),
 		{
 		  snapshotListenOptions: { includeMetadataChanges: true },
 		}

@@ -22,9 +22,9 @@ function MyProfile({ session, articles }) {
 
     const [following, setFollowing] = useState(false)
 
-    const name = session ? session.user.name : 'D Maxwell'
-    const followers = '1.1M'
-    const bio = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
+    const name = session ? session.user.name : 'Your name'
+    const followers = '0'
+    const bio = "Bio"
     /*
     let articles = [
         {title: 'God is dead', description: 'And we killed him. You and I', author: 'D Maxwell', date: '12 Apr, 22'},
@@ -59,7 +59,7 @@ function MyProfile({ session, articles }) {
                     <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
                         {/*<div className='absolute rounded-full border-2 border-blue-600 bg-blue-100 h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2'></div>*/}
                         <div className='absolute translate-x-6 lg:translate-x-12 translate-y-1/2'>
-                            <Image src={session.user.image} className="object-contain border-2 border-blue-600 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
+                            <Image src={session ? session.user.image : 'https://images.unsplash.com/bruh'} className="object-contain border-2 border-blue-600 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
                         </div>
                         <div className='relative flex flex-col lg:flex-row lg:items-center lg:gap-2 text-lg pl-36 lg:pl-48 -translate-y-1/4 lg:-translate-y-1/2 text-white'>
                             <span className='text-2xl font-semibold'>{name}</span>
@@ -114,7 +114,7 @@ export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
 
-    const q = query(collection(db, "articles"), where("uid", "==", session.user.email));
+    const q = query(collection(db, "articles"), where("uid", "==", session ? session.user.email : 'someemailaddress@email.com'));
     const querySnapshot = await getDocs(q);
 
     let articles = []
