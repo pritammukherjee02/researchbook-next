@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 import ArticleCardLoading from '../../components/MainContentComponents/ArticleCardLoading';
 
+import { getSession } from 'next-auth/react'
 import { db } from '../../firebase'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -13,12 +14,25 @@ import Header from '../../components/Header'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard'
 import RecommendedArticleCard from '../../components/ArticleComponents/RecommendedArticleCard'
 import AppBar from '../../components/AppBar'
+import UserInformation from '../../components/UserInformation'
+import UserNotLoggedInInfo from '../../components/UserNotLoggedInInfo'
 
-function Profile() {
+function Profile({ session }) {
     const router = useRouter()
     const { userId } = router.query
 
     const [following, setFollowing] = useState(false)
+
+    const userInfo = {
+        uid: 1,
+        name: 'James Anderson',
+        fieldOfExpertise: 'Comp sci',
+        jobDesignation: 'Research Fellow',
+        username: '@janderson11',
+        articles: 0,
+        followers: 2,
+        following: 98
+    }
 
     const [realtimeArticles, loading, error] = useCollection(
         query(collection(db, "articles"), where("uid", "==", !userId ? 'official.researchbook@gmail.com' : userId))
@@ -83,6 +97,8 @@ function Profile() {
         else setFollowing(true)
     }
 
+    const userInformationMarkup = session ? (<UserInformation page='profile' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='profile' />)
+
     return (
         <div>
             <Head>
@@ -92,9 +108,13 @@ function Profile() {
 
             <Header home={false} searchProp='' />
 
-            <div className='lg:px-5 lg:mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
+            <div className='lg:px-5 lg:mt-5 pb-14 gap-3 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
                 
-                <div className='w-full h-full lg:w-8/12 pb-5'>
+                <div className='w-full hidden lg:flex lg:w-2/12'>
+                    {userInformationMarkup}
+                </div>
+                
+                <div className='w-full h-full lg:w-7/12 pb-5'>
                     {/* USER BANNER AND POSTS */}
 
                     <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
@@ -118,10 +138,10 @@ function Profile() {
                     </div>
                 </div>
 
-                <div className='hidden lg:w-4/12 lg:inline-flex flex-col'>
+                <div className='hidden lg:w-3/12 lg:inline-flex flex-col'>
                     {/* SIDE PANE FOR BIO AND MORE */}
 
-                    <div className='p-3 bg-gray-100 rounded-2xl max-h-44 w-11/12 mx-auto flex flex-col align-middle'>
+                    <div className='p-3 bg-gray-100 rounded-2xl max-h-50 w-11/12 mx-auto flex flex-col align-middle'>
                         <p className='text-md font-bold opacity-40'>About</p>
                         <p className='text-sm font-light'>{bio}</p>
                     </div>
@@ -147,6 +167,17 @@ function Profile() {
 }
 
 export default Profile
+
+export async function getServerSideProps(context) {
+    //GET THE USER
+    const session = await getSession(context)
+  
+    return {
+      props: {
+        session
+      }
+    }
+}
 
 /*
 export async function getStaticPaths() {
