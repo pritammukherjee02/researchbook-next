@@ -1,35 +1,63 @@
 import Head from 'next/head'
 import Router from 'next/router'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import React, { useRef, useEffect, useState } from 'react'
-import Header from '../components/Header'
-import AppBar from '../components/AppBar'
-import UserInformation from '../components/UserInformation'
-import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
+import Header from '../../components/Header'
+import AppBar from '../../components/AppBar'
+import UserInformation from '../../components/UserInformation'
+import UserNotLoggedInInfo from '../../components/UserNotLoggedInInfo'
 
 import { getSession, useSession } from 'next-auth/react'
 
-import { db, storage } from '../firebase'
+import { useDocument } from 'react-firebase-hooks/firestore';
+
+import { db, storage } from '../../firebase'
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
-function Create({ session }) {
+function Edit({ session }) {
   //const session = useSession()
   useEffect(() => {
     if (!session) {
-      Router.push('/login/create')
+      Router.push('/login')
     }
     }, [])
 
-	const [thumbnailToArticle, setThumbnailToArticle] = useState(null)
+    const router = useRouter()
+    const { articleId } = router.query
 
-	const contentRef = useRef(null)
-	const titleRef = useRef(null)
-	const subtitleRef = useRef(null)
-	const descriptionRef = useRef(null)
+    const [articleSnapshot, loading, error] = useDocument(
+		doc(db, 'articles', articleId),
+		{
+		  snapshotListenOptions: { includeMetadataChanges: true },
+		}
+	);
+
+    error && console.log(error)
+    if(!loading && articleSnapshot.data().uid != session.user.email){
+        alert('Permission denied')
+        Router.push('/')
+
+    }
+    const article = !loading ? articleSnapshot.data() : null
+
+
+	const [thumbnailToArticle, setThumbnailToArticle] = useState(!loading ? article.thumbnailLink : null)  // POSSIBLE CAUSE OF FAILURE
+
+	const contentRef = useRef(!loading ? article.content : null)
+	const titleRef = useRef(!loading ? article.title : null)
+	const subtitleRef = useRef(!loading ? article.subtitle : null)
+	const descriptionRef = useRef(!loading ? article.description : null)
 	const thumbnailRef = useRef(null)
 	const filePickerRef = useRef(null)
 	const tagsRef = useRef(null)
+
+    useEffect(() => {
+        titleRef.current.value = !loading ? article.title : ''
+        subtitleRef.current.value = !loading ? article.subtitle : ''
+        contentRef.current.value = !loading ? article.content : ''
+    }, [loading])
 
 	const userInfo = {
 		uid: 1,
@@ -61,85 +89,85 @@ function Create({ session }) {
 		  }, { merge: true })
 	}
 
-  async function publishArticle(e){
-    e.preventDefault()
+    async function publishArticle(e){
+        e.preventDefault()
 
-    if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
-      alert('Please give the title, the subtitle, the content, and the thumbnail image')
-      return
+        if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
+        alert('Please give the title, the subtitle, the content, and the thumbnail image')
+        return
+        }
+
+        const tagsCollection = (tagsRef.current.value).split(',')
+        const tags = []
+        tagsCollection.map(tag => {
+            if(tag[0] == ' '){
+                tag = tag.slice(1)
+            }
+            if(tag[tag.length - 1] == ' '){
+                tag = tag.slice(0, tag.length - 1)
+            }
+            tags.push(tag)
+        })
+
+        try {
+            const docRef = await addDoc(collection(db, "articles"), {
+                content: contentRef.current.value,
+                title: titleRef.current.value,
+                subtitle: subtitleRef.current.value,
+                description: descriptionRef.current.value,
+                date: '27 Jul, 22',
+                author: session.user.name,
+                uid: session.user.email,
+                thumbnailLink: thumbnailRef.current.value,
+                tags: tags
+            })
+
+            if(thumbnailToArticle)
+            {
+                const uplodaTask = ref(storage, `thumbnails/${docRef.id}`)
+                uploadString(uplodaTask, thumbnailToArticle, 'data_url').then((snapshot) => {
+                    getDownloadURL(ref(storage, snapshot.ref.fullPath))
+                    .then(url => {
+
+                        addArticleCard(docRef.id, tags, url)
+                        addThumbnailToArticle(docRef.id, url)
+
+                        removeThumbnail()
+                        contentRef.current.value = ''
+                        titleRef.current.value = ''
+                        subtitleRef.current.value = ''
+                        descriptionRef.current.value = ''
+                        thumbnailRef.current.value = ''
+
+                    })
+                })
+
+            /*
+            uplodaTask.on('state_change', null, err => console.error(err), () => {
+                getDownloadURL(ref(storage, `thumbnails/${docRef.id}`))
+                    .then(url => {
+                            setThumbnailDownloadURL(url)
+                        })
+            })
+            */
+            } else {
+
+                addArticleCard(docRef.id, tags)
+
+                removeThumbnail()
+                contentRef.current.value = ''
+                titleRef.current.value = ''
+                subtitleRef.current.value = ''
+                descriptionRef.current.value = ''
+                thumbnailRef.current.value = ''
+            }
+        } catch (e) {
+        alert('Something went wrong')
+        console.log('ERR: DOCADD: ', e)
+        return
+        }
+
     }
-
-	const tagsCollection = (tagsRef.current.value).split(',')
-	const tags = []
-	tagsCollection.map(tag => {
-		if(tag[0] == ' '){
-			tag = tag.slice(1)
-		}
-		if(tag[tag.length - 1] == ' '){
-			tag = tag.slice(0, tag.length - 1)
-		}
-		tags.push(tag)
-	})
-
-    try {
-		const docRef = await addDoc(collection(db, "articles"), {
-			content: contentRef.current.value,
-			title: titleRef.current.value,
-			subtitle: subtitleRef.current.value,
-			description: descriptionRef.current.value,
-			date: '27 Jul, 22',
-			author: session.user.name,
-			uid: session.user.email,
-			thumbnailLink: thumbnailRef.current.value,
-			tags: tags
-		})
-
-		if(thumbnailToArticle)
-		{
-			const uplodaTask = ref(storage, `thumbnails/${docRef.id}`)
-			uploadString(uplodaTask, thumbnailToArticle, 'data_url').then((snapshot) => {
-				getDownloadURL(ref(storage, snapshot.ref.fullPath))
-				.then(url => {
-
-					addArticleCard(docRef.id, tags, url)
-					addThumbnailToArticle(docRef.id, url)
-
-					removeThumbnail()
-					contentRef.current.value = ''
-					titleRef.current.value = ''
-					subtitleRef.current.value = ''
-					descriptionRef.current.value = ''
-					thumbnailRef.current.value = ''
-
-				})
-			})
-
-		/*
-		  uplodaTask.on('state_change', null, err => console.error(err), () => {
-			  getDownloadURL(ref(storage, `thumbnails/${docRef.id}`))
-			  	.then(url => {
-						setThumbnailDownloadURL(url)
-					})
-		  })
-		*/
-	  	} else {
-
-			addArticleCard(docRef.id, tags)
-
-			removeThumbnail()
-			contentRef.current.value = ''
-			titleRef.current.value = ''
-			subtitleRef.current.value = ''
-			descriptionRef.current.value = ''
-			thumbnailRef.current.value = ''
-		}
-    } catch (e) {
-      alert('Something went wrong')
-      console.log('ERR: DOCADD: ', e)
-      return
-    }
-
-  }
 
   	const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
 
@@ -163,7 +191,7 @@ function Create({ session }) {
   return (
     <div>
         <Head>
-            <title>ResearchBook Editor</title>
+            <title>Edit Article | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
@@ -225,7 +253,7 @@ function Create({ session }) {
   )
 }
 
-export default Create
+export default Edit
 
 export async function getServerSideProps(context) {
   //GET THE USER
