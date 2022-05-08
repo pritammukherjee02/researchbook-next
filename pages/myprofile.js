@@ -11,6 +11,8 @@ import { db } from '../firebase'
 import Header from '../components/Header'
 import ArticleCard from '../components/MainContentComponents/ArticleCard'
 import RecommendedArticleCard from '../components/ArticleComponents/RecommendedArticleCard'
+import UserInformation from '../components/UserInformation'
+import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import AppBar from '../components/AppBar'
 
 function MyProfile({ session, articles }) {
@@ -21,6 +23,17 @@ function MyProfile({ session, articles }) {
     }, [])
 
     const [following, setFollowing] = useState(false)
+
+    const userInfo = {
+        uid: 1,
+        name: 'James Anderson',
+        fieldOfExpertise: 'Comp sci',
+        jobDesignation: 'Research Fellow',
+        username: '@janderson11',
+        articles: 0,
+        followers: 2,
+        following: 98
+    }
 
     const name = session ? session.user.name : 'Your name'
     const followers = '0'
@@ -42,6 +55,8 @@ function MyProfile({ session, articles }) {
         else setFollowing(true)
     }
 
+    const userInformationMarkup = session ? (<UserInformation page='myprofile' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='myprofile' />)
+
     return (
         <div>
             <Head>
@@ -51,13 +66,17 @@ function MyProfile({ session, articles }) {
 
             <Header home={false} searchProp='' />
 
-            <div className='lg:px-5 lg:mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
+            <div className='lg:px-5 lg:mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto gap-3 flex flex-col lg:flex-row justify-between relative'>
                 
-                <div className='w-full h-full lg:w-8/12 pb-5'>
+                <div className='w-full hidden lg:flex lg:w-2/12'>
+                    {userInformationMarkup}
+                </div>
+                
+                <div className='w-full h-full lg:w-7/12 pb-5'>
                     {/* USER BANNER AND POSTS */}
 
                     <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
-                        {/*<div className='absolute rounded-full border-2 border-blue-600 bg-blue-100 h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2'></div>*/}
+                        
                         <div className='absolute translate-x-6 lg:translate-x-12 translate-y-1/2'>
                             <Image src={session ? session.user.image : 'https://images.unsplash.com/bruh'} className="object-contain border-2 border-blue-600 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
                         </div>
@@ -80,7 +99,7 @@ function MyProfile({ session, articles }) {
                     </div>
                 </div>
 
-                <div className='hidden lg:w-4/12 lg:inline-flex flex-col'>
+                <div className='hidden lg:w-3/12 lg:inline-flex flex-col'>
                     {/* SIDE PANE FOR BIO AND MORE */}
 
                     <div className='p-3 bg-gray-100 rounded-2xl max-h-44 w-11/12 mx-auto flex flex-col align-middle'>
