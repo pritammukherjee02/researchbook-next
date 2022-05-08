@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Router from 'next/router'
 import Image from 'next/image';
 
 import ArticleCardLoading from '../../components/MainContentComponents/ArticleCardLoading';
@@ -21,6 +22,12 @@ import UserNotLoggedInInfo from '../../components/UserNotLoggedInInfo'
 function Profile({ session }) {
     const router = useRouter()
     const { userId } = router.query
+
+    useEffect(() => {
+        if (session && userId == session.user.email) {
+          Router.push('/myprofile')
+        }
+    }, [])
 
     const [following, setFollowing] = useState(false)
 
