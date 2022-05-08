@@ -13,7 +13,7 @@ import { getSession, useSession } from 'next-auth/react'
 import { useDocument } from 'react-firebase-hooks/firestore';
 
 import { db, storage } from '../../firebase'
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
 function Edit({ session }) {
@@ -33,22 +33,30 @@ function Edit({ session }) {
 		  snapshotListenOptions: { includeMetadataChanges: true },
 		}
 	);
+    const [articleCardSnapshot, articleCardLoading, articleCardError] = useDocument(
+		doc(db, 'articleCards', articleId),
+		{
+		  snapshotListenOptions: { includeMetadataChanges: true },
+		}
+	);
 
-    error && console.log(error)
-    if(!loading && articleSnapshot.data().uid != session.user.email){
+    (error || articleCardError) && console.log(error || articleCardError)
+    if(!loading && !articleCardLoading && articleSnapshot.data().uid != session.user.email){
         alert('Permission denied')
         Router.push('/')
 
     }
     const article = !loading ? articleSnapshot.data() : null
+    const articleCard = !articleCardLoading ? articleCardSnapshot.data() : null
 
 
-	const [thumbnailToArticle, setThumbnailToArticle] = useState(!loading ? article.thumbnailLink : null)  // POSSIBLE CAUSE OF FAILURE
+	const [thumbnailToArticle, setThumbnailToArticle] = useState(null)
+    const [originalThumbnail, setOriginalThumbnail] = useState(null)
 
-	const contentRef = useRef(!loading ? article.content : null)
-	const titleRef = useRef(!loading ? article.title : null)
-	const subtitleRef = useRef(!loading ? article.subtitle : null)
-	const descriptionRef = useRef(!loading ? article.description : null)
+	const contentRef = useRef(null)
+	const titleRef = useRef(null)
+	const subtitleRef = useRef(null)
+	const descriptionRef = useRef(null)
 	const thumbnailRef = useRef(null)
 	const filePickerRef = useRef(null)
 	const tagsRef = useRef(null)
@@ -57,7 +65,26 @@ function Edit({ session }) {
         titleRef.current.value = !loading ? article.title : ''
         subtitleRef.current.value = !loading ? article.subtitle : ''
         contentRef.current.value = !loading ? article.content : ''
-    }, [loading])
+        descriptionRef.current.value = !articleCardLoading ? articleCard.description : ''
+        setThumbnailToArticle(!loading ? article.thumbnailLink : null)
+        setOriginalThumbnail(!loading ? article.thumbnailLink : null)
+
+        if(!loading){
+            let tagString = ''
+            article.tags && article.tags.map(tag => {
+                tagString += `${tag}, `
+            })
+            tagsRef.current.value = tagString
+        }
+        else{
+            titleRef.current.value = 'Loading...'
+            subtitleRef.current.value = 'Loading...'
+            contentRef.current.value = 'Loading...'
+            tagsRef.current.value = 'Loading...'
+        }
+
+        if(articleCardLoading) descriptionRef.current.value = 'Loading...'
+    }, [loading, articleCardLoading])
 
 	const userInfo = {
 		uid: 1,
@@ -71,7 +98,7 @@ function Edit({ session }) {
 	}
 
 	async function addArticleCard(articleId, tags, url = ''){
-		const docCardRef = await setDoc(doc(db, 'articleCards', articleId), {
+		const docCardRef = await updateDoc(doc(db, 'articleCards', articleId), {
 			title: titleRef.current.value,
 			description: descriptionRef.current.value,
 			date: '27 Jul, 22',
@@ -80,11 +107,11 @@ function Edit({ session }) {
 			articleId: articleId,
 			thumbnailLink: thumbnailRef.current.value ? thumbnailRef.current.value : url,
 			tags: tags
-		})
+		}, { merge: true })
 	}
 
 	async function addThumbnailToArticle(articleId, url = ''){
-		const docRef = await setDoc(doc(db, 'articles', articleId), {
+		const docRef = await updateDoc(doc(db, 'articles', articleId), {
 			thumbnailLink: thumbnailRef.current.value ? thumbnailRef.current.value : url
 		  }, { merge: true })
 	}
@@ -110,7 +137,7 @@ function Edit({ session }) {
         })
 
         try {
-            const docRef = await addDoc(collection(db, "articles"), {
+            const docRef = await updateDoc(doc(db, 'articles', articleId), {
                 content: contentRef.current.value,
                 title: titleRef.current.value,
                 subtitle: subtitleRef.current.value,
@@ -120,27 +147,39 @@ function Edit({ session }) {
                 uid: session.user.email,
                 thumbnailLink: thumbnailRef.current.value,
                 tags: tags
-            })
+            }, { merge: true })
 
             if(thumbnailToArticle)
             {
-                const uplodaTask = ref(storage, `thumbnails/${docRef.id}`)
-                uploadString(uplodaTask, thumbnailToArticle, 'data_url').then((snapshot) => {
-                    getDownloadURL(ref(storage, snapshot.ref.fullPath))
-                    .then(url => {
-
-                        addArticleCard(docRef.id, tags, url)
-                        addThumbnailToArticle(docRef.id, url)
-
-                        removeThumbnail()
-                        contentRef.current.value = ''
-                        titleRef.current.value = ''
-                        subtitleRef.current.value = ''
-                        descriptionRef.current.value = ''
-                        thumbnailRef.current.value = ''
-
+                if(thumbnailToArticle != originalThumbnail){
+                    const uplodaTask = ref(storage, `thumbnails/${docRef.id}`)
+                    uploadString(uplodaTask, thumbnailToArticle, 'data_url').then((snapshot) => {
+                        getDownloadURL(ref(storage, snapshot.ref.fullPath))
+                        .then(url => {
+    
+                            addArticleCard(articleId, tags, url)
+                            addThumbnailToArticle(articleId, url)
+    
+                            removeThumbnail()
+                            contentRef.current.value = ''
+                            titleRef.current.value = ''
+                            subtitleRef.current.value = ''
+                            descriptionRef.current.value = ''
+                            thumbnailRef.current.value = ''
+    
+                        })
                     })
-                })
+                } else {
+                    addArticleCard(articleId, tags, originalThumbnail)
+                    addThumbnailToArticle(articleId, originalThumbnail)
+
+                    removeThumbnail()
+                    contentRef.current.value = ''
+                    titleRef.current.value = ''
+                    subtitleRef.current.value = ''
+                    descriptionRef.current.value = ''
+                    thumbnailRef.current.value = ''
+                }
 
             /*
             uplodaTask.on('state_change', null, err => console.error(err), () => {
@@ -152,7 +191,7 @@ function Edit({ session }) {
             */
             } else {
 
-                addArticleCard(docRef.id, tags)
+                addArticleCard(articleId, tags)
 
                 removeThumbnail()
                 contentRef.current.value = ''
