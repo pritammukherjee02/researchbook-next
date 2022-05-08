@@ -75,8 +75,9 @@ function MyProfile({ session, articles }) {
                 <div className='w-full h-full lg:w-7/12 pb-5'>
                     {/* USER BANNER AND POSTS */}
 
-                    <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
-                        
+                    <div className='h-40 lg:h-52 lg:rounded-xl relative flex items-end'>
+                        <Image src='https://images.unsplash.com/photo-1619760563678-02e23d15f69f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' className='object-cover lg:rounded-xl' layout='fill' />
+
                         <div className='absolute translate-x-6 lg:translate-x-12 translate-y-1/2'>
                             <Image src={session ? session.user.image : 'https://images.unsplash.com/bruh'} className="object-contain border-2 border-blue-600 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
                         </div>

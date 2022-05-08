@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Image from 'next/image';
 
 import ArticleCardLoading from '../../components/MainContentComponents/ArticleCardLoading';
 
@@ -117,7 +118,9 @@ function Profile({ session }) {
                 <div className='w-full h-full lg:w-7/12 pb-5'>
                     {/* USER BANNER AND POSTS */}
 
-                    <div className='h-40 lg:h-52 bg-blue-400 lg:rounded-xl relative flex items-end'>
+                    <div className='h-40 lg:h-52 lg:rounded-xl relative flex items-end'>
+                    <Image src='https://images.unsplash.com/photo-1619760563678-02e23d15f69f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' className='object-cover lg:rounded-xl' layout='fill' />
+
                         <div className='absolute rounded-full border-2 border-blue-600 bg-blue-100 h-28 w-28 lg:h-34 lg:w-34 translate-x-6 lg:translate-x-12 translate-y-1/2'></div>
                         <div className='relative flex flex-col lg:flex-row items-center lg:gap-2 text-lg pl-36 lg:pl-48 -translate-y-1/4 lg:-translate-y-1/2 text-white'>
                             <span className='text-2xl font-semibold'>{name}</span>
