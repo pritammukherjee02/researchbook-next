@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'
 
 //components
 import MenuDropDown from './HeaderComponents/MenuDropDown'
@@ -14,39 +13,32 @@ interface Props {
 
 function Header({ page='', searchProp='' }:Props) {
     const [searchFieldContent, setSearchFieldContent] = useState('');
-    const router = useRouter()
 
     useEffect(() => {
         setSearchFieldContent(searchProp)
     }, [])
 
-    function search(e: React.SyntheticEvent){
-        e.preventDefault()
-    
-        const target = e.target as typeof e.target & {
-            searchField: { value: string };
-        };
-        const searchField = target.searchField.value;
-    
-        router.push('/search/' + searchField)
-    }
-
-    const onchangeHandler = (e) => {
-        setSearchFieldContent(e.target.value)
-    }
-
     return (
         <header className='flex justify-between p-2 lg:p-4 max-w-7xl mx-auto border-b-2 sticky top-0 z-50 bg-white'>
-            <div className="flex items-center space-x-5">
+            <div className="flex items-center space-x-4">
                 <Link href='/'>
                     <div>
                         <h1 className="object-contain cursor-pointer text-center font-semibold text-md md:text-xl hidden lg:block lg:text-2xl" >ResearchBook</h1>
                         <h1 className='object-contain cursor-pointer text-center font-semibold text-3xl lg:hidden'>Rb</h1>
                     </div>
                 </Link>
-                <form onSubmit={search}>
+                {/* <form onSubmit={search}>
                     <input name='searchField' type="text" placeholder='Search...' onChange={onchangeHandler} value={searchFieldContent} className='hidden md:block outline-none shadow-none px-4 py-2 w-72 border-0 border-b-2 border-blue-500' />
-                </form>
+                </form> */}
+                <Link href='/search'>
+                    <div className='p-3 cursor-pointer transition duration-150 ease-in-out opacity-60 hover:opacity-100 hidden lg:flex gap-2 items-center hover:shadow-md rounded-3xl'>
+                        <svg className={ "h-5 w-5 inline-block" } xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" fill="currentColor">
+                            <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"/>
+                        </svg>
+
+                        <p>Search for Authors and Articles</p>
+                    </div>
+                </Link>
             </div>
             <div className="flex items-center space-x-7">
                 <div className='hidden lg:block'>
