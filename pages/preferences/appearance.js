@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
+import { Toaster } from 'react-hot-toast'
 import { getSession } from 'next-auth/react'
 
 //Components
@@ -30,6 +31,7 @@ function Appearance({ session }) {
 				<title>Preferences | Researchbook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+            <Toaster />
 
             <main className='h-screen overflow-x-hidden'>
                 <Header home={false} page='preferences' searchProp='' />

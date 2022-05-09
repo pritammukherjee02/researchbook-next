@@ -1,7 +1,20 @@
 import React, { useState } from 'react'
 import { Switch } from '@headlessui/react'
+import toaster from 'react-hot-toast'
 
 function ToggleSetting({ settingName, settingDesc, current, setCurrentStateFunction, accentColor }) {
+	const changeHandler = () => {
+		if(!current){
+			toaster.success(`${settingName} enabled`, {
+				style: {
+					borderRadius: '10px',
+					background: '#333',
+					color: '#fff',
+				},
+			})
+		}
+		setCurrentStateFunction(!current)
+	}
   return (
 		<div className='flex items-center justify-between px-5 py-3'>
 			<div className='flex flex-col gap-1 w-7/12 cursor-default'>
