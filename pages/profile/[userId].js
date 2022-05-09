@@ -89,8 +89,8 @@ function Profile({ session }) {
     */
 
     const name = loading ? (<p className='w-44 bg-blue-200 h-5'></p>) : articles[0].data() ? articles[0].data().author : 'BRUH'
-    const followers = '1.1M'
-    const bio = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
+    const followers = '...'
+    const bio = "Loading..."
 
     const articlesMarkup = articles.map((article, index) => {
         if (loading){
@@ -152,9 +152,9 @@ function Profile({ session }) {
                 <div className='hidden lg:w-3/12 lg:inline-flex flex-col'>
                     {/* SIDE PANE FOR BIO AND MORE */}
 
-                    <div className='p-3 bg-gray-100 rounded-2xl max-h-50 w-11/12 mx-auto flex flex-col align-middle'>
-                        <p className='text-md font-bold opacity-40'>About</p>
-                        <p className='text-sm font-light'>{bio}</p>
+                    <div className='p-3 pb-6 w-11/12 max-h-44 border-b-4 mx-auto flex flex-col align-middle'>
+                        <p className='text-md w-full mx-auto font-bold opacity-40 mb-2'>Bio</p>
+                        <p className='text-sm w-full mx-auto font-light'>{bio}</p>
                     </div>
 
                     <div className='mt-5 p-3 w-11/12 mx-auto align-middle'>

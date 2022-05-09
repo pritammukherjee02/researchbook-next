@@ -104,9 +104,9 @@ function MyProfile({ session, articles }) {
                 <div className='hidden lg:w-3/12 lg:inline-flex flex-col'>
                     {/* SIDE PANE FOR BIO AND MORE */}
 
-                    <div className='p-3 bg-gray-100 rounded-2xl max-h-44 w-11/12 mx-auto flex flex-col align-middle'>
-                        <p className='text-md font-bold opacity-40'>About</p>
-                        <p className='text-sm font-light'>{bio}</p>
+                    <div className='p-3 pb-6 w-11/12 max-h-44 border-b-4 mx-auto flex flex-col align-middle'>
+                        <p className='text-md w-full mx-auto font-bold opacity-40 mb-2'>Bio</p>
+                        <p className='text-sm w-full mx-auto font-light'>{bio}</p>
                     </div>
 
                     <div className='mt-5 p-3 w-11/12 mx-auto align-middle'>
