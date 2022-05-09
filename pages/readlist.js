@@ -72,9 +72,11 @@ function Readlist({ session }) {
 					</div>
 					<div className='my-0 w-full lg:w-7/12'>
 						<div className='lg:px-3 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col justify-around gap-1'>
+							
 							{articlesMarkup == [] && <p className='text-sm font-light p-5 opacity-70'>You have nothing in your Readlist yet</p>}
 
 							<div className='lg:m-3 lg:mx-5 flex flex-col gap-1'>
+								<p className='text-4xl lg:text-3xl opacity-70 font-semibold px-5 mb-1'>Readlist</p>
 								{articlesMarkup}
 							</div>
 						</div>
