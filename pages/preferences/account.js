@@ -9,7 +9,7 @@ import AppBar from '../../components/AppBar'
 import SideBar from '../../components/PreferencesComponents/SideBar'
 
 import ToggleSetting from '../../components/PreferencesComponents/ToggleSetting'
-import ColorPickerSetting from '../../components/PreferencesComponents/ColorPickerSetting'
+//import ColorPickerSetting from '../../components/PreferencesComponents/ColorPickerSetting'
 
 function Appearance({ session }) {
     useEffect(() => {
@@ -21,6 +21,7 @@ function Appearance({ session }) {
     const [showMenu, setShowMenu]  = useState(false)
 
     //Setting states
+    const [monetization, setMonetization] = useState(false)
 
     return (
         <div className='flex flex-col gap-14'>
@@ -48,8 +49,9 @@ function Appearance({ session }) {
                         </div>
 
                         <div name='MainContent' className='mt-3'>
+                            <p className='text-md px-5 font-bold opacity-50 cursor-default'>Colors</p>
 
-                            
+                            <ToggleSetting settingName='Monetize content' settingDesc='Enable your articles to make money through ads' current={monetization} setCurrentStateFunction={setMonetization} accentColor={{ name: 'Blue', color: 'bg-blue-500 text-white' }} />    
                         </div>
 
                     </div>
