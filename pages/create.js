@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Router from 'next/router'
 import Image from 'next/image'
 import React, { useRef, useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 import UserInformation from '../components/UserInformation'
@@ -20,6 +22,8 @@ function Create({ session }) {
       Router.push('/login/create')
     }
     }, [])
+
+	let publishToast
 
 	const [thumbnailToArticle, setThumbnailToArticle] = useState(null)
 
@@ -63,6 +67,13 @@ function Create({ session }) {
 
   async function publishArticle(e){
     e.preventDefault()
+	publishToast = toast.loading('Publishing Article...', {
+		style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+        },
+	})
 
     if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
       alert('Please give the title, the subtitle, the content, and the thumbnail image')
@@ -105,6 +116,11 @@ function Create({ session }) {
 					addThumbnailToArticle(docRef.id, url)
 
 					removeThumbnail()
+					toast.success('Published!', { id: publishToast, style: {
+						borderRadius: '10px',
+						background: '#333',
+						color: '#fff',
+					  }, })
 					contentRef.current.value = ''
 					titleRef.current.value = ''
 					subtitleRef.current.value = ''
@@ -127,6 +143,11 @@ function Create({ session }) {
 			addArticleCard(docRef.id, tags)
 
 			removeThumbnail()
+			toast.success('Published!', { id: publishToast,style: {
+				borderRadius: '10px',
+				background: '#333',
+				color: '#fff',
+			  }, })
 			contentRef.current.value = ''
 			titleRef.current.value = ''
 			subtitleRef.current.value = ''
@@ -166,6 +187,7 @@ function Create({ session }) {
             <title>ResearchBook Editor</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
+		<Toaster />
 
         <main className='h-screen'>
             <Header home={false} />

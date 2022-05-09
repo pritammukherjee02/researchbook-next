@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import AppBar from '../components/AppBar'
 import { getSession } from 'next-auth/react'
+import { Toaster } from 'react-hot-toast'
 
 //Components
 import Header from '../components/Header'
@@ -37,6 +38,7 @@ export default function Home({ session }) {
         <title>ResearchBook</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Toaster />
 
       <main className='h-screen overflow-x-hidden'>
         <Header page='home' searchProp=''/>

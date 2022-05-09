@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image'
-import React, {  } from 'react';
+import React, { } from 'react';
 import ArticleCard from './MainContentComponents/ArticleCard';
 import ArticleCardLoading from './MainContentComponents/ArticleCardLoading';
 import SignUpPitch from './MainContentComponents/SignUpPitch';
@@ -11,7 +11,7 @@ import { collection } from "firebase/firestore";
 import { db } from '../firebase'
 
 function MainContent({ session }) {
-
+    
     const [realtimeArticles, loading, error] = useCollection(
         collection(db, 'articleCards')
     )

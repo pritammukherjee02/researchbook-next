@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
 
 import DeleteBtn from './DeleteBtn'
 import DeleteButton from './DeleteButton'
@@ -14,8 +15,18 @@ export default function Example({ selfOwned, articleId, articleCardId, selfUid, 
     const deleteArticle = async () => {
         await deleteDoc(doc(db, "articleCards", articleCardId));
         await deleteDoc(doc(db, "articles", articleId));
-        await deleteObject(ref(storage, `thumbnails/${articleId}`));
-        alert('Permanently deleted article')
+        try {
+          await deleteObject(ref(storage, `thumbnails/${articleId}`));
+        } catch (error) {
+          
+        }
+        toast.success('Successfully Deleted Article', {
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
     }
 
     const addToReadlist = async (e) => {
