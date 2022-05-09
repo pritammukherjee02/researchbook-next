@@ -95,7 +95,7 @@ function MyProfile({ session, articles }) {
 
                     <div className='lg:p-3 lg:mt-20 border-t-2 lg:border-t-4'>
                         {/* ARTICLE CARDS BELONGING TO THE USER */}
-                        <p className='text-xl opacity-70 px-5 lg:px-3 pt-3 pb-1 lg:pb-3 font-semibold'>Articles by {name}</p>
+                        <p className='text-xl opacity-70 px-5 lg:px-3 pt-5 pb-1 lg:pb-3 font-semibold'>Articles by {name}</p>
 
                         {articlesMarkup}
                     </div>
