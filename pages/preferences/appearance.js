@@ -9,10 +9,13 @@ import Header from '../../components/Header'
 import AppBar from '../../components/AppBar'
 import SideBar from '../../components/PreferencesComponents/SideBar'
 
+import { db } from '../../firebase'
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+
 import ToggleSetting from '../../components/PreferencesComponents/ToggleSetting'
 import ColorPickerSetting from '../../components/PreferencesComponents/ColorPickerSetting'
 
-function Appearance({ session }) {
+function Appearance({ session, userAppearanceSettingsData }) {
     useEffect(() => {
         if (!session) {
           Router.push('/login/preferences')
@@ -22,8 +25,32 @@ function Appearance({ session }) {
     const [showMenu, setShowMenu]  = useState(false)
 
     //Setting states
-    const [allowCustomAccent, setAllowCustomAccent] = useState(false)
-    const [accentColor, setAccentColor] = useState({ name: 'Blue', color: 'bg-blue-500 text-white' })
+    const [allowCustomAccent, setAllowCustomAccent] = useState(userAppearanceSettingsData.appearenceSettingsData.accentColor.allowAccentColor)
+    const [accentColor, setAccentColor] = useState(userAppearanceSettingsData.appearenceSettingsData.accentColor.color)
+
+    const appearenceSettingsData = {
+        accentColor: {
+            allowAccentColor: allowCustomAccent,
+            color: accentColor
+        }
+    }
+
+    const updateSettings = async () => {
+        const appearanceSettingsRef = await updateDoc(doc(db, 'userSettings', session ? session.user.email : ''), {
+            appearenceSettingsData
+        }, { merge: true })
+    }
+    
+    const setSettings = async () => {
+        const appearenceSettingsRef = await setDoc(doc(db, 'userSettings', session ? session.user.email : ''), {
+            appearenceSettingsData
+        }, { merge: true })
+    }
+
+    useEffect(() => {
+        if(userAppearanceSettingsData == null) setSettings()
+        else if (appearenceSettingsData != userAppearanceSettingsData) updateSettings()
+    }, [appearenceSettingsData])
 
     return (
         <div className='flex flex-col gap-14'>
@@ -72,10 +99,13 @@ export default Appearance
 export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
+    const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+    const userAppearanceSettingsData = docSnap.exists ? docSnap.data() : null
   
     return {
       props: {
-        session
+        session,
+        userAppearanceSettingsData
       }
     }
   }
