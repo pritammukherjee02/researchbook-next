@@ -92,7 +92,7 @@ function Index({ session }) {
 
                                 <p className='mx-7 lg:mx-16 text-sm font-light'>What do you want to read today?</p>
                                 <div className='w-full lg:w-8/12 lg:m-3 lg:mx-5 flex flex-col'>
-                                    <Hits hitComponent={Hit} />
+                                    <Hits hitComponent={Hit} uid={session.user.email} />
                                 </div>
                             </div>
                         </div>
@@ -117,9 +117,9 @@ function Index({ session }) {
     )
 }
 
-function Hit({hit}) {
+function Hit({hit, uid}) {
     return (
-      <ArticleCard title={hit.title} thumbnailLink={hit.thumbnailLink} description={hit.description} author={hit.author} date={hit.date} />
+      <ArticleCard title={hit.title} selfOwned={hit.uid == uid} thumbnailLink={hit.thumbnailLink} description={hit.description} author={hit.author} date={hit.date} />
     );
   }
 

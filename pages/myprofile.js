@@ -37,7 +37,7 @@ function MyProfile({ session, articles }) {
 
     const name = session ? session.user.name : 'Your name'
     const followers = '0'
-    const bio = "Bio"
+    const bio = "This website will shine mark my words!! Shit like large live broadcasts by multiple hosts and realtime chat for those broadcasts and more"
     /*
     let articles = [
         {title: 'God is dead', description: 'And we killed him. You and I', author: 'D Maxwell', date: '12 Apr, 22'},
@@ -47,7 +47,7 @@ function MyProfile({ session, articles }) {
     */
 
     const articlesMarkup = articles.map((article, index) => {
-        return <ArticleCard key={index} uid={article.uid} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} date={article.date} />
+        return <ArticleCard articleId={article.articleId} key={index} uid={article.uid} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} date={article.date} />
     })
 
     const toggleFollowing = () => {
@@ -85,16 +85,17 @@ function MyProfile({ session, articles }) {
                             <span className='text-2xl font-semibold'>{name}</span>
                             <span> {followers} Followers</span>
                         </div>
-                        <button onClick={toggleFollowing} className={'px-6 py-3 lg:px-5 lg:py-2 mt-4 text-md lg:text-sm absolute right-6 bottom-24 lg:bottom-3 text-white rounded-full transition-all ' + (following ? 'bg-gray-700 hover:bg-gray-900' : 'bg-blue-500 hover:bg-blue-600')}>{following ? 'FOLLOWING' : 'FOLLOW'}</button>
+                        <button className={'px-6 py-2 lg:px-5 lg:py-2 mt-4 text-md lg:text-sm absolute right-6 bottom-24 lg:bottom-3 text-white rounded-full transition-all bg-blue-500 hover:bg-blue-600'}>EDIT</button>
                     </div>
 
-                    <div className='lg:hidden p-3 mt-16 bg-gray-100 rounded-2xl w-11/12 mx-auto'>
-                        <p className='text-md font-bold opacity-40'>About</p>
-                        <p className='text-sm font-light'>{bio}</p>
+                    <div className='lg:hidden py-3 pb-5 mt-12 border-b-2 w-12/12 mx-auto'>
+                        {/* <p className='text-md font-bold opacity-40'>About</p> */}
+                        <p className='text-md font-light w-11/12 mx-auto'>{bio}</p>
                     </div>
 
-                    <div className='lg:p-3 lg:mt-16'>
+                    <div className='lg:p-3 lg:mt-20 border-t-2 lg:border-t-4'>
                         {/* ARTICLE CARDS BELONGING TO THE USER */}
+                        <p className='text-xl opacity-70 px-5 lg:px-3 pt-3 pb-1 lg:pb-3 font-semibold'>Articles by {name}</p>
 
                         {articlesMarkup}
                     </div>
@@ -134,7 +135,7 @@ export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
 
-    const q = query(collection(db, "articles"), where("uid", "==", session ? session.user.email : 'someemailaddress@email.com'));
+    const q = query(collection(db, "articleCards"), where("uid", "==", session ? session.user.email : 'someemailaddress@email.com'));
     const querySnapshot = await getDocs(q);
 
     let articles = []
