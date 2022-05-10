@@ -8,6 +8,9 @@ import Header from '../../components/Header'
 import AppBar from '../../components/AppBar'
 import SideBar from '../../components/PreferencesComponents/SideBar'
 
+import { db } from '../../firebase'
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+
 import ToggleSetting from '../../components/PreferencesComponents/ToggleSetting'
 //import ColorPickerSetting from '../../components/PreferencesComponents/ColorPickerSetting'
 

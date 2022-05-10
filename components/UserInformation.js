@@ -21,8 +21,8 @@ function UserInformation({ userInfo, session, page, accentColor={ name: 'Blue', 
       </div>
 
       <Link href='/create'>
-        <div className={'mt-5 hidden lg:flex items-center px-6 py-3 rounded-full cursor-pointer justify-center transition duration-150 ease-in-out ' + accentColor.primary + ' ' + accentColor.hover}>
-          <p className={`text-xl font-semibold ${accentColor.text}`}>Create</p>
+        <div className={`mt-5 hidden lg:flex items-center px-6 py-3 rounded-full cursor-pointer justify-center transition duration-150 ease-in-out ${accentColor.text} ${accentColor.hover} ` + accentColor.primary + ' ' + accentColor.hover}>
+          <p className={`text-xl font-semibold`}>Create</p>
         </div>
       </Link>
   </div>
