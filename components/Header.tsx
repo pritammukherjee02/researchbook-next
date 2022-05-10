@@ -7,11 +7,12 @@ import NotificationDropDownBetter from './HeaderComponents/NotificationDropDownB
 
 interface Props {
     page: string,
-    searchProp: any
+    searchProp: any,
+    accentColor: any
 }
 
 
-function Header({ page='', searchProp='' }:Props) {
+function Header({ page='', searchProp='', accentColor }:Props) {
     const [searchFieldContent, setSearchFieldContent] = useState('');
 
     useEffect(() => {
@@ -44,7 +45,7 @@ function Header({ page='', searchProp='' }:Props) {
                 <div className='hidden lg:block'>
                     <Link href='/'>
                         <h3 className='flex flex-col items-center cursor-pointer'>
-                            <svg xmlns="http://www.w3.org/2000/svg" className={ "h-7 w-7 " + (page == 'home' ? 'text-blue-500' : 'text-gray-700') } viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className={ "h-7 w-7 " + (page == 'home' ? accentColor.icon : 'text-gray-700') } viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                             </svg>
                             {/*<p className='text-sm text-blue-500'>Home</p>*/}
@@ -54,7 +55,7 @@ function Header({ page='', searchProp='' }:Props) {
                 <div className='hidden lg:block'>
                     <Link href='/readlist'>
                         <h3 className='flex flex-col items-center cursor-pointer'>
-                            <svg className={ "h-7 w-7 " + (page == 'readlist' ? 'text-blue-500' : 'text-gray-700') } fill="currentColor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            <svg className={ "h-7 w-7 " + (page == 'readlist' ? accentColor.icon : 'text-gray-700') } fill="currentColor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 64 64" enableBackground="new 0 0 64 64" xmlSpace="preserve">
                                 <path id="Bookmark_1_" d="M55.5311928,13.5146999c-1.2568016-1.2578001-2.9980011-1.9794998-4.7783012-1.9794998H16.0770931
                                     c-1.0039005,0-1.8213005-0.8174-1.8213005-1.8389006c0-0.5145998,0.2011995-1,0.5634995-1.3632994
@@ -83,14 +84,14 @@ function Header({ page='', searchProp='' }:Props) {
                 <div className=''>
                     <Link href='/notifications'>
                         <h3 className='flex flex-col items-center cursor-pointer'>
-                            <svg xmlns="http://www.w3.org/2000/svg" className={ "h-7 w-7 " + (page == 'notifications' ? 'text-blue-500' : 'text-gray-700') } viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className={ "h-7 w-7 " + (page == 'notifications' ? accentColor.icon : 'text-gray-700') } viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                             </svg>
                             {/*<p className='text-sm text-gray-700'>Notifications</p>*/}
                         </h3>
                     </Link>
                 </div>
-                <MenuDropDown />
+                <MenuDropDown accentColor={accentColor} />
             </div>
         </header>
     )

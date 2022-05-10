@@ -2,12 +2,12 @@ import React, { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
 const accentColors = [
-    { name: 'Blue', color: 'bg-blue-500 text-white' },
-    { name: 'Red', color: 'bg-red-600 text-white' },
-    { name: 'Green', color: 'bg-green-600 text-white' },
-    { name: 'Yellow', color: 'bg-yellow-400 text-black' },
-    { name: 'Graphite', color: 'bg-gray-700 text-white' },
-    { name: 'Dark', color: 'bg-black text-white' },
+    { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', secondary: 'bg-blue-200', text: 'text-white', icon: 'text-blue-500' },
+    { name: 'Red', color: 'bg-red-600 text-white', primary: 'bg-red-600', secondary: 'bg-red-200', text: 'text-white', icon: 'text-red-600' },
+    { name: 'Green', color: 'bg-green-600 text-white', primary: 'bg-green-600', secondary: 'bg-green-200', text: 'text-white', icon: 'text-green-600' },
+    { name: 'Yellow', color: 'bg-yellow-400 text-black', primary: 'bg-yellow-400', secondary: 'bg-blue-200', text: 'text-black', icon: 'text-yellow-400' },
+    { name: 'Graphite', color: 'bg-gray-700 text-white', primary: 'bg-gray-700', secondary: 'bg-gray-400', text: 'text-white', icon: 'text-gray-900' },
+    { name: 'Dark', color: 'bg-black text-white', primary: 'bg-black', secondary: 'bg-gray-700', text: 'text-white', icon: 'text-black' },
   ]
 
 function ColorPickerSetting({ settingName, settingDesc, currentColor, setCurrentColorStateFunction }) {

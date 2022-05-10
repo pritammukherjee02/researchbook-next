@@ -25,8 +25,8 @@ function Appearance({ session, userAppearanceSettingsData }) {
     const [showMenu, setShowMenu]  = useState(false)
 
     //Setting states
-    const [allowCustomAccent, setAllowCustomAccent] = useState(userAppearanceSettingsData.appearenceSettingsData.accentColor.allowAccentColor)
-    const [accentColor, setAccentColor] = useState(userAppearanceSettingsData.appearenceSettingsData.accentColor.color)
+    const [allowCustomAccent, setAllowCustomAccent] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.allowAccentColor : false)
+    const [accentColor, setAccentColor] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.color : 'bg-blue-500 text-white')
 
     const appearenceSettingsData = {
         accentColor: {
