@@ -4,7 +4,7 @@ import Router from 'next/router'
 import Image from 'next/image'
 
 import { getSession } from 'next-auth/react'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from '../firebase'
 
 //Components
@@ -15,12 +15,14 @@ import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import AppBar from '../components/AppBar'
 
-function MyProfile({ session, articles }) {
+function MyProfile({ session, articles, userSettingsData }) {
     useEffect(() => {
         if (!session) {
           Router.push('/login/myprofile')
         }
     }, [])
+
+    const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     const [following, setFollowing] = useState(false)
 
@@ -47,7 +49,7 @@ function MyProfile({ session, articles }) {
     */
 
     const articlesMarkup = articles.map((article, index) => {
-        return <ArticleCard articleId={article.articleId} key={index} uid={article.uid} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} date={article.date} />
+        return <ArticleCard accentColor={accentColor} articleId={article.articleId} key={index} uid={article.uid} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} date={article.date} />
     })
 
     const toggleFollowing = () => {
@@ -55,7 +57,7 @@ function MyProfile({ session, articles }) {
         else setFollowing(true)
     }
 
-    const userInformationMarkup = session ? (<UserInformation page='myprofile' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='myprofile' />)
+    const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} page='myprofile' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} page='myprofile' />)
 
     return (
         <div>
@@ -64,7 +66,7 @@ function MyProfile({ session, articles }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header home={false} searchProp='' />
+            <Header accentColor={accentColor} home={false} searchProp='' />
 
             <div className='lg:px-5 lg:mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto gap-3 flex flex-col lg:flex-row justify-between relative'>
                 
@@ -79,13 +81,13 @@ function MyProfile({ session, articles }) {
                         <Image src='https://images.unsplash.com/photo-1619760563678-02e23d15f69f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' className='object-cover lg:rounded-xl' layout='fill' />
 
                         <div className='absolute translate-x-6 lg:translate-x-12 translate-y-1/2'>
-                            <Image src={session ? session.user.image : 'https://images.unsplash.com/bruh'} className="object-contain border-2 border-blue-600 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
+                            <Image src={session ? session.user.image : 'https://images.unsplash.com/bruh'} className="object-contain border-2 rounded-full h-28 w-28 lg:h-34 lg:w-34" width={112} height={112} layout='fixed' objectFit='cover' />
                         </div>
                         <div className='relative flex flex-col lg:flex-row lg:items-center lg:gap-2 text-lg pl-36 lg:pl-48 -translate-y-1/4 lg:-translate-y-1/2 text-white'>
                             <span className='text-2xl font-semibold'>{name}</span>
                             <span> {followers} Followers</span>
                         </div>
-                        <button className={'px-6 py-2 lg:px-5 lg:py-2 mt-4 text-md lg:text-sm absolute right-6 bottom-24 lg:bottom-3 text-white rounded-full transition-all bg-blue-500 hover:bg-blue-600'}>EDIT</button>
+                        <button className={`px-6 py-2 lg:px-5 lg:py-2 mt-4 text-md lg:text-sm absolute right-6 bottom-24 lg:bottom-3 ${accentColor.color} ${accentColor.hover} rounded-full transition-all`}>EDIT</button>
                     </div>
 
                     <div className='lg:hidden py-3 pb-5 mt-12 border-b-2 w-12/12 mx-auto'>
@@ -123,7 +125,7 @@ function MyProfile({ session, articles }) {
 
             </div>
 
-            <AppBar />
+            <AppBar accentColor={accentColor} />
 
         </div>
     )
@@ -134,6 +136,8 @@ export default MyProfile
 export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
+    const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+    const userSettingsData = docSnap.exists ? docSnap.data() : null
 
     const q = query(collection(db, "articleCards"), where("uid", "==", session ? session.user.email : 'someemailaddress@email.com'));
     const querySnapshot = await getDocs(q);
@@ -146,7 +150,8 @@ export async function getServerSideProps(context) {
     return {
       props: {
         session,
-        articles
+        articles,
+        userSettingsData
       }
     }
   }

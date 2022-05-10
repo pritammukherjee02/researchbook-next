@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import React, { useEffect, useState } from 'react'
+import { getSession } from 'next-auth/react'
 import Recommended from '../../components/ArticleComponents/Recommended'
 import UserInfo from '../../components/ArticleComponents/UserInfo'
 import Header from '../../components/Header'
@@ -14,6 +15,7 @@ import { db } from '../../firebase'
 
 
 function Article({ article }) {
+    //const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     const [following, setFollowing] = useState(false)
 
@@ -116,7 +118,7 @@ export async function getStaticPaths() {
     articlesSnapshot?.forEach(article => {
         paths.push({
             params: {
-                id: article.id
+                id: article.id,
             }
         })
     })
@@ -139,7 +141,7 @@ export const getStaticProps = async ({ params }) => {
 
     return {
         props: {
-            article
+            article,
         }
     }
 }

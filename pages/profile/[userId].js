@@ -8,7 +8,7 @@ import ArticleCardLoading from '../../components/MainContentComponents/ArticleCa
 
 import { getSession } from 'next-auth/react'
 import { db } from '../../firebase'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDoc, doc } from "firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 //Components
@@ -19,9 +19,11 @@ import AppBar from '../../components/AppBar'
 import UserInformation from '../../components/UserInformation'
 import UserNotLoggedInInfo from '../../components/UserNotLoggedInInfo'
 
-function Profile({ session }) {
+function Profile({ session, userSettingsData }) {
     const router = useRouter()
     const { userId } = router.query
+
+    const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     useEffect(() => {
         if (session && userId == session.user.email) {
@@ -96,7 +98,7 @@ function Profile({ session }) {
         if (loading){
             return <ArticleCardLoading />
         } else {
-            return <ArticleCard key={article.id} articleId={article.id} title={article.data().title} thumbnailLink={article.data().thumbnailLink} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
+            return <ArticleCard accentColor={accentColor} key={article.id} articleId={article.id} title={article.data().title} thumbnailLink={article.data().thumbnailLink} description={article.data().description} uid={article.data().uid} author={article.data().author} date={article.data().date} />
         }
     })
 
@@ -105,7 +107,7 @@ function Profile({ session }) {
         else setFollowing(true)
     }
 
-    const userInformationMarkup = session ? (<UserInformation page='profile' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='profile' />)
+    const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} page='profile' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} page='profile' />)
 
     return (
         <div>
@@ -114,7 +116,7 @@ function Profile({ session }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header home={false} searchProp='' />
+            <Header accentColor={accentColor} home={false} searchProp='' />
 
             <div className='lg:px-5 lg:mt-5 pb-14 gap-3 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
                 
@@ -171,7 +173,7 @@ function Profile({ session }) {
 
             </div>
 
-            <AppBar />
+            <AppBar accentColor={accentColor} />
 
         </div>
     )
@@ -182,10 +184,13 @@ export default Profile
 export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
+    const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+    const userSettingsData = docSnap.exists ? docSnap.data() : null
   
     return {
       props: {
-        session
+        session,
+        userSettingsData
       }
     }
 }
