@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 
-function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' } }) {
+function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' } }) {
 
     return (
         <div className=''>
@@ -9,7 +9,7 @@ function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 t
                 <div id="tabs" className="flex justify-between">
                     <Link href='/'>
 
-                        <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'home' ? 'text-blue-500' : '')}>
+                        <div className={`w-full justify-center ${accentColor.hoverIcon} inline-block text-center pt-2 pb-1 ` + (currentPage == 'home' ? accentColor.icon : '')}>
                             <svg xmlns="http://www.w3.org/2000/svg" className={ "h-6 w-6 inline-block mb-1" } viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                             </svg>
@@ -19,7 +19,7 @@ function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 t
                     </Link>
                     <Link href='/search'>
 
-                        <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'search' ? 'text-blue-500' : '')}>
+                        <div className={`w-full justify-center ${accentColor.hoverIcon} inline-block text-center pt-2 pb-1 ` + (currentPage == 'search' ? accentColor.icon : '')}>
                             <svg className={ "h-6 w-6 inline-block mb-1" } xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" fill="currentColor">
                                 <path d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"/>
                             </svg>
@@ -29,7 +29,7 @@ function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 t
                     </Link>
                     <Link href='/create'>
 
-                        <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'create' ? 'text-blue-500' : '')}>
+                        <div className={`w-full justify-center ${accentColor.hoverIcon} inline-block text-center pt-2 pb-1 ` + (currentPage == 'create' ? accentColor.icon : '')}>
                             <svg className={ "h-6 w-6 inline-block mb-1" } fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 52 52" xmlSpace="preserve">
                                 <path d="M26,0C11.664,0,0,11.663,0,26s11.664,26,26,26s26-11.663,26-26S40.336,0,26,0z M38.5,28H28v11c0,1.104-0.896,2-2,2
@@ -43,7 +43,7 @@ function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 t
                     </Link>
                     <Link href='/readlist'>
 
-                        <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'readlist' ? 'text-blue-500' : '')}>
+                        <div className={`w-full justify-center ${accentColor.hoverIcon} inline-block text-center pt-2 pb-1 ` + (currentPage == 'readlist' ? accentColor.icon : '')}>
                             <svg className={ "h-6 w-6 inline-block mb-1" } fill="currentColor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xmlSpace="preserve">
                                 <path id="Bookmark_1_" d="M55.5311928,13.5146999c-1.2568016-1.2578001-2.9980011-1.9794998-4.7783012-1.9794998H16.0770931
@@ -72,7 +72,7 @@ function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 t
                     </Link>
                     <Link href='/myprofile'>
 
-                        <div className={'w-full focus:text-blue-500 hover:text-blue-500 justify-center inline-block text-center pt-2 pb-1 ' + (currentPage == 'account' ? 'text-blue-500' : '')}>
+                        <div className={`w-full justify-center ${accentColor.hoverIcon} inline-block text-center pt-2 pb-1 ` + (currentPage == 'account' ? accentColor.icon : '')}>
                             <svg className={ "h-6 w-6 inline-block mb-1" } fill="currentColor" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>person-profile-image</title>
                                 <path d="M61.44,0A61.46,61.46,0,1,1,18,18,61.21,61.21,0,0,1,61.44,0ZM49.28,71.35c.26-2.18-6.23-10.54-7.41-14.54-2.54-4-3.44-10.46-.68-14.73,1.11-1.69.63-3.16.63-5.51,0-23.24,40.7-23.24,40.7,0,0,2.94-.67,3.63.92,6,2.66,3.86,1.29,10.72-1,14.3C81,61,74.24,69,74.71,71.37c.42,11.92-25.5,11.53-25.43,0v0Zm-31,20.07c3.25-3.6,9.09-3.76,16.17-7.36a74.7,74.7,0,0,0,7.75-4.53c8.22,10.08,15,21.16,12.78,34.05a52.65,52.65,0,0,0,6.44.4c.55,0,1.09,0,1.64,0-.5-15.14,8.38-26.21,17.79-35.63A68.55,68.55,0,0,0,96.33,86c4.62,1.54,7.39,2.53,9,4.3a52.54,52.54,0,1,0-87,1.08Z"/>
                             </svg>

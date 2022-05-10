@@ -26,7 +26,7 @@ function Appearance({ session, userAppearanceSettingsData }) {
 
     //Setting states
     const [allowCustomAccent, setAllowCustomAccent] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.allowAccentColor : false)
-    const [accentColor, setAccentColor] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.color : 'bg-blue-500 text-white')
+    const [accentColor, setAccentColor] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     const appearenceSettingsData = {
         accentColor: {

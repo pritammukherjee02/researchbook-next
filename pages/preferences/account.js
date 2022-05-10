@@ -11,12 +11,13 @@ import SideBar from '../../components/PreferencesComponents/SideBar'
 import ToggleSetting from '../../components/PreferencesComponents/ToggleSetting'
 //import ColorPickerSetting from '../../components/PreferencesComponents/ColorPickerSetting'
 
-function Appearance({ session }) {
+function Appearance({ session, userSettingsData }) {
     useEffect(() => {
         if (!session) {
           Router.push('/login/preferences')
         }
     }, [])
+    const [accentColor, setAccentColor] = useState(userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     const [showMenu, setShowMenu]  = useState(false)
 
@@ -51,7 +52,7 @@ function Appearance({ session }) {
                         <div name='MainContent' className='mt-3'>
                             <p className='text-md px-5 font-bold opacity-50 cursor-default'>Colors</p>
 
-                            <ToggleSetting settingName='Monetize content' settingDesc='Enable your articles to make money through ads' current={monetization} setCurrentStateFunction={setMonetization} accentColor={{ name: 'Blue', color: 'bg-blue-500 text-white' }} />    
+                            <ToggleSetting settingName='Monetize content' settingDesc='Enable your articles to make money through ads' current={monetization} setCurrentStateFunction={setMonetization} accentColor={accentColor} />    
                         </div>
 
                     </div>
@@ -68,10 +69,13 @@ export default Appearance
 export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
+    const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+    const userSettingsData = docSnap.exists ? docSnap.data() : null
   
     return {
       props: {
-        session
+        session,
+        userSettingsData
       }
     }
   }
