@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Router from 'next/router'
 import { getSession } from 'next-auth/react'
 
 import { useDocument } from 'react-firebase-hooks/firestore';
-import { doc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase'
 
 //components
@@ -15,12 +15,14 @@ import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import ArticleCardLoading from '../components/MainContentComponents/ArticleCardLoading'
 import ReadlistCard from '../components/ReadlistComponents/ReadlistCard';
 
-function Readlist({ session }) {
+function Readlist({ session, userSettingsData }) {
   useEffect(() => {
     if (!session) {
       Router.push('/login/readlist')
     }
     }, [])
+
+	const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
 	const userInfo = {
         uid: 1,
@@ -50,11 +52,11 @@ function Readlist({ session }) {
         if (loading){
             return <ArticleCardLoading />
         } else {
-            return <ReadlistCard key={article.id} selfUid={session.user.email} session={session} articleId={article.articleId} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} />
+            return <ReadlistCard accentColor={accentColor} key={article.id} selfUid={session.user.email} session={session} articleId={article.articleId} title={article.title} thumbnailLink={article.thumbnailLink} description={article.description} author={article.author} />
         }
     })
 
-	const userInformationMarkup = session ? (<UserInformation page='readlist' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='readlist' />)
+	const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} page='readlist' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} page='readlist' />)
 
 	return (
 		<div className='flex flex-col gap-14'>
@@ -64,7 +66,7 @@ function Readlist({ session }) {
 			</Head>
 
 			<main className='h-screen overflow-x-hidden'>
-				<Header home={false} page='readlist' searchProp='' />
+				<Header accentColor={accentColor} home={false} page='readlist' searchProp='' />
 
 				<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row relative'>
 					<div className='hidden lg:flex w-full lg:w-2/12'>
@@ -83,7 +85,7 @@ function Readlist({ session }) {
 					</div>
 				</div>
 
-				<AppBar currentPage='readlist' />
+				<AppBar accentColor={accentColor} currentPage='readlist' />
 			</main>
 
 			{/*<main className='pb-14'>
@@ -105,10 +107,13 @@ export default Readlist
 export async function getServerSideProps(context) {
   //GET THE USER
   const session = await getSession(context)
+  const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+  const userSettingsData = docSnap.exists ? docSnap.data() : null
 
   return {
     props: {
-      session
+      session,
+	  userSettingsData
     }
   }
 }

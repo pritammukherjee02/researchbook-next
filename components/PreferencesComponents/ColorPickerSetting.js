@@ -2,12 +2,12 @@ import React, { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
 const accentColors = [
-    { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', secondary: 'bg-blue-200', text: 'text-white', icon: 'text-blue-500' },
-    { name: 'Red', color: 'bg-red-600 text-white', primary: 'bg-red-600', secondary: 'bg-red-200', text: 'text-white', icon: 'text-red-600' },
-    { name: 'Green', color: 'bg-green-600 text-white', primary: 'bg-green-600', secondary: 'bg-green-200', text: 'text-white', icon: 'text-green-600' },
-    { name: 'Yellow', color: 'bg-yellow-400 text-black', primary: 'bg-yellow-400', secondary: 'bg-blue-200', text: 'text-black', icon: 'text-yellow-400' },
-    { name: 'Graphite', color: 'bg-gray-700 text-white', primary: 'bg-gray-700', secondary: 'bg-gray-400', text: 'text-white', icon: 'text-gray-900' },
-    { name: 'Dark', color: 'bg-black text-white', primary: 'bg-black', secondary: 'bg-gray-700', text: 'text-white', icon: 'text-black' },
+    { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' },
+    { name: 'Red', color: 'bg-red-600 text-white', primary: 'bg-red-600', hover: 'hover:bg-red-700', secondary: 'bg-red-100', secondaryHover: 'hover:bg-red-200', text: 'text-white', contentText: 'text-black', icon: 'text-red-600' },
+    { name: 'Green', color: 'bg-green-600 text-white', primary: 'bg-green-600', hover: 'hover:bg-green-700', secondary: 'bg-green-100', secondaryHover: 'hover:bg-green-200', text: 'text-white', contentText: 'text-black', icon: 'text-green-600' },
+    { name: 'Yellow', color: 'bg-yellow-400 text-black', primary: 'bg-yellow-400', hover: 'hover:bg-yellow-500', secondary: 'bg-yellow-100', secondaryHover: 'hover:bg-yellow-200', text: 'text-black', contentText: 'text-black', icon: 'text-yellow-400' },
+    { name: 'Graphite', color: 'bg-gray-700 text-white', primary: 'bg-gray-700', hover: 'hover:bg-gray-800', secondary: 'bg-gray-200', secondaryHover: 'hover:bg-gray-300', text: 'text-white', contentText: 'text-black', icon: 'text-gray-900' },
+    { name: 'Dark', color: 'bg-black text-white', primary: 'bg-black', hover: 'hover:bg-white hover:text-black', secondary: 'bg-gray-500', secondaryHover: 'hover:bg-gray-700', text: 'text-white', contentText: 'text-white', icon: 'text-black' },
   ]
 
 function ColorPickerSetting({ settingName, settingDesc, currentColor, setCurrentColorStateFunction }) {

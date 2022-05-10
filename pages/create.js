@@ -12,16 +12,17 @@ import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import { getSession, useSession } from 'next-auth/react'
 
 import { db, storage } from '../firebase'
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
-function Create({ session }) {
+function Create({ session, userSettingsData }) {
   //const session = useSession()
   useEffect(() => {
     if (!session) {
       Router.push('/login/create')
     }
     }, [])
+	const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
 	let publishToast
 
@@ -67,19 +68,25 @@ function Create({ session }) {
 
   async function publishArticle(e){
     e.preventDefault()
+	
+    if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
+		toast.error('Please give the title, subtitle, content, and the thumbnail image', {
+			style: {
+				borderRadius: '10px',
+				background: '#333',
+				color: '#fff',
+			},
+		})
+		return
+    }
+	
 	publishToast = toast.loading('Publishing Article...', {
 		style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-        },
+			borderRadius: '10px',
+			background: '#333',
+			color: '#fff',
+		},
 	})
-
-    if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
-      alert('Please give the title, the subtitle, the content, and the thumbnail image')
-      return
-    }
-
 	const tagsCollection = (tagsRef.current.value).split(',')
 	const tags = []
 	tagsCollection.map(tag => {
@@ -162,7 +169,7 @@ function Create({ session }) {
 
   }
 
-  	const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
+  	const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} />)
 
 	const addThumbnailImageToArticle = (e) => {
 		const reader = new FileReader()
@@ -190,7 +197,7 @@ function Create({ session }) {
 		<Toaster />
 
         <main className='h-screen'>
-            <Header home={false} />
+            <Header accentColor={accentColor} home={false} />
 
               <div className='lg:px-5 mt-5 mb-3 pb-14 lg:pb-0 max-w-7xl mx-auto'>
                 <div className='flex gap-4'>
@@ -202,7 +209,7 @@ function Create({ session }) {
 					<form onSubmit={publishArticle} className='flex flex-col w-full h-full lg:w-8/12 pb-5'>
 						<div className='flex justify-between items-center lg:w-11/12'>
 						<input type="text" ref={titleRef} name='title' className='p-2 text-3xl outline-none shadow-none font-bold w-full lg:w-8/12 mb-1' placeholder='Title...' />
-						<input type='submit' value='Publish' className='px-6 h-10 mr-3 lg:mr-0 lg:h-11 text-md bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md' />
+						<input type='submit' value='Publish' className={`px-6 h-10 mr-3 lg:mr-0 lg:h-11 text-md ${accentColor.color} ${accentColor.hover} cursor-pointer rounded-md`} />
 						</div>
 						<input type="text" ref={subtitleRef} name='subtitle' className='p-2 outline-none shadow-none text-2xl font-light opacity-50 w-full lg:w-8/12 mb-5' placeholder='Sub-title...' />
 
@@ -239,7 +246,7 @@ function Create({ session }) {
                 </div>
               </div>
 
-              <AppBar currentPage='create' />
+              <AppBar accentColor={accentColor} currentPage='create' />
         
         </main>
 
@@ -250,12 +257,15 @@ function Create({ session }) {
 export default Create
 
 export async function getServerSideProps(context) {
-  //GET THE USER
-  const session = await getSession(context)
-
-  return {
-    props: {
-      session
-    }
+	//GET THE USER
+	const session = await getSession(context)
+	const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+	const userSettingsData = docSnap.exists ? docSnap.data() : null
+  
+	return {
+	  props: {
+		session,
+		userSettingsData
+	  }
+	}
   }
-}

@@ -1,8 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 
-function AppBar(props) {
-    const currentPage = props.currentPage
+function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' } }) {
 
     return (
         <div className=''>

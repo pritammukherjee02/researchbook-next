@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 import { getSession } from 'next-auth/react'
 import Head from 'next/head'
+
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase'
 
 //Components
 import Header from '../components/Header'
@@ -11,12 +14,14 @@ import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import NotificationCard from '../components/NotificationsComponents/NotificationCard'
 
-function Notifications({ session }) {
+function Notifications({ session, userSettingsData }) {
     useEffect(() => {
         if (!session) {
           Router.push('/login/readlist')
         }
         }, [])
+
+	const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
 	const userInfo = {
 		uid: 1,
@@ -29,7 +34,7 @@ function Notifications({ session }) {
 		following: 98
 	}
 
-	const userInformationMarkup = session ? (<UserInformation page='notifications' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='notifications' />)
+	const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} page='notifications' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} page='notifications' />)
 
 	const notifications = [
 		{
@@ -72,7 +77,7 @@ function Notifications({ session }) {
 			</Head>
 
 			<main className='h-screen overflow-x-hidden'>
-				<Header home={false} page='notifications' searchProp='' />
+				<Header accentColor={accentColor} home={false} page='notifications' searchProp='' />
 
 				<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col gap-12 lg:flex-row relative'>
 					<div className='hidden lg:flex w-full lg:w-2/12'>
@@ -110,7 +115,7 @@ function Notifications({ session }) {
 					</div>
 				</div>
 
-				<AppBar currentPage='notifications' />
+				<AppBar accentColor={accentColor} currentPage='notifications' />
 			</main>
 
 		</div>
@@ -123,10 +128,13 @@ export default Notifications
 export async function getServerSideProps(context) {
 	//GET THE USER
 	const session = await getSession(context)
+	const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+	const userSettingsData = docSnap.exists ? docSnap.data() : null
   
 	return {
 	  props: {
-		session
+		session,
+		userSettingsData
 	  }
 	}
   }

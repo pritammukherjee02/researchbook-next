@@ -3,6 +3,8 @@ import Router from 'next/router'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import React, { useRef, useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import Header from '../../components/Header'
 import AppBar from '../../components/AppBar'
 import UserInformation from '../../components/UserInformation'
@@ -13,16 +15,17 @@ import { getSession, useSession } from 'next-auth/react'
 import { useDocument } from 'react-firebase-hooks/firestore';
 
 import { db, storage } from '../../firebase'
-import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
-function Edit({ session }) {
+function Edit({ session, userSettingsData }) {
   //const session = useSession()
   useEffect(() => {
     if (!session) {
       Router.push('/login')
     }
     }, [])
+    const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     const router = useRouter()
     const { articleId } = router.query
@@ -120,9 +123,23 @@ function Edit({ session }) {
         e.preventDefault()
 
         if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
-        alert('Please give the title, the subtitle, the content, and the thumbnail image')
-        return
-        }
+          toast.error('Please give the title, subtitle, content, and the thumbnail image', {
+            style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
+            },
+          })
+          return
+          }
+        
+        publishToast = toast.loading('Publishing Edits...', {
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
 
         const tagsCollection = (tagsRef.current.value).split(',')
         const tags = []
@@ -161,6 +178,11 @@ function Edit({ session }) {
                             addThumbnailToArticle(articleId, url)
     
                             removeThumbnail()
+                            toast.success('Edits Published!', { id: publishToast, style: {
+                              borderRadius: '10px',
+                              background: '#333',
+                              color: '#fff',
+                              }, })
                             contentRef.current.value = ''
                             titleRef.current.value = ''
                             subtitleRef.current.value = ''
@@ -174,6 +196,11 @@ function Edit({ session }) {
                     addThumbnailToArticle(articleId, originalThumbnail)
 
                     removeThumbnail()
+                    toast.success('Edits Published!', { id: publishToast, style: {
+                      borderRadius: '10px',
+                      background: '#333',
+                      color: '#fff',
+                      }, })
                     contentRef.current.value = ''
                     titleRef.current.value = ''
                     subtitleRef.current.value = ''
@@ -208,7 +235,7 @@ function Edit({ session }) {
 
     }
 
-  	const userInformationMarkup = session ? (<UserInformation session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo />)
+  	const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} />)
 
 	const addThumbnailImageToArticle = (e) => {
 		const reader = new FileReader()
@@ -233,9 +260,10 @@ function Edit({ session }) {
             <title>Edit Article | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
+        <Toaster />
 
         <main className='h-screen'>
-            <Header home={false} />
+            <Header accentColor={accentColor} home={false} />
 
               <div className='lg:px-5 mt-5 mb-3 pb-14 lg:pb-0 max-w-7xl mx-auto'>
                 <div className='flex gap-4'>
@@ -247,7 +275,7 @@ function Edit({ session }) {
 					<form onSubmit={publishArticle} className='flex flex-col w-full h-full lg:w-8/12 pb-5'>
 						<div className='flex justify-between items-center lg:w-11/12'>
 						<input type="text" ref={titleRef} name='title' className='p-2 text-3xl outline-none shadow-none font-bold w-full lg:w-8/12 mb-1' placeholder='Title...' />
-						<input type='submit' value='Publish' className='px-6 h-10 mr-3 lg:mr-0 lg:h-11 text-md bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded-md' />
+						<input type='submit' value='Publish' className={`px-6 h-10 mr-3 lg:mr-0 lg:h-11 text-md ${accentColor.color} ${accentColor.hover} cursor-pointer rounded-md`} />
 						</div>
 						<input type="text" ref={subtitleRef} name='subtitle' className='p-2 outline-none shadow-none text-2xl font-light opacity-50 w-full lg:w-8/12 mb-5' placeholder='Sub-title...' />
 
@@ -284,7 +312,7 @@ function Edit({ session }) {
                 </div>
               </div>
 
-              <AppBar currentPage='create' />
+              <AppBar accentColor={accentColor} currentPage='create' />
         
         </main>
 
@@ -295,12 +323,15 @@ function Edit({ session }) {
 export default Edit
 
 export async function getServerSideProps(context) {
-  //GET THE USER
-  const session = await getSession(context)
-
-  return {
-    props: {
-      session
-    }
-  }
+	//GET THE USER
+	const session = await getSession(context)
+	const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+	const userSettingsData = docSnap.exists ? docSnap.data() : null
+  
+	return {
+	  props: {
+		session,
+		userSettingsData
+	  }
+	}
 }

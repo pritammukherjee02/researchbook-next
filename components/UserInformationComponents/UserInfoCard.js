@@ -2,12 +2,12 @@ import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
 
-function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid, pfp='/bruh' }) {
+function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid, pfp='/bruh', accentColor }) {
   return (
     <div>
-        <div className='p-2 mx-auto w-full hidden lg:block bg-blue-100 rounded-xl'>
+        <div className={`p-2 mx-auto w-full hidden lg:block ${accentColor.secondary} rounded-xl`}>
             <Link href={'/myprofile'}>
-                <div className='cursor-pointer p-1 rounded-lg transition duration-150 ease-in-out hover:bg-blue-200'>
+                <div className={`cursor-pointer p-1 rounded-lg ${accentColor.contentText} transition duration-150 ease-in-out ${accentColor.secondaryHover}`}>
                     <p className='pl-2 text-xl font-semibold'>{name}</p>
                     <div className='flex space-2 pt-3'>
                         {/*<div className='border-2 border-blue-500 rounded-full h-10 w-10 mt-2 ml-3 lg:ml-0'></div>*/}
@@ -57,9 +57,9 @@ function UserInfoCard({ name, fieldOfExpertise, jobDesignation, username, uid, p
         </div>
 
         {/* Mobile View */}
-        <div className='p-1 py-5 mx-3 lg:hidden bg-blue-100 rounded-xl'>
+        <div className={`p-1 py-5 mx-3 lg:hidden ${accentColor.secondary} rounded-xl`}>
             <Link href={'/myprofile'}>
-                <div className='cursor-pointer p-1 flex items-center space-2 rounded-lg hover:bg-blue-200'>
+                <div className={`cursor-pointer p-1 flex items-center ${accentColor.contentText} space-2 rounded-lg ${accentColor.secondaryHover}`}>
                     {/*<div className='border-2 border-blue-500 rounded-full h-14 w-14 mt-2 ml-3 lg:ml-0'></div>*/}
                     <div className='w-3'></div>
                     <Image src={pfp} className="object-contain border-2 rounded-full h-14 w-14 mt-2 ml-3 lg:ml-0" width={56} height={56} layout='fixed' objectFit='cover' />

@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { getSession } from 'next-auth/react'
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../../firebase'
 
 import algoliasearch from 'algoliasearch/lite';
 import {
@@ -31,8 +33,9 @@ const searchClient = algoliasearch(
   'a827d5781711d37cccbfab0539cf992a'
 );
 
-function Search({ session }) {
+function Search({ session, userSettingsData }) {
   const router = useRouter()
+  const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
   const { searchField } = router.query
   const [searchFieldContent, setSearchFieldContent] = useState(searchField ? searchField : '');
 
@@ -60,7 +63,7 @@ function Search({ session }) {
     setSearchFieldContent(e.target.value)
   }
 
-  const userInformationMarkup = session ? (<UserInformation page='search' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo page='search' />)
+  const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} page='search' session={session} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} page='search' />)
 
   const SearchBox = ({ currentRefinement, refine }) => (
     <form noValidate action="" role="search">
@@ -78,7 +81,7 @@ function Search({ session }) {
       </Head>
 
       	<main className='h-screen overflow-x-hidden'>
-			<Header home={false} searchProp='' />
+			<Header accentColor={accentColor} home={false} searchProp='' />
 
 			<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between relative'>
         <InstantSearch indexName="articles" searchClient={searchClient}>
@@ -106,7 +109,7 @@ function Search({ session }) {
         </InstantSearch>
 			</div>
 
-			<AppBar currentPage='search' />
+			<AppBar accentColor={accentColor} currentPage='search' />
     	</main>
 
       {/*<Header home={false} searchProp='' />
@@ -137,13 +140,16 @@ function Hit({hit}) {
 export default Search
 
 export async function getServerSideProps(context) {
-    //GET THE USER
-    const session = await getSession(context)
-  
-    return {
-      props: {
-        session
-      }
+  //GET THE USER
+  const session = await getSession(context)
+  const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+  const userSettingsData = docSnap.exists ? docSnap.data() : null
+
+  return {
+    props: {
+      session,
+      userSettingsData
     }
   }
+}
   
