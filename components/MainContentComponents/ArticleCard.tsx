@@ -50,10 +50,12 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
                         </div>
                     </div>
 
+                    {/* <div className='p-2 w-36 bg-purple-100'></div> */}
                     <ArticleCardMenuDropdown selfUid={selfUid} session={session} selfOwned={selfOwned} articleCardId={articleCardId} articleId={articleId} title={title} desc={description} author={author} thumbnailLink={thumbnailLink} />
                 </div>
             </div>
         </div>
+        <div className='h-1 w-full bg-blue-500 rounded-full mt-2'></div>
     </div>
   )
 }
