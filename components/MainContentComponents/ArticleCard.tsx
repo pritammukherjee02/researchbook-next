@@ -41,7 +41,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
                             <p>~</p>
                             <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
                             <Link href={'/profile/' + uid}>
-                                <p className='cursor-pointer text-sm absolute ml-12 hover:font-semibold'>{author}</p>
+                                <p className='cursor-pointer text-sm absolute ml-[50px] hover:font-semibold'>{author}</p>
                             </Link>
                         </div>
                         <div className='flex gap-1 items-center'>
