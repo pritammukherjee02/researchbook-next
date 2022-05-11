@@ -133,7 +133,7 @@ function Edit({ session, userSettingsData }) {
           return
           }
         
-        publishToast = toast.loading('Publishing Edits...', {
+        const publishToast = toast.loading('Publishing Edits...', {
           style: {
             borderRadius: '10px',
             background: '#333',
