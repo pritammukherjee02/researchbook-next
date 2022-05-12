@@ -5,7 +5,7 @@ const accentColors = [
     { name: 'White', articleCardAccent: 'bg-white', articleContentElementAccent: 'text-black', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-white' },
     { name: 'Blue', articleCardAccent: 'bg-blue-500', articleContentElementAccent: 'text-blue-600', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-blue-200' },
     { name: 'Pink', articleCardAccent: 'bg-pink-300', articleContentElementAccent: 'text-pink-600', articleInteractiveElementAccent: 'bg-pink-200 text-black', articleInteractiveElementAccentHover: 'hover:bg-pink-600 focus:bg-pink-600', articleBgColor: 'bg-pink-200' },
-    { name: 'Violet', articleCardAccent: 'bg-violet-300', articleContentElementAccent: 'text-violet-600', articleInteractiveElementAccent: 'bg-violet-200 text-black', articleInteractiveElementAccentHover: 'hover:bg-violet-500 focus:bg-violet-500', articleBgColor: 'bg-violet-200' },
+    { name: 'Violet', articleCardAccent: 'bg-violet-300', articleContentElementAccent: 'text-violet-600', articleInteractiveElementAccent: 'bg-violet-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-violet-600 focus:bg-violet-600', articleBgColor: 'bg-violet-200' },
   ]
 
 function AccentColorPicker({ currentColor, setCurrentColorStateFunction }) {
