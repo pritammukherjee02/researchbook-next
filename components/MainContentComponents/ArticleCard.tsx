@@ -67,10 +67,10 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
             </Link>
             <div className='flex flex-col h-full md:w-8/12 w-12/12 lg:w-8/12 pt-1 pb-3 px-1 lg:px-5'>
                 <Link href={`/article/${articleId}`}>
-                    <p className='text-sm lg:text-base opacity-70 cursor-pointer'>{description}</p>
+                    <p className='text-sm pb-1 lg:text-base opacity-70 cursor-pointer'>{description}</p>
                 </Link>
                 <div className='flex justify-between items-end'>
-                    <div className='w-full'>
+                    <div className='w-9/12'>
                         <div className='flex gap-1 items-center mt-2'>
                             <p>~</p>
                             <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
@@ -85,7 +85,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
                     </div>
 
                     {/* <div className='p-2 w-36 bg-purple-100'></div> */}
-                    <div className='flex w-10 gap-2'>
+                    <div className='flex w-16 gap-2'>
                         <div onClick={addToReadlist} className='flex items-center cursor-pointer'>
                             <svg className='h-7 text-gray-700 w-7' version="1.1" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                 <defs>
