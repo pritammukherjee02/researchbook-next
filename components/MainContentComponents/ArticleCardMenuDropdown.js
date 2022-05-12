@@ -47,35 +47,13 @@ export default function Example({ selfOwned, articleId, articleCardId, selfUid, 
         console.log('ERR: READLISTADD: ', e)
         return
       }
-        
-	  /*
-        await setDoc(doc(db, 'readlists', selfUid), {
-          info: [{articleId: articleId,
-          title: title,
-          description: desc,
-          author: author,
-          thumbnailLink: thumbnailLink
-        }]
-        }, { merge: true });
-		
-
-        await updateDoc(doc(db, 'readlists', selfUid), {
-            info: arrayUnion({
-				articleId: articleId,
-				title: title,
-				description: desc,
-				author: author,
-				thumbnailLink: thumbnailLink
-			})
-        });
-		*/
     }
 
     return (
-        <div className="w-56 text-right z-10">
+        <div className="w-56 z-10">
         <Menu as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="focus:outline-none p-3">
+                <Menu.Button className="focus:outline-none px-3 lg:px-1">
 
                     <svg id="Layer_1" className="h-4 text-gray-700 w-4" data-name="Layer 1" fill="currentColor" stroke='currentColor' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 29.96"><path class="cls-1" d="M0,15A15,15,0,1,1,15,30,15,15,0,0,1,0,15Zm92.93,0a15,15,0,1,1,15,15,15,15,0,0,1-15-15ZM46.46,15a15,15,0,1,1,15,15,15,15,0,0,1-15-15Z"/></svg>
 
