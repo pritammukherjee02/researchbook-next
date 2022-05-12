@@ -19,10 +19,11 @@ interface Props {
     thumbnailLink: string,
     selfUid: any,
     session: any,
-    selfOwned: boolean
+    selfOwned: boolean,
+    articleAccentColor: any
 }
 
-function ArticleCard({ title, description, author, date, articleId, articleCardId, uid, thumbnailLink, selfOwned, selfUid, session }:Props) {
+function ArticleCard({ title, description, author, date, articleId, articleCardId, uid, thumbnailLink, selfOwned, selfUid, session, articleAccentColor }:Props) {
 
     const addToReadlist = async (e) => {
         const toast = toaster.loading('Adding to Readlist', {
@@ -166,7 +167,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
                 </div>
             </div>
         </div>
-        <div className='h-1 w-full bg-blue-500 rounded-full mt-2'></div>
+        <div className={`h-1 w-full ${articleAccentColor ? articleAccentColor.articleCardAccent : 'bg-white'} rounded-full mt-2`}></div>
     </div>
   )
 }

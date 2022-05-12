@@ -9,6 +9,7 @@ import Header from '../../components/Header'
 import AppBar from '../../components/AppBar'
 import UserInformation from '../../components/UserInformation'
 import UserNotLoggedInInfo from '../../components/UserNotLoggedInInfo'
+import AccentColorPicker from '../../components/CreateComponents/AccentColorPicker'
 
 import { getSession, useSession } from 'next-auth/react'
 
@@ -26,6 +27,7 @@ function Edit({ session, userSettingsData }) {
     }
     }, [])
     const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
+    const [articleAccentColor, setArticleAccentColor] = useState({ name: 'White', articleCardAccent: 'bg-white', articleContentElementAccent: 'text-black', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-white' })
 
     const router = useRouter()
     const { articleId } = router.query
@@ -109,7 +111,8 @@ function Edit({ session, userSettingsData }) {
 			uid: session.user.email,
 			articleId: articleId,
 			thumbnailLink: thumbnailRef.current.value ? thumbnailRef.current.value : url,
-			tags: tags
+			tags: tags,
+			articleAccentColor: articleAccentColor
 		}, { merge: true })
 	}
 
@@ -163,7 +166,8 @@ function Edit({ session, userSettingsData }) {
                 author: session.user.name,
                 uid: session.user.email,
                 thumbnailLink: thumbnailRef.current.value,
-                tags: tags
+                tags: tags,
+				articleAccentColor: articleAccentColor
             }, { merge: true })
 
             if(thumbnailToArticle)
@@ -206,6 +210,7 @@ function Edit({ session, userSettingsData }) {
                     subtitleRef.current.value = ''
                     descriptionRef.current.value = ''
                     thumbnailRef.current.value = ''
+                    Router.push('/')
                 }
 
             /*
@@ -221,11 +226,17 @@ function Edit({ session, userSettingsData }) {
                 addArticleCard(articleId, tags)
 
                 removeThumbnail()
+                toast.success('Edits Published!', { id: publishToast, style: {
+                  borderRadius: '10px',
+                  background: '#333',
+                  color: '#fff',
+                }, })
                 contentRef.current.value = ''
                 titleRef.current.value = ''
                 subtitleRef.current.value = ''
                 descriptionRef.current.value = ''
                 thumbnailRef.current.value = ''
+                Router.push('/')
             }
         } catch (e) {
         alert('Something went wrong')
@@ -306,6 +317,11 @@ function Edit({ session, userSettingsData }) {
 							<div className='flex flex-col gap-2 justify-between lg:w-full mb-5'>
 								<input type="text" ref={tagsRef} name='tags' className='p-2 w-11/12 mx-auto rounded-xl outline-none shadow-none text-md font-light opacity-50 border-2' placeholder="Comma (',') seperated..." />
 							</div>
+						</div>
+
+						<div name='ArticleAccent' className='border-t-2 mt-2 p-3 w-full'>
+							<p className='text-md font-semibold opacity-30 mb-4 cursor-default'>Accent color</p>
+							<AccentColorPicker currentColor={articleAccentColor} setCurrentColorStateFunction={setArticleAccentColor} />
 						</div>
 					</form>
 

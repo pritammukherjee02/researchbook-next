@@ -58,7 +58,8 @@ function Create({ session, userSettingsData }) {
 			uid: session.user.email,
 			articleId: articleId,
 			thumbnailLink: thumbnailRef.current.value ? thumbnailRef.current.value : url,
-			tags: tags
+			tags: tags,
+			articleAccentColor: articleAccentColor
 		})
 	}
 
@@ -111,7 +112,8 @@ function Create({ session, userSettingsData }) {
 			author: session.user.name,
 			uid: session.user.email,
 			thumbnailLink: thumbnailRef.current.value,
-			tags: tags
+			tags: tags,
+			articleAccentColor: articleAccentColor
 		})
 
 		if(thumbnailToArticle)
