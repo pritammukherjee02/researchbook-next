@@ -61,7 +61,7 @@ function Article({ article }) {
             <Header page='article' searchProp='' />
 
             <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
-                <div className='w-full h-full lg:w-8/12 pb-5'>
+                <div className='w-full h-full lg:w-8/12 mb-20'>
                     <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
                         <Link href={'/profile/' + articleDetails.uid}>
                             <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-14 w-14'></div>

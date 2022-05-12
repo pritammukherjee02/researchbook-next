@@ -74,7 +74,7 @@ function MyProfile({ session, articles, userSettingsData }) {
                     {userInformationMarkup}
                 </div>
                 
-                <div className='w-full h-full lg:w-7/12 pb-5'>
+                <div className='w-full h-full lg:w-7/12 pb-20'>
                     {/* USER BANNER AND POSTS */}
 
                     <div className='h-40 lg:h-52 lg:rounded-xl relative flex items-end'>

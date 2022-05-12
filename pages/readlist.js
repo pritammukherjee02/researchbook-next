@@ -68,7 +68,7 @@ function Readlist({ session, userSettingsData }) {
 			<main className='h-screen overflow-x-hidden'>
 				<Header accentColor={accentColor} home={false} page='readlist' searchProp='' />
 
-				<div className='lg:px-5 mt-5 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row relative'>
+				<div className='lg:px-5 mt-5 pb-20 lg:pb-0 max-w-7xl mx-auto flex flex-col lg:flex-row relative'>
 					<div className='hidden lg:flex w-full lg:w-2/12'>
 						{userInformationMarkup}
 					</div>

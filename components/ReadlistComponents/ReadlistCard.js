@@ -17,14 +17,13 @@ function ReadlistCard({ title, author, description, thumbnailLink='/bruh', artic
             </Link>
             <div className='flex flex-col h-full md:w-8/12 w-12/12 lg:w-8/12 pt-1 pb-3 px-1 lg:px-5'>
                 <Link href={`/article/${articleId}`}>
-                    <p className='text-sm lg:text-base opacity-70 cursor-pointer'>{description}</p>
+                    <p className='text-sm mb-1 lg:text-base opacity-70 cursor-pointer'>{description}</p>
                 </Link>
                 <div className='flex justify-between items-end'>
                     <div className='w-full'>
                         <div className='flex text-sm gap-1 items-center mt-2'>
-                            <p>~</p>
-                            <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
-                            <p className='cursor-pointer absolute ml-14 hover:font-semibold'>{author}</p>
+                            <div className='border border-blue-500 rounded-full h-6 w-6'></div>
+                            <p className='cursor-pointer absolute ml-[30px] hover:font-semibold'>{author}</p>
                         </div>
                     </div>
 

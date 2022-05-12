@@ -72,14 +72,12 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
                 <div className='flex justify-between items-end'>
                     <div className='w-9/12'>
                         <div className='flex gap-1 items-center mt-2'>
-                            <p>~</p>
-                            <div className='ml-2 border border-blue-500 rounded-full h-6 w-6'></div>
+                            <div className='border border-blue-500 rounded-full h-6 w-6'></div>
                             <Link href={'/profile/' + uid}>
-                                <p className='cursor-pointer text-sm absolute ml-[50px] hover:font-semibold'>{author}</p>
+                                <p className='cursor-pointer text-sm absolute ml-[30px] hover:font-semibold'>{author}</p>
                             </Link>
                         </div>
-                        <div className='flex gap-1 items-center'>
-                            <p>~</p>
+                        <div className='flex gap-1 mt-1 items-center'>
                             <p className='text-sm'>{date}</p>
                         </div>
                     </div>
