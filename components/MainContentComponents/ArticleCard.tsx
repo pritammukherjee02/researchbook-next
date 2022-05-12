@@ -84,7 +84,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
 
                     {/* <div className='p-2 w-36 bg-purple-100'></div> */}
                     <div className='flex w-16 gap-2'>
-                        <div onClick={addToReadlist} className='flex items-center cursor-pointer'>
+                        <div onClick={addToReadlist} className='flex items-center cursor-pointer rounded-3xl'>
                             <svg className='h-7 text-gray-700 w-7' version="1.1" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                 <defs>
                                 <symbol id="v" overflow="visible">

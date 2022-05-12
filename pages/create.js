@@ -8,6 +8,7 @@ import Header from '../components/Header'
 import AppBar from '../components/AppBar'
 import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
+import AccentColorPicker from '../components/CreateComponents/AccentColorPicker'
 
 import { getSession, useSession } from 'next-auth/react'
 
@@ -23,6 +24,7 @@ function Create({ session, userSettingsData }) {
     }
     }, [])
 	const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
+	const [articleAccentColor, setArticleAccentColor] = useState({ name: 'White', articleCardAccent: 'bg-white', articleContentElementAccent: 'text-black', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-white' })
 
 	let publishToast
 
@@ -199,7 +201,7 @@ function Create({ session, userSettingsData }) {
         <main className='h-screen'>
             <Header accentColor={accentColor} home={false} />
 
-              <div className='lg:px-5 mt-5 mb-3 pb-14 lg:pb-0 max-w-7xl mx-auto'>
+              <div className='lg:px-5 mt-5 mb-3 pb-28 max-w-7xl mx-auto'>
                 <div className='flex gap-4'>
 
 					<div className='hidden lg:flex w-full lg:w-2/12'>
@@ -224,7 +226,7 @@ function Create({ session, userSettingsData }) {
 
 								<span className='text-xs cursor-default font-semibold opacity-20 mx-auto'>OR</span>
 
-								{!thumbnailToArticle && <div onClick={() => filePickerRef.current.click()} className='w-11/12 lg:w-7/12 mx-auto p-8 flex items-center justify-center text-sm opacity-50 rounded-lg cursor-pointer bg-gray-100 border-gray-500 border-2 border-dashed'>Upload Image</div>}
+								{!thumbnailToArticle && <div onClick={() => filePickerRef.current.click()} className='w-11/12 lg:w-7/12 mx-auto p-8 flex items-center justify-center text-sm opacity-50 rounded-lg cursor-pointer bg-gray-100 border-gray-500 border-2 border-dashed'>Click to upload image</div>}
 							</div>
 							<input ref={filePickerRef} onChange={addThumbnailImageToArticle} type='file' hidden />
 							{thumbnailToArticle && (
@@ -240,6 +242,11 @@ function Create({ session, userSettingsData }) {
 							<div className='flex flex-col gap-2 justify-between lg:w-full mb-5'>
 								<input type="text" ref={tagsRef} name='tags' className='p-2 w-11/12 mx-auto rounded-xl outline-none shadow-none text-md font-light opacity-50 border-2' placeholder="Comma (',') seperated..." />
 							</div>
+						</div>
+
+						<div name='ArticleAccent' className='border-t-2 mt-2 p-3 w-full'>
+							<p className='text-md font-semibold opacity-30 mb-4 cursor-default'>Accent color</p>
+							<AccentColorPicker currentColor={articleAccentColor} setCurrentColorStateFunction={setArticleAccentColor} />
 						</div>
 					</form>
 
