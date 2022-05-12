@@ -47,15 +47,18 @@ function Article({ article }) {
         else setFollowing(true)
     }
 
+    
+
   return (
     <div className='flex flex-col gap-14'>
         <Head>
             <title>{articleDetails.title} | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
+            {/* <link rel="stylesheet" href="/articleStyles.css" /> */}
         </Head>
 
-        <main className='h-screen pb-14'>
-            <Header page='' searchProp='' />
+        <main className='pb-14 h-full  justify-self-stretch self-stretch'>
+            <Header page='article' searchProp='' />
 
             <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
                 <div className='w-full h-full lg:w-8/12 pb-5'>

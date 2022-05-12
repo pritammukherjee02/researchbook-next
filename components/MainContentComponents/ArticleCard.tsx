@@ -24,7 +24,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
   return (
     <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 transition duration-150 ease-in-out rounded-sm'>
         <Link href={`/article/${articleId}`}>
-            <h2 className='text-3xl lg:text-2xl font-semibold cursor-pointer'>{title}</h2>
+            <h2 className='text-2xl lg:text-2xl font-semibold cursor-pointer'>{title}</h2>
         </Link>
         <div className='flex flex-col md:flex-row gap-3 mt-4 md:items-center'>
             <Link href={`/article/${articleId}`}>
@@ -33,7 +33,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
             </Link>
             <div className='flex flex-col h-full md:w-8/12 w-12/12 lg:w-8/12 p-3 px-5'>
                 <Link href={`/article/${articleId}`}>
-                    <p className='  cursor-pointer'>{description}</p>
+                    <p className='text-sm  cursor-pointer'>{description}</p>
                 </Link>
                 <div className='flex justify-between items-end'>
                     <div className='w-full'>

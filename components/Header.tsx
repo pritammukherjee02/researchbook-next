@@ -20,7 +20,7 @@ function Header({ page='', searchProp='', accentColor={ name: 'Blue', color: 'bg
     }, [])
 
     return (
-        <header className='flex justify-between p-2 lg:p-4 max-w-7xl mx-auto border-b-2 sticky top-0 z-50 bg-white'>
+        <header className={'flex justify-between p-2 lg:p-4 max-w-7xl mx-auto border-b-2 sticky top-0 z-50 ' + (page == 'article' ? 'bg-white' : 'bg-white')}>
             <div className="flex items-center space-x-4">
                 <Link href='/'>
                     <div>
