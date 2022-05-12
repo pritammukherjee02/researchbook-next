@@ -4,10 +4,11 @@ import React, { useState } from 'react'
 interface Props {
     name: String,
     followers: String,
-    uid: Number
+    uid: Number,
+    articleAccentColor: any
 }
 
-function UserInfo({ name, followers, uid }:Props) {
+function UserInfo({ name, followers, uid, articleAccentColor }:Props) {
     const [following, setFollowing] = useState(false)
 
     const toggleFollowing = () => {
@@ -27,7 +28,7 @@ function UserInfo({ name, followers, uid }:Props) {
                     </Link>
                     <p className='text-sm opacity-70'>{followers} Followers</p>
                     <div className='flex'>
-                        <button onClick={toggleFollowing} className={'px-4 py-2 mt-4 text-sm text-white rounded-full ' + (following ? 'bg-gray-700 hover:bg-gray-900' : 'bg-blue-500 hover:bg-blue-600')}>{following ? 'Following' : 'Follow'}</button>
+                        <button onClick={toggleFollowing} className={'px-4 py-2 mt-4 text-sm text-white rounded-full ' + (following ? 'bg-gray-700 hover:bg-gray-900' : `${articleAccentColor.articleInteractiveElementAccent} ${articleAccentColor.articleInteractiveElementAccentHover}`)}>{following ? 'Following' : 'Follow'}</button>
                     </div>
                 </div>
             </div>

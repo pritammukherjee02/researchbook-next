@@ -8,11 +8,12 @@ import NotificationDropDownBetter from './HeaderComponents/NotificationDropDownB
 interface Props {
     page: string,
     searchProp: any,
-    accentColor: any
+    accentColor: any,
+    bgColor: string
 }
 
 
-function Header({ page='', searchProp='', accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' } }:Props) {
+function Header({ page='', searchProp='', accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' }, bgColor='bg-white' }:Props) {
     const [searchFieldContent, setSearchFieldContent] = useState('');
 
     useEffect(() => {
@@ -20,7 +21,7 @@ function Header({ page='', searchProp='', accentColor={ name: 'Blue', color: 'bg
     }, [])
 
     return (
-        <header className={'flex justify-between p-2 lg:p-4 max-w-7xl mx-auto border-b-2 sticky top-0 z-50 ' + (page == 'article' ? 'bg-white' : 'bg-white')}>
+        <header className={'flex justify-between p-2 lg:p-4 max-w-7xl mx-auto sticky top-0 z-50 ' + (page == 'article' ? bgColor : 'bg-white border-b-2')}>
             <div className="flex items-center space-x-4">
                 <Link href='/'>
                     <div>

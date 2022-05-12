@@ -1,11 +1,11 @@
 import React from 'react'
 import Link from 'next/link';
 
-function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' } }) {
+function AppBar({ currentPage, accentColor={ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' }, bgColor }) {
 
     return (
         <div className=''>
-            <footer id="bottom-navigation" className="block fixed inset-x-0 h-auto bottom-0 z-10 bg-white shadow lg:hidden border-t-2">
+            <footer id="bottom-navigation" className={"block fixed inset-x-0 h-auto bottom-0 z-10  shadow lg:hidden border-t-2 " + bgColor}>
                 <div id="tabs" className="flex justify-between">
                     <Link href='/'>
 

@@ -26,12 +26,27 @@ function Article({ article }) {
         title: "How and why is the demonlord so menacing?",
         subtitle: "Demonlord's pursuits",
         content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem asperiores facere id est adipisci nesciunt totam odit, cum dolores non ipsam aut eius similique repudiandae assumenda. Non asperiores ipsum consequuntur officiis. Voluptas placeat vel similique sapiente quasi dolorum, cum nostrum, perferendis veniam quibusdam doloribus, dolorem aperiam suscipit temporibus iste? Consectetur hic saepe cupiditate qui accusantium corporis? Sunt in dolorum esse obcaecati, consequuntur aliquid natus eum quis doloremque quibusdam vel praesentium corporis quasi non facilis quia possimus. Iste exercitationem amet cumque ab, illum, et quaerat enim asperiores excepturi rerum quos aspernatur veritatis ducimus ipsam soluta corrupti deleniti quisquam autem deserunt earum.",
-        thumbnailLink: 'https://images.unsplash.com/photo-1448772917253-74bbbe249b30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
+        thumbnailLink: 'https://images.unsplash.com/photo-1448772917253-74bbbe249b30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+        articleAccentColor: {
+            articleBgColor: 'bg-white',
+            articleInteractiveElementAccent: 'bg-blue-500',
+            articleInteractiveElementAccentHover: 'bg-blue-600'
+        }
     })
 
     useEffect(() => {
         if(article) setArticleDetails(article)
     }, [article])
+
+    const [articleAccentColor, setArticleAccentColor] = useState(articleDetails.articleAccentColor ? articleDetails.articleAccentColor : {
+        articleBgColor: 'bg-white',
+        articleInteractiveElementAccent: 'bg-blue-500',
+        articleInteractiveElementAccentHover: 'bg-blue-600'
+    })
+
+    useEffect(() => {
+        setArticleAccentColor(articleDetails.articleAccentColor)
+    }, [articleDetails])
 
     const recommendedArticles = [
         {title: 'How to nuke a country effectively?', description: 'You have to be vigilant about prying eyes when it comes to nuking...', author: 'Demonlord', date: '14 Feb, 22', thumbnailLink: articleDetails.thumbnailLink},
@@ -50,62 +65,66 @@ function Article({ article }) {
     
 
   return (
-    <div className='flex flex-col gap-14'>
+    <div className='flex h-[1&#37;] after:content-none after:hidden after:clear-both after:h-0 flex-col gap-14'>
         <Head>
             <title>{articleDetails.title} | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
             {/* <link rel="stylesheet" href="/articleStyles.css" /> */}
         </Head>
 
-        <main className='pb-14 h-full  justify-self-stretch self-stretch'>
-            <Header page='article' searchProp='' />
+        <main className='h-screen'>
+            <div className={articleAccentColor.articleBgColor}>
+                <Header bgColor={articleAccentColor.articleBgColor} page='article' searchProp='' />
+            </div>
 
-            <div className='lg:px-5 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
-                <div className='w-full h-full lg:w-8/12 mb-20'>
-                    <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
-                        <Link href={'/profile/' + articleDetails.uid}>
-                            <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-14 w-14'></div>
-                        </Link>
-                        <div className='flex flex-col pl-5 my-auto justify-between'>
-                            <div className='flex items-center'>
-                                <Link href={'/profile/' + articleDetails.uid}>
-                                    <p className='text-lg cursor-pointer'>{articleDetails.author}</p>
-                                </Link>
-                                <button onClick={toggleFollowing} className={'px-3 py-1 ml-3 text-sm lg:hidden text-white rounded-full ' + (following ? 'bg-gray-700 hover:bg-gray-900' : 'bg-blue-500 hover:bg-blue-600')}>{following ? 'Following' : 'Follow'}</button>
+            <div className={`${articleAccentColor.articleBgColor} overflow-scroll`}>
+                <div className='lg:px-5 pb-14 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
+                    <div className='w-full h-full lg:w-8/12 mb-20'>
+                        <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
+                            <Link href={'/profile/' + articleDetails.uid}>
+                                <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-14 w-14'></div>
+                            </Link>
+                            <div className='flex flex-col pl-5 my-auto justify-between'>
+                                <div className='flex items-center'>
+                                    <Link href={'/profile/' + articleDetails.uid}>
+                                        <p className='text-lg cursor-pointer'>{articleDetails.author}</p>
+                                    </Link>
+                                    <button onClick={toggleFollowing} className={'px-3 py-1 ml-3 text-sm lg:hidden text-white rounded-full ' + (following ? 'bg-gray-700 hover:bg-gray-900' : `${articleAccentColor.articleInteractiveElementAccent} ${articleAccentColor.articleInteractiveElementAccentHover}`)}>{following ? 'Following' : 'Follow'}</button>
+                                </div>
+                                <p className='text-sm opacity-60'>{articleDetails.date}</p>
                             </div>
-                            <p className='text-sm opacity-60'>{articleDetails.date}</p>
                         </div>
+
+                        <h1 className="text-3xl pt-8 font-bold w-11/12 lg:w-10/12 mx-auto">{articleDetails.title}</h1>
+                        <h2 className='text-2xl pt-1 font-light w-11/12 lg:w-10/12 mx-auto opacity-50'>{articleDetails.subtitle}</h2>
+
+                        <div className='mt-8 w-full mx-auto flex justify-center'>
+                            <Image src={articleDetails.thumbnailLink} className="object-contain inline mx-auto mt-24" width={690} height={388} objectFit='cover' /> {/* w:850 h:478 */}
+                        </div>
+
+                        <p className='text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>{articleDetails.content}</p>
+
+                        <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-14 lg:pb-0 -z-10`}>
+                            <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
+
+                            {recommendedArticlesMarkup}   
+                        </div>                   
                     </div>
 
-                    <h1 className="text-3xl pt-8 font-bold w-11/12 lg:w-10/12 mx-auto">{articleDetails.title}</h1>
-                    <h2 className='text-2xl pt-1 font-light w-11/12 lg:w-10/12 mx-auto opacity-50'>{articleDetails.subtitle}</h2>
-
-                    <div className='mt-8 w-full mx-auto flex justify-center'>
-                        <Image src={articleDetails.thumbnailLink} className="object-contain inline mx-auto mt-24" width={690} height={388} objectFit='cover' /> {/* w:850 h:478 */}
-                    </div>
-
-                    <p className='text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>{articleDetails.content}</p>
-
-                    <div className='w-full lg:w-10/12 mx-auto bg-slate-50 mt-16 pt-4 pb-14 lg:pb-0 -z-10'>
-                        <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
-
-                        {recommendedArticlesMarkup}   
-                    </div>                   
-                </div>
-
-                <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
-                    <div className='pt-4 w-11/12 lg:w-10/12 mx-auto'>
-                        <UserInfo name={articleDetails.author} followers="1.1M" uid={articleDetails.uid} />
-                        <Recommended />
-                        <div className='my-8 mb-4 w-11/12'>
-                            <p className='text-sm opacity-50'>ResearchBook | Massive information network</p>
+                    <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
+                        <div className='pt-4 w-11/12 lg:w-10/12 mx-auto'>
+                            <UserInfo articleAccentColor={articleAccentColor} name={articleDetails.author} followers="1.1M" uid={articleDetails.uid} />
+                            <Recommended />
+                            <div className='my-8 mb-4 w-11/12'>
+                                <p className='text-sm opacity-50'>ResearchBook | Massive information network</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <AppBar />
+        <AppBar bgColor={articleAccentColor.articleBgColor} />
     </div>
   )
 }
