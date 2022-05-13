@@ -3,9 +3,12 @@ import { Listbox, Transition } from '@headlessui/react'
 
 const accentColors = [
     { name: 'White', articleCardAccent: 'bg-white', articleContentElementAccent: 'text-black', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-white' },
-    { name: 'Blue', articleCardAccent: 'bg-blue-500', articleContentElementAccent: 'text-blue-600', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-blue-200' },
-    { name: 'Pink', articleCardAccent: 'bg-pink-300', articleContentElementAccent: 'text-pink-600', articleInteractiveElementAccent: 'bg-pink-200 text-black', articleInteractiveElementAccentHover: 'hover:bg-pink-600 focus:bg-pink-600', articleBgColor: 'bg-pink-200' },
-    { name: 'Violet', articleCardAccent: 'bg-violet-300', articleContentElementAccent: 'text-violet-600', articleInteractiveElementAccent: 'bg-violet-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-violet-600 focus:bg-violet-600', articleBgColor: 'bg-violet-200' },
+    { name: 'Blue', articleCardAccent: 'bg-blue-500', articleContentElementAccent: 'text-blue-600', articleInteractiveElementAccent: 'bg-blue-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-blue-600 focus:bg-blue-600', articleBgColor: 'bg-blue-100' },
+    { name: 'Green', articleCardAccent: 'bg-green-500', articleContentElementAccent: 'text-green-600', articleInteractiveElementAccent: 'bg-green-600 text-white', articleInteractiveElementAccentHover: 'hover:bg-green-700 focus:bg-green-700', articleBgColor: 'bg-green-100' },
+    { name: 'Yellow', articleCardAccent: 'bg-yellow-500', articleContentElementAccent: 'text-yellow-600', articleInteractiveElementAccent: 'bg-yellow-400 text-black', articleInteractiveElementAccentHover: 'hover:bg-yellow-600 focus:bg-yellow-600', articleBgColor: 'bg-yellow-100' },
+    { name: 'Gray', articleCardAccent: 'bg-gray-500', articleContentElementAccent: 'text-gray-600', articleInteractiveElementAccent: 'bg-gray-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-gray-600 focus:bg-gray-600', articleBgColor: 'bg-gray-100' },
+    { name: 'Pink', articleCardAccent: 'bg-pink-300', articleContentElementAccent: 'text-pink-600', articleInteractiveElementAccent: 'bg-pink-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-pink-600 focus:bg-pink-600', articleBgColor: 'bg-pink-100' },
+    { name: 'Violet', articleCardAccent: 'bg-violet-300', articleContentElementAccent: 'text-violet-600', articleInteractiveElementAccent: 'bg-violet-500 text-white', articleInteractiveElementAccentHover: 'hover:bg-violet-600 focus:bg-violet-600', articleBgColor: 'bg-violet-100' },
   ]
 
 function AccentColorPicker({ currentColor, setCurrentColorStateFunction }) {
@@ -19,7 +22,7 @@ function AccentColorPicker({ currentColor, setCurrentColorStateFunction }) {
             <Listbox value={currentColor} onChange={setCurrentColorStateFunction}>
                 <div className="relative w-5/12">
                 <Listbox.Button className={"relative w-full cursor-pointer rounded-lg py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm " + currentColor.articleInteractiveElementAccent}>
-                    <span className="block truncate">{currentColor.name}</span>
+                    <span className="block truncate bg-amb">{currentColor.name}</span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     </span>
                 </Listbox.Button>

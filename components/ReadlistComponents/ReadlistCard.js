@@ -6,7 +6,7 @@ import ReadlistCardMenuDropdown from './ReadlistCardMenuDropdown'
 
 function ReadlistCard({ title, author, description, thumbnailLink='/bruh', articleId, session, selfUid }) {
   return (
-    <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 transition duration-150 ease-in-out rounded-sm hover:shadow-md'>
+    <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 transition duration-150 ease-in-out rounded-sm'>
         <Link href={`/article/${articleId}`}>
             <h2 className='text-2xl font-semibold cursor-pointer'>{title}</h2>
         </Link>

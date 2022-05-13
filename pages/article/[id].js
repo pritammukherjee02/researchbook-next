@@ -104,7 +104,7 @@ function Article({ article }) {
 
                         <p className='text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>{articleDetails.content}</p>
 
-                        <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-14 lg:pb-0 -z-10`}>
+                        <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-32 lg:pb-28 -z-10`}>
                             <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
 
                             {recommendedArticlesMarkup}   
