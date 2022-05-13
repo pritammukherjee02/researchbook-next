@@ -26,12 +26,16 @@ function Appearance({ session, userAppearanceSettingsData }) {
 
     //Setting states
     const [allowCustomAccent, setAllowCustomAccent] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.allowAccentColor : false)
+    const [fullPageTheming, setFullPageTheming] = useState(userAppearanceSettingsData.appearenceSettingsData.theming ? userAppearanceSettingsData.appearenceSettingsData.theming.fullPageTheming : true)
     const [accentColor, setAccentColor] = useState(userAppearanceSettingsData ? userAppearanceSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
 
     const appearenceSettingsData = {
         accentColor: {
             allowAccentColor: allowCustomAccent,
             color: accentColor
+        },
+        theming: {
+            fullPageTheming: fullPageTheming
         }
     }
 
@@ -83,6 +87,12 @@ function Appearance({ session, userAppearanceSettingsData }) {
 
                             <ToggleSetting settingName='Custom Accent Color' settingDesc='Make Researchbook look the way you want' current={allowCustomAccent} setCurrentStateFunction={setAllowCustomAccent} accentColor={accentColor} />
                             {allowCustomAccent && <ColorPickerSetting settingName='Accent Color' settingDesc='Personalize Researchbook according to your tastes' currentColor={accentColor} setCurrentColorStateFunction={setAccentColor} />}
+                        </div>
+                        
+                        <div name='Themes' className='mt-12'>
+                            <p className='text-md px-5 font-bold opacity-50 cursor-default'>Themes</p>
+
+                            <ToggleSetting settingName='Enable full-page theming' settingDesc='Let the entire background adapt to the theme of the article' current={fullPageTheming} setCurrentStateFunction={setFullPageTheming} accentColor={accentColor} />
                         </div>
 
                     </div>
