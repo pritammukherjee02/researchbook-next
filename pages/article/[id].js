@@ -4,6 +4,9 @@ import Link from 'next/link'
 
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
+
 import Recommended from '../../components/ArticleComponents/Recommended'
 import UserInfo from '../../components/ArticleComponents/UserInfo'
 import Header from '../../components/Header'
@@ -20,6 +23,8 @@ function Article({ article }) {
     const [accentColor, setAccentColor] = useState({ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
     
     const [following, setFollowing] = useState(false)
+
+    let loadingUserAccents
 
     const [articleDetails, setArticleDetails] = useState({
         uid: 2,
@@ -48,9 +53,21 @@ function Article({ article }) {
         // GET THE ACCENT PREFERENCE OF THE USER IF IT EXISTS
         if(session)
         {
+            loadingUserAccents = toast.loading('Loading Accents', {
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            })
             const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
 	        const userSettingsData = docSnap.exists ? docSnap.data() : null
             setAccentColor(userSettingsData.appearenceSettingsData.accentColor.color)
+            toast.success('Personalized!', { id: loadingUserAccents, style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+              }, })
         }
     }, [session])
 
@@ -94,6 +111,7 @@ function Article({ article }) {
             <link rel="icon" href="/favicon.ico" />
             {/* <link rel="stylesheet" href="/articleStyles.css" /> */}
         </Head>
+        <Toaster />
 
         <main className='h-screen'>
             <div className={articleAccentColor.articleBgColor}>
