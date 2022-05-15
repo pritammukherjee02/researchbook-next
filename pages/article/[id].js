@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import React, { useEffect, useState } from 'react'
-import { getSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import Recommended from '../../components/ArticleComponents/Recommended'
 import UserInfo from '../../components/ArticleComponents/UserInfo'
 import Header from '../../components/Header'
@@ -15,8 +15,10 @@ import { db } from '../../firebase'
 
 
 function Article({ article }) {
-    //const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
-
+    const { data: session, status } = useSession()
+    // const [session, loading] = useSession()
+    const [accentColor, setAccentColor] = useState({ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
+    
     const [following, setFollowing] = useState(false)
 
     const [articleDetails, setArticleDetails] = useState({
@@ -38,15 +40,25 @@ function Article({ article }) {
         if(article) setArticleDetails(article)
     }, [article])
 
-    const [articleAccentColor, setArticleAccentColor] = useState(articleDetails.articleAccentColor ? articleDetails.articleAccentColor : {
-        articleBgColor: 'bg-white',
-        articleInteractiveElementAccent: 'bg-blue-500',
-        articleInteractiveElementAccentHover: 'bg-blue-600'
-    })
-
     useEffect(() => {
         setArticleAccentColor(articleDetails.articleAccentColor)
     }, [articleDetails])
+
+    useEffect(async () => {
+        // GET THE ACCENT PREFERENCE OF THE USER IF IT EXISTS
+        if(session)
+        {
+            const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
+	        const userSettingsData = docSnap.exists ? docSnap.data() : null
+            setAccentColor(userSettingsData.appearenceSettingsData.accentColor.color)
+        }
+    }, [session])
+
+    const [articleAccentColor, setArticleAccentColor] = useState(articleDetails.articleAccentColor ? articleDetails.articleAccentColor : {
+        articleBgColor: 'bg-white',
+        articleInteractiveElementAccent: accentColor.primary,
+        articleInteractiveElementAccentHover: accentColor.hover
+    })
 
     const recommendedArticles = [
         {title: 'How to nuke a country effectively?', description: 'You have to be vigilant about prying eyes when it comes to nuking...', author: 'Demonlord', date: '14 Feb, 22', thumbnailLink: articleDetails.thumbnailLink},
