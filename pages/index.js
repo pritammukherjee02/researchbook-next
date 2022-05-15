@@ -68,7 +68,6 @@ export async function getServerSideProps(context) {
   const session = await getSession(context)
   const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
   const userSettingsData = docSnap.exists && docSnap.data() != undefined ? docSnap.data() : null
-  console.log('userSettings Data: ', userSettingsData)
 
   return {
     props: {

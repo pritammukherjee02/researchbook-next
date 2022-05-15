@@ -54,11 +54,22 @@ function Article({ article }) {
         }
     }, [session])
 
-    const [articleAccentColor, setArticleAccentColor] = useState(articleDetails.articleAccentColor ? articleDetails.articleAccentColor : {
+    const [articleAccentColor, setArticleAccentColor] = useState((articleDetails.articleAccentColor && articleDetails.articleAccentColor.articleBgColor != 'bg-white') ? articleDetails.articleAccentColor : {
         articleBgColor: 'bg-white',
+        articleCardAccent: "bg-white",
         articleInteractiveElementAccent: accentColor.primary,
-        articleInteractiveElementAccentHover: accentColor.hover
+        articleInteractiveElementAccentHover: accentColor.hover,
+        articleContentElementAccent: "text-black"
     })
+    useEffect(() => {
+        setArticleAccentColor((articleDetails.articleAccentColor && articleDetails.articleAccentColor.articleBgColor != 'bg-white') ? articleDetails.articleAccentColor : {
+            articleBgColor: 'bg-white',
+            articleCardAccent: "bg-white",
+            articleInteractiveElementAccent: accentColor.primary,
+            articleInteractiveElementAccentHover: accentColor.hover,
+            articleContentElementAccent: "text-black"
+        })
+    }, [accentColor])
 
     const recommendedArticles = [
         {title: 'How to nuke a country effectively?', description: 'You have to be vigilant about prying eyes when it comes to nuking...', author: 'Demonlord', date: '14 Feb, 22', thumbnailLink: articleDetails.thumbnailLink},
