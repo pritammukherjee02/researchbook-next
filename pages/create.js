@@ -9,6 +9,7 @@ import AppBar from '../components/AppBar'
 import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import AccentColorPicker from '../components/CreateComponents/AccentColorPicker'
+import CategorySelector from '../components/CreateComponents/CategorySelector'
 
 import { getSession, useSession } from 'next-auth/react'
 
@@ -240,9 +241,18 @@ function Create({ session, userSettingsData }) {
 						</div>
 
 						<div name='Tags' className='border-t-2 mt-2 p-3 w-full'>
-							<p className='text-md font-semibold opacity-30 mb-4 cursor-default'>Tags</p>
-							<div className='flex flex-col gap-2 justify-between lg:w-full mb-5'>
-								<input type="text" ref={tagsRef} name='tags' className='p-2 w-11/12 mx-auto rounded-xl outline-none shadow-none text-md font-light opacity-50 border-2' placeholder="Comma (',') seperated..." />
+							<div className='w-full'>
+								<p className='text-md font-semibold opacity-30 mb-4 cursor-default'>Category</p>
+								<div className='flex flex-col gap-2 justify-between lg:w-full mb-5'>
+									<CategorySelector />
+								</div>
+							</div>
+
+							<div className='w-full mt-3 bg-red'>
+								<p className='text-md font-semibold opacity-30 mb-4 cursor-default'>Tags</p>
+								<div className='flex flex-col gap-2 justify-between lg:w-full mb-5'>
+									<input type="text" ref={tagsRef} name='tags' className='p-2 w-11/12 mx-auto rounded-xl outline-none shadow-none text-md font-light opacity-50 border-2' placeholder="Comma (',') seperated..." />
+								</div>
 							</div>
 						</div>
 

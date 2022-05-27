@@ -21,6 +21,7 @@ function Article({ article }) {
     const { data: session, status } = useSession()
     // const [session, loading] = useSession()
     const [accentColor, setAccentColor] = useState({ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
+    const [fullBgTheme, setFullBgTheme] = useState(true)
     
     const [following, setFollowing] = useState(false)
 
@@ -63,6 +64,8 @@ function Article({ article }) {
             const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
 	        const userSettingsData = docSnap.exists ? docSnap.data() : null
             setAccentColor(userSettingsData.appearenceSettingsData.accentColor.color)
+            setFullBgTheme(userSettingsData.appearenceSettingsData.theming.fullPageTheming)
+
             toast.success('Personalized!', { id: loadingUserAccents, style: {
                 borderRadius: '10px',
                 background: '#333',
@@ -109,13 +112,12 @@ function Article({ article }) {
         <Head>
             <title>{articleDetails.title} | Researchbook</title>
             <link rel="icon" href="/favicon.ico" />
-            {/* <link rel="stylesheet" href="/articleStyles.css" /> */}
         </Head>
         <Toaster />
 
         <main className='h-screen'>
             <div className={articleAccentColor.articleBgColor}>
-                <Header bgColor={articleAccentColor.articleBgColor} page='article' searchProp='' />
+                <Header accentColor={accentColor} bgColor={articleAccentColor.articleBgColor} page='article' searchProp='' />
             </div>
 
             <div className={`${articleAccentColor.articleBgColor} overflow-scroll`}>
@@ -143,7 +145,7 @@ function Article({ article }) {
                             <Image src={articleDetails.thumbnailLink} className="object-contain inline mx-auto mt-24" width={690} height={388} objectFit='cover' /> {/* w:850 h:478 */}
                         </div>
 
-                        <p className='text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>{articleDetails.content}</p>
+                        <p className='text-lg lg:text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>{articleDetails.content}</p>
 
                         <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-32 lg:pb-28 -z-10`}>
                             <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
