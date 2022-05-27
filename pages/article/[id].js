@@ -122,7 +122,7 @@ function Article({ article }) {
 
             <div className={`${articleAccentColor.articleBgColor} overflow-scroll`}>
                 <div className='lg:px-5 pb-14 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
-                    <div className='w-full h-full lg:w-8/12 mb-20'>
+                    <div className='w-full h-full lg:w-8/12 mb-20 relative'>
                         <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
                             <Link href={'/profile/' + articleDetails.uid}>
                                 <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-14 w-14'></div>
@@ -146,6 +146,15 @@ function Article({ article }) {
                         </div>
 
                         <p className='text-lg lg:text-xl pt-8 w-11/12 lg:w-10/12 mx-auto leading-relaxed font-light'>{articleDetails.content}</p>
+
+                        <div className='rounded-full flex z-50 p-3 w-48 justify-around fixed bottom-20 lg:bottom-10 ml-3 lg:ml-8 border-2 bg-white shadow-xl'>
+                            <button className='h-full w-20 hover:font-semibold px-2 border-r-2 flex text-sm'>
+                                Applaud
+                            </button>
+                            <button className='h-full w-20 hover:font-semibold px-2 flex text-sm'>
+                                Comments
+                            </button>
+                        </div>
 
                         <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-32 lg:pb-28 -z-10`}>
                             <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
