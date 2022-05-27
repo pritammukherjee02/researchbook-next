@@ -193,6 +193,17 @@ function Create({ session, userSettingsData }) {
 		setThumbnailToArticle(null)
 	}
 
+	const handleCharacterLimit = (e) => {
+		if(e.target.name == 'title' && (e.target.value).length > 100)
+		{
+			e.target.value = (e.target.value).slice(0, -1)
+		}
+		else if(e.target.name == 'description' && (e.target.value).length > 150)
+		{
+			e.target.value = (e.target.value).slice(0, -1)
+		}
+	}
+
   return (
     <div>
         <Head>
@@ -213,12 +224,12 @@ function Create({ session, userSettingsData }) {
                   
 					<form onSubmit={publishArticle} className='flex flex-col w-full h-full lg:w-8/12 pb-5'>
 						<div className='flex justify-between items-center lg:w-11/12'>
-						<input type="text" ref={titleRef} name='title' className='p-2 text-3xl outline-none shadow-none font-bold w-full lg:w-8/12 mb-1' placeholder='Title...' />
+						<input onChange={handleCharacterLimit} type="text" ref={titleRef} name='title' className='p-2 text-3xl outline-none shadow-none font-bold w-full lg:w-8/12 mb-1' placeholder='Title...' />
 						<input type='submit' value='Publish' className={`px-6 h-10 mr-3 lg:mr-0 lg:h-11 text-md ${accentColor.color} ${accentColor.hover} cursor-pointer rounded-md`} />
 						</div>
 						<input type="text" ref={subtitleRef} name='subtitle' className='p-2 outline-none shadow-none text-2xl font-light opacity-50 w-full lg:w-8/12 mb-5' placeholder='Sub-title...' />
 
-						<textarea type="text" ref={descriptionRef} name='description' placeholder='Description...' className='text-md outline-none shadow-none resize-none rounded-xl border-2 border-gray-100 p-2 mb-1 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
+						<textarea onChange={handleCharacterLimit} type="text" ref={descriptionRef} name='description' placeholder='Description...' className='text-md outline-none shadow-none resize-none rounded-xl border-2 border-gray-100 p-2 mb-1 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={3} />
 						<textarea type="text" ref={contentRef} name='content' placeholder='Write your masterpiece...' className='text-xl outline-none shadow-none resize-none p-2 w-full mx-auto lg:mx-0 leading-relaxed font-light flex-wrap' rows={15} />
 						
 
