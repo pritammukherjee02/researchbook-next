@@ -149,8 +149,8 @@ function Article({ article }) {
 
                         <div className={'rounded-full flex z-50 p-3  justify-around fixed bottom-20 lg:bottom-10 ml-3 lg:ml-8 border-[1px] border-gray-400 bg-white shadow-xl ' + articleAccentColor.articleBgColor}>
                             <button className='h-full w-16 flex justify-center hover:font-semibold px-2 border-gray-400 border-r-2 text-sm'>
-                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                    viewBox="0 0 297.221 297.221" className="h-6 w-6 inline-block" xmlSpace="preserve">
+                                <svg version="1.1" className="h-6 w-6 inline-block hover:scale-110" id="Capa_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                    viewBox="0 0 297.221 297.221" xmlSpace="preserve">
                                     <g>
                                         <path d="M283.762,32.835c2.705-1.913,3.346-5.658,1.432-8.363c-1.914-2.705-5.657-3.347-8.363-1.432l-14.984,10.602
                                             c-2.705,1.913-3.346,5.658-1.432,8.363c1.169,1.652,3.022,2.535,4.902,2.535c1.198,0,2.408-0.358,3.461-1.104L283.762,32.835z"/>
@@ -192,7 +192,7 @@ function Article({ article }) {
                                 </svg>
                             </button>
                             <button className='h-full w-16 flex justify-center hover:font-semibold px-2 text-sm'>
-                                <svg version="1.1" id="Layer_1" className="h-6 w-6 inline-block" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                <svg version="1.1" id="Layer_1" className="h-6 w-6 inline-block hover:scale-110" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 32 32" enable-background="new 0 0 32 32" xmlSpace="preserve">
                                         <polygon fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="4,7 4,25 13,25 16,28 19,25 28,25 28,7 "/>
                                         <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="9" y1="12" x2="23" y2="12"/>
