@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
+import toaster from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 
 import Recommended from '../../components/ArticleComponents/Recommended'
@@ -13,12 +15,16 @@ import Header from '../../components/Header'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard'
 import AppBar from '../../components/AppBar'
 
-import { doc, collection, getDocs, getDoc } from "firebase/firestore";
+import { doc, collection, getDocs, getDoc, arrayUnion, updateDoc } from "firebase/firestore";
+import { useDocument } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase'
 
 
 function Article({ article }) {
     const { data: session, status } = useSession()
+    const router = useRouter()
+    const { id } = router.query
+
     // const [session, loading] = useSession()
     const [accentColor, setAccentColor] = useState({ name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
     const [fullBgTheme, setFullBgTheme] = useState(true)
@@ -73,6 +79,50 @@ function Article({ article }) {
               }, })
         }
     }, [session])
+
+    const addToReadlist = async (e) => {
+        if (!session){
+            const toast = toaster.error('Log in to add the article to your readlist', {
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            })
+            return
+        }
+
+        const toast = toaster.loading('Adding to Readlist', {
+            style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+        })
+                  
+        
+        try {
+            const articleCardSnap = await getDoc(doc(db, 'articleCards', id))
+
+            await updateDoc(doc(db, 'readlists', session ? session.user.email : 'somerandomemail@email.com'), {
+                info: arrayUnion({
+                  articleId: id,
+                  title: articleDetails.title,
+                  description: articleCardSnap.exists() ? articleCardSnap.data().description : '',
+                  author: articleDetails.author,
+                  thumbnailLink: articleDetails.thumbnailLink
+                })
+            });
+    
+            toaster.success('Added to Readlist', {
+              id: toast
+            })
+        } catch (error) {
+          alert('Something went wrong')
+          console.log('ERR: READLISTADD: ', e)
+          return
+        }
+    }
 
     const [articleAccentColor, setArticleAccentColor] = useState((articleDetails.articleAccentColor && articleDetails.articleAccentColor.articleBgColor != 'bg-white') ? articleDetails.articleAccentColor : {
         articleBgColor: 'bg-white',
@@ -137,7 +187,7 @@ function Article({ article }) {
                                 <p className='text-sm opacity-60'>{articleDetails.date}</p>
                             </div>
                             <div className='flex items-center justify-center my-auto'>
-                                <svg className='h-7 text-gray-500 opacity-75 w-7 hover:scale-110 cursor-pointer' version="1.1" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                                <svg onClick={addToReadlist} className='h-7 text-gray-500 opacity-75 w-7 hover:scale-110 cursor-pointer' version="1.1" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                                     <defs>
                                     <symbol id="v" overflow="visible">
                                     <path d="m18.766-1.125c-0.96875 0.5-1.9805 0.875-3.0312 1.125-1.043 0.25781-2.1367 0.39062-3.2812 0.39062-3.3984 0-6.0898-0.94531-8.0781-2.8438-1.9922-1.9062-2.9844-4.4844-2.9844-7.7344 0-3.2578 0.99219-5.8359 2.9844-7.7344 1.9883-1.9062 4.6797-2.8594 8.0781-2.8594 1.1445 0 2.2383 0.13281 3.2812 0.39062 1.0508 0.25 2.0625 0.625 3.0312 1.125v4.2188c-0.98047-0.65625-1.9453-1.1406-2.8906-1.4531-0.94922-0.3125-1.9492-0.46875-3-0.46875-1.875 0-3.3516 0.60547-4.4219 1.8125-1.0742 1.1992-1.6094 2.8555-1.6094 4.9688 0 2.1055 0.53516 3.7617 1.6094 4.9688 1.0703 1.1992 2.5469 1.7969 4.4219 1.7969 1.0508 0 2.0508-0.14844 3-0.45312 0.94531-0.3125 1.9102-0.80078 2.8906-1.4688z"/>

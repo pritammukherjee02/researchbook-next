@@ -54,7 +54,7 @@ function ArticleCard({ title, description, author, date, articleId, articleCardI
           console.log('ERR: READLISTADD: ', e)
           return
         }
-      }
+    }
 
   return (
     <div className='flex p-5 flex-col justify-around border-0 lg:border-b-2 transition duration-150 ease-in-out rounded-sm'>
