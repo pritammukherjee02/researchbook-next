@@ -26,6 +26,29 @@ const articleActionsVariants = {
     visible: { left: 0, opacity: 1 },
   }
 
+const contentVariants = {
+    open: {
+        transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+      },
+    closed: {
+        transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    },
+    initial: { 
+        y: '10vh',
+        opacity: 0.5,
+        transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+    },
+    animate: {
+        y: 0,
+        opacity: 1,
+        scale: [0.9, 1.01, 1.0],
+        duration: 0.5
+    },
+    exit: {
+        transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    }
+}
+
 function Article({ article }) {
     const { data: session, status } = useSession()
     const router = useRouter()
@@ -178,7 +201,7 @@ function Article({ article }) {
 
             <div className={`${articleAccentColor.articleBgColor} overflow-scroll`}>
                 <div className='lg:px-5 pb-14 mt-5 mb-3 max-w-7xl mx-auto flex flex-col lg:flex-row justify-between h-screen relative gap-2'>
-                    <div className='w-full h-full lg:w-8/12 mb-20 relative'>
+                    <motion.div initial='initial' animate='animate' exit='exit' transition={{ ease: "easeInOut" }} variants={contentVariants} className='w-full h-full lg:w-8/12 mb-20 relative'>
                         <div className='flex w-11/12 lg:w-10/12 mx-auto mt-8'>
                             <Link href={'/profile/' + articleDetails.uid}>
                                 <div className='ml-2 cursor-pointer border my-auto border-blue-500 rounded-full h-14 w-14'></div>
@@ -279,7 +302,14 @@ function Article({ article }) {
 
                         <p className='text-lg lg:text-xl leading-8 lg:leading-loose pt-8 w-11/12 lg:w-10/12 mx-auto font-light'>{articleDetails.content}</p>
 
-                        <motion.div initial='hidden' animate='visible' variants={articleActionsVariants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }} className={'rounded-full flex z-50 p-3  justify-around fixed bottom-20 lg:bottom-10 ml-3 lg:ml-8 border-[1px] border-gray-400 bg-white shadow-xl ' + articleAccentColor.articleBgColor}>
+                        <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-32 lg:pb-28 -z-10`}>
+                            <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
+
+                            {recommendedArticlesMarkup}   
+                        </div>                   
+                    </motion.div>
+
+                    <motion.div initial='hidden' animate='visible' variants={articleActionsVariants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }} className={'rounded-full flex z-50 p-3  justify-around fixed bottom-20 lg:bottom-10 ml-3 lg:ml-8 border-[1px] border-gray-400 bg-white shadow-xl ' + articleAccentColor.articleBgColor}>
                             <button className='h-full w-16 flex justify-center hover:font-semibold px-2 border-gray-400 border-r-2 text-sm'>
                                 <svg version="1.1" className="h-6 w-6 inline-block hover:scale-110" id="Capa_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 297.221 297.221" xmlSpace="preserve">
@@ -333,13 +363,6 @@ function Article({ article }) {
                                 </svg>
                             </button>
                         </motion.div>
-
-                        <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-32 lg:pb-28 -z-10`}>
-                            <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
-
-                            {recommendedArticlesMarkup}   
-                        </div>                   
-                    </div>
 
                     <div className='hidden h-min lg:block lg:w-4/12 border-l-2 sticky bottom-0'>
                         <div className='pt-4 w-11/12 lg:w-10/12 mx-auto'>
