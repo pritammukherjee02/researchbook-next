@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { motion } from "framer-motion"
 
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -19,6 +20,11 @@ import { doc, collection, getDocs, getDoc, arrayUnion, updateDoc } from "firebas
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { db } from '../../firebase'
 
+
+const articleActionsVariants = {
+    hidden: { left: -300, opacity: 0 },
+    visible: { left: 0, opacity: 1 },
+  }
 
 function Article({ article }) {
     const { data: session, status } = useSession()
@@ -273,7 +279,7 @@ function Article({ article }) {
 
                         <p className='text-lg lg:text-xl leading-8 lg:leading-loose pt-8 w-11/12 lg:w-10/12 mx-auto font-light'>{articleDetails.content}</p>
 
-                        <div className={'rounded-full flex z-50 p-3  justify-around fixed bottom-20 lg:bottom-10 ml-3 lg:ml-8 border-[1px] border-gray-400 bg-white shadow-xl ' + articleAccentColor.articleBgColor}>
+                        <motion.div initial='hidden' animate='visible' variants={articleActionsVariants} whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }} className={'rounded-full flex z-50 p-3  justify-around fixed bottom-20 lg:bottom-10 ml-3 lg:ml-8 border-[1px] border-gray-400 bg-white shadow-xl ' + articleAccentColor.articleBgColor}>
                             <button className='h-full w-16 flex justify-center hover:font-semibold px-2 border-gray-400 border-r-2 text-sm'>
                                 <svg version="1.1" className="h-6 w-6 inline-block hover:scale-110" id="Capa_1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 297.221 297.221" xmlSpace="preserve">
@@ -326,7 +332,7 @@ function Article({ article }) {
                                         <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="9" y1="20" x2="19" y2="20"/>
                                 </svg>
                             </button>
-                        </div>
+                        </motion.div>
 
                         <div className={`w-full lg:w-10/12 mx-auto ${articleAccentColor.articleBgColor} mt-16 pt-4 pb-32 lg:pb-28 -z-10`}>
                             <p className='text-md px-5 font-semibold opacity-40 cursor-default'>Related to this</p>
