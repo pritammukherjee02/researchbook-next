@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { motion } from "framer-motion"
 
 import { getSession } from 'next-auth/react'
 import { doc, getDoc } from "firebase/firestore";
@@ -25,6 +26,12 @@ import AppBar from '../../components/AppBar'
 import UserInformation from '../../components/UserInformation'
 import UserNotLoggedInInfo from '../../components/UserNotLoggedInInfo'
 import ArticleCard from '../../components/MainContentComponents/ArticleCard';
+
+const searchfieldVariants = {
+    animate: {
+        scale: [1.0, 1.05, 1.0]
+    },
+}
 
 const searchClient = algoliasearch(
     'YLY5A2MO21',
@@ -88,10 +95,10 @@ function Index({ session, userSettingsData }) {
                         </div>
                         <div className='my-0 w-full lg:w-10/12'>
                             <div className='lg:px-3 pb-14 lg:pb-0 max-w-7xl mx-auto flex flex-col justify-around gap-1'>
-                                <form onSubmit={e => e.preventDefault()} className='w-11/12 lg:w-7/12 mx-auto lg:mx-0'>
+                                <motion.form animate='animate' variants={searchfieldVariants} onSubmit={e => e.preventDefault()} className='w-11/12 lg:w-7/12 mx-auto lg:mx-0'>
                                     {/*<input name='inPageSearchField' type='text' onChange={onchangeHandler} value={searchFieldContent} className='mb-2 lg:mx-9 text-md outline-none shadow-none font-semibold opacity-90 p-3 w-full rounded-full bg-gray-200' placeholder='Search...' />*/}
                                     <CustomSearchBox />
-                                </form>
+                                </motion.form>
 
                                 <p className='mx-7 lg:mx-16 text-sm font-light'>What do you want to read today?</p>
                                 <div className='w-full lg:w-8/12 lg:m-3 lg:mx-5 flex flex-col'>
@@ -122,7 +129,9 @@ function Index({ session, userSettingsData }) {
 
 function Hit({hit, uid}) {
     return (
-      <ArticleCard title={hit.title} selfOwned={hit.uid == uid} thumbnailLink={hit.thumbnailLink} description={hit.description} author={hit.author} date={hit.date} />
+        <motion.div initial={{ y: 300, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -100, zIndex: -10, opacity: 0 }}>
+            <ArticleCard title={hit.title} selfOwned={hit.uid == uid} thumbnailLink={hit.thumbnailLink} description={hit.description} author={hit.author} date={hit.date} />
+        </motion.div>
     );
   }
 
