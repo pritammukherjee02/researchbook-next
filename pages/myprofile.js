@@ -137,7 +137,7 @@ export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
     const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
-    const userSettingsData = docSnap.exists ? docSnap.data() : null
+    const userSettingsData = docSnap.exists() ? docSnap.data() : null
 
     const q = query(collection(db, "articleCards"), where("uid", "==", session ? session.user.email : 'someemailaddress@email.com'));
     const querySnapshot = await getDocs(q);

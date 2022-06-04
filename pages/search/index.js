@@ -102,7 +102,7 @@ function Index({ session, userSettingsData }) {
 
                                 <p className='mx-7 lg:mx-16 text-sm font-light'>What do you want to read today?</p>
                                 <div className='w-full lg:w-8/12 lg:m-3 lg:mx-5 flex flex-col'>
-                                    <Hits hitComponent={Hit} uid={session.user.email} />
+                                    <Hits hitComponent={Hit} uid={session ? session.user.email : 'somerandomemailaddressthatwontexist@email.com'} />
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ export async function getServerSideProps(context) {
     //GET THE USER
     const session = await getSession(context)
     const docSnap = await getDoc(doc(db, 'userSettings', session ? session.user.email : 'randomassemailadress@email.com'));
-    const userSettingsData = docSnap.exists ? docSnap.data() : null
+    const userSettingsData = docSnap.exists() ? docSnap.data() : null
   
     return {
       props: {
