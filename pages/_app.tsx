@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Router from 'next/router'
-import { motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 
 import ProgressBar from '@badrap/bar-of-progress'
 
@@ -22,9 +22,9 @@ Router.events.on('routeChangeError', progress.finish)
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <AnimatePresence exitBeforeEnter>
         <Component {...pageProps} />
-      </motion.div>
+      </AnimatePresence>
     </SessionProvider>
   )
 }

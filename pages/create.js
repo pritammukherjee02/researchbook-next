@@ -73,7 +73,7 @@ function Create({ session, userSettingsData }) {
   async function publishArticle(e){
     e.preventDefault()
 	
-    if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
+    if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value || (!thumbnailRef.current.value && !thumbnailToArticle)){
 		toast.error('Please give the title, subtitle, content, and the thumbnail image', {
 			style: {
 				borderRadius: '10px',
@@ -138,7 +138,7 @@ function Create({ session, userSettingsData }) {
 					subtitleRef.current.value = ''
 					descriptionRef.current.value = ''
 					thumbnailRef.current.value = ''
-
+					Router.push('/')
 				})
 			})
 
@@ -165,6 +165,7 @@ function Create({ session, userSettingsData }) {
 			subtitleRef.current.value = ''
 			descriptionRef.current.value = ''
 			thumbnailRef.current.value = ''
+			Router.push('/')
 		}
     } catch (e) {
       alert('Something went wrong')

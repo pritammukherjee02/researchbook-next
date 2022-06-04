@@ -2,6 +2,7 @@ import Head from 'next/head'
 import AppBar from '../components/AppBar'
 import { getSession } from 'next-auth/react'
 import { Toaster } from 'react-hot-toast'
+import { motion } from 'framer-motion'
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase'
@@ -13,6 +14,12 @@ import SideBar from '../components/SideBar'
 import UserInformation from '../components/UserInformation'
 import UserNotLoggedInInfo from '../components/UserNotLoggedInInfo'
 import { useEffect, useState } from 'react';
+
+const indexPageVariants = {
+  exit: {
+    y: [0, -20, 0, -20, 0, -20, 0]
+  }
+}
 
 export default function Home({ session, userSettingsData }) {
 	const [accentColor, setAccentColor] = useState(session && userSettingsData ? userSettingsData.appearenceSettingsData.accentColor.color : { name: 'Blue', color: 'bg-blue-500 text-white', primary: 'bg-blue-500', hover: 'hover:bg-blue-600', hoverIcon: 'hover:text-blue-500 focus:text-blue-500', secondary: 'bg-blue-100', secondaryHover: 'hover:bg-blue-200', text: 'text-white', contentText: 'text-black', icon: 'text-blue-500' })
@@ -37,7 +44,7 @@ export default function Home({ session, userSettingsData }) {
   const userInformationMarkup = session ? (<UserInformation accentColor={accentColor} page='home' session={session} fromFollowingUsers={fromFollowingUsers} userInfo={userInfo} />) : (<UserNotLoggedInInfo accentColor={accentColor} page='home' />)
 
   return (
-    <div className=''>
+    <motion.div exit='exit' variants={indexPageVariants} className=''>
       <Head>
         <title>ResearchBook</title>
         <link rel="icon" href="/favicon.ico" />
@@ -59,7 +66,7 @@ export default function Home({ session, userSettingsData }) {
       </main>
 
 
-    </div>
+    </motion.div>
   )
 }
 

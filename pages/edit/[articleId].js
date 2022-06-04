@@ -125,7 +125,7 @@ function Edit({ session, userSettingsData }) {
     async function publishArticle(e){
         e.preventDefault()
 
-        if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value){
+        if(!contentRef.current.value || !titleRef.current.value || !subtitleRef.current.value || (!thumbnailRef.current.value && !thumbnailToArticle)){
           toast.error('Please give the title, subtitle, content, and the thumbnail image', {
             style: {
               borderRadius: '10px',
@@ -167,7 +167,7 @@ function Edit({ session, userSettingsData }) {
                 uid: session.user.email,
                 thumbnailLink: thumbnailRef.current.value,
                 tags: tags,
-				articleAccentColor: articleAccentColor
+				        articleAccentColor: articleAccentColor
             }, { merge: true })
 
             if(thumbnailToArticle)
@@ -192,7 +192,7 @@ function Edit({ session, userSettingsData }) {
                             subtitleRef.current.value = ''
                             descriptionRef.current.value = ''
                             thumbnailRef.current.value = ''
-    
+                            Router.push('/')
                         })
                     })
                 } else {
